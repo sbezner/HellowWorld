@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Top 5 Sumner Material Lift Parts</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 2rem 1.5rem;
+      background-color: #f0f4f8;
+      font-family: sans-serif;
+      color: #2d3748;
+    }
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.25rem;
+    }
+    .subtitle {
+      color: #718096;
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+    }
+    .notice {
+      background: #fffbeb;
+      border-left: 4px solid #f6ad55;
+      padding: 0.6rem 1rem;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.85rem;
+      margin-bottom: 2rem;
+      color: #744210;
+    }
+
+    /* Summary Table */
+    .summary-table {
+      background: white;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      overflow-x: auto;
+    }
+    .summary-table h2 {
+      margin: 0 0 1rem;
+      font-size: 1.1rem;
+      color: #2b6cb0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+    th {
+      background: #ebf8ff;
+      color: #2b6cb0;
+      text-align: left;
+      padding: 0.6rem 0.75rem;
+      border-bottom: 2px solid #bee3f8;
+    }
+    td {
+      padding: 0.6rem 0.75rem;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #f7fafc; }
+    .price-tag {
+      font-weight: bold;
+      color: #276749;
+    }
+    .best-price {
+      font-size: 0.8rem;
+      color: #718096;
+    }
+
+    /* Part Cards */
+    .part-card {
+      background: white;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .part-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .part-number-badge {
+      background: #2b6cb0;
+      color: white;
+      border-radius: 50%;
+      width: 2.2rem;
+      height: 2.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .part-title h2 {
+      margin: 0 0 0.2rem;
+      font-size: 1.2rem;
+      color: #1a365d;
+    }
+    .part-title .part-nos {
+      font-size: 0.8rem;
+      color: #718096;
+      font-family: monospace;
+    }
+    .sales-pitch {
+      background: #f0fff4;
+      border-left: 3px solid #38a169;
+      padding: 0.6rem 1rem;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      color: #276749;
+    }
+    .part-details {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+    .part-numbers-list {
+      background: #f7fafc;
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.85rem;
+    }
+    .part-numbers-list strong {
+      display: block;
+      margin-bottom: 0.4rem;
+      color: #2d3748;
+    }
+    .part-numbers-list ul {
+      margin: 0;
+      padding-left: 1.2rem;
+      color: #4a5568;
+    }
+    .part-numbers-list li { margin-bottom: 0.2rem; }
+    .part-numbers-list code {
+      background: #e2e8f0;
+      padding: 0.1rem 0.3rem;
+      border-radius: 3px;
+      font-size: 0.85rem;
+    }
+    .where-to-buy {
+      font-size: 0.88rem;
+    }
+    .where-to-buy strong {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #2d3748;
+    }
+    .dealer-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .dealer-chip {
+      display: inline-block;
+      background: #ebf8ff;
+      border: 1px solid #bee3f8;
+      border-radius: 20px;
+      padding: 0.3rem 0.75rem;
+      font-size: 0.82rem;
+      color: #2b6cb0;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .dealer-chip:hover {
+      background: #bee3f8;
+    }
+    .dealer-chip .chip-price {
+      color: #276749;
+      font-weight: bold;
+      margin-left: 0.3rem;
+    }
+    .price-range {
+      display: inline-block;
+      background: #f0fff4;
+      border: 1px solid #c6f6d5;
+      border-radius: 6px;
+      padding: 0.3rem 0.75rem;
+      font-size: 0.85rem;
+      color: #276749;
+      font-weight: bold;
+      margin-bottom: 0.75rem;
+    }
+
+    /* Distributors Section */
+    .distributors {
+      background: white;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .distributors h2 {
+      margin: 0 0 1rem;
+      font-size: 1.1rem;
+      color: #2b6cb0;
+    }
+    .dist-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .dist-item {
+      background: #f7fafc;
+      border-radius: 6px;
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+      flex: 1 1 200px;
+    }
+    .dist-item a {
+      color: #2b6cb0;
+      text-decoration: none;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+    .dist-item a:hover { text-decoration: underline; }
+    .dist-item span { color: #718096; }
+
+    a.back {
+      display: inline-block;
+      margin-top: 0.5rem;
+      color: #3182ce;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+    a.back:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <h1>Top 5 Sumner Material Lift Parts</h1>
+  <p class="subtitle">Sales Reference Guide &mdash; Pricing, Part Numbers &amp; Where to Buy</p>
+  <div class="notice">
+    <strong>Sales Tip:</strong> Always confirm the customer's lift model number (on the nameplate/data tag) before ordering. Sumner is now owned by Southwire/SFE Group &mdash; parts may appear under either brand on retailer sites. Prices have increased recently due to manufacturer adjustments.
+  </div>
+
+  <!-- Summary Table -->
+  <div class="summary-table">
+    <h2>Quick Reference</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Part</th>
+          <th>Key Part #(s)</th>
+          <th>Price Range</th>
+          <th>Best Price Source</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><strong>Load Line (Cable) Assembly</strong></td>
+          <td><code>783628 / 783629 / 783630</code></td>
+          <td><span class="price-tag">$41 – $115</span></td>
+          <td><span class="best-price">Toolup.com (~$41)</span></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><strong>Pulley / Sheave Assembly</strong></td>
+          <td><code>783921</code></td>
+          <td><span class="price-tag">$49 – $97</span></td>
+          <td><span class="best-price">IMS Bolt (~$49)</span></td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><strong>Wheel / Caster Assembly</strong></td>
+          <td><code>779011 / 779005 / 779036</code></td>
+          <td><span class="price-tag">$89 – $600+</span></td>
+          <td><span class="best-price">Sumner Outlet / Toolup</span></td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><strong>Winch Handle Replacement Kit</strong></td>
+          <td><code>784841 / 784842 / 783761</code></td>
+          <td><span class="price-tag">$130 – $200</span></td>
+          <td><span class="best-price">Energized Engines / Amazon</span></td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><strong>Outrigger / Stabilizer Leg Assembly</strong></td>
+          <td><code>783935 / 783936</code></td>
+          <td><span class="price-tag">$418 – $700</span></td>
+          <td><span class="best-price">Zoro (~$418)</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Part 1 -->
+  <div class="part-card">
+    <div class="part-header">
+      <div class="part-number-badge">1</div>
+      <div class="part-title">
+        <h2>Load Line (Cable) Assembly</h2>
+        <div class="part-nos">783628 &bull; 783629 &bull; 783630 &bull; 784790</div>
+      </div>
+    </div>
+    <div class="sales-pitch">
+      Most wear-prone component on any Sumner lift. High repeat-purchase rate &mdash; every lift needs a new cable eventually. Lead with model number to match the right SKU.
+    </div>
+    <div class="part-details">
+      The wire rope cable running through the mast to the lifting carriage. Daily friction against pulleys, jobsite grit, and occasional overloading all fray the cable. Sumner's own operator manual flags cable inspection as a mandatory pre-use check.
+    </div>
+    <div class="part-numbers-list">
+      <strong>Part Numbers by Model:</strong>
+      <ul>
+        <li><code>783628</code> — 2012 / 2112 Series</li>
+        <li><code>783629</code> — 2018 / 2118 Series</li>
+        <li><code>783630</code> — 2024 / 2124 Series</li>
+        <li><code>784790</code> — 2412 MDLS Series</li>
+      </ul>
+    </div>
+    <div class="price-range">$41 – $115</div>
+    <div class="where-to-buy">
+      <strong>Where to Buy:</strong>
+      <div class="dealer-grid">
+        <a class="dealer-chip" href="https://toolup.com/collections/sumner-material-lift-parts" target="_blank">Toolup.com <span class="chip-price">~$41–$45</span></a>
+        <a class="dealer-chip" href="https://www.equipsupply.com/tools-hardware/material-lifts/material-lift-parts" target="_blank">EquipSupply</a>
+        <a class="dealer-chip" href="https://gearflow.com/brand/southwire-co-sumner" target="_blank">Gearflow <span class="chip-price">~$111</span></a>
+        <a class="dealer-chip" href="https://www.scottelectricusa.com/online-store/product/sumner-783629-load-line-assembly/883608" target="_blank">Scott Electric USA</a>
+        <a class="dealer-chip" href="https://www.energizedengines.com/pages/about-sumner-lifts-and-parts" target="_blank">Energized Engines</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Part 2 -->
+  <div class="part-card">
+    <div class="part-header">
+      <div class="part-number-badge">2</div>
+      <div class="part-title">
+        <h2>Pulley / Sheave Assembly</h2>
+        <div class="part-nos">783921 (supersedes obsolete 783812)</div>
+      </div>
+    </div>
+    <div class="sales-pitch">
+      Often sold alongside a new cable &mdash; a worn pulley destroys a new cable fast. Upsell the Pulley Kit from Energized Engines (includes guard + shims) for ~$106.
+    </div>
+    <div class="part-details">
+      Sits at the top of the mast and redirects the load line. The internal bearing wears out from repetitive loading and the aluminum wheel develops groove wear that damages the cable. Part #783812 is now obsolete &mdash; replacement is #783921.
+    </div>
+    <div class="part-numbers-list">
+      <strong>Part Numbers:</strong>
+      <ul>
+        <li><code>783921</code> — Pulley Assembly, 2000/2100 Series (aluminum, includes center bearing)</li>
+        <li><code>783812</code> — Obsolete; cross to 783921</li>
+      </ul>
+    </div>
+    <div class="price-range">$49 – $97</div>
+    <div class="where-to-buy">
+      <strong>Where to Buy:</strong>
+      <div class="dealer-grid">
+        <a class="dealer-chip" href="https://imsbolt.com/sumner-pulley-assembly-aluminum-2000-2100-lift/" target="_blank">IMS Bolt <span class="chip-price">~$49</span></a>
+        <a class="dealer-chip" href="https://empirerigging.com/sumner-783921" target="_blank">Empire Rigging <span class="chip-price">~$74</span></a>
+        <a class="dealer-chip" href="https://www.zoro.com/sumner-pulley-assembly-20002100-lifts-783921/i/G210403285/" target="_blank">Zoro <span class="chip-price">~$97</span></a>
+        <a class="dealer-chip" href="https://www.energizedengines.com/products/sumner-783921-pulley-assembly-2000-2100-lifts" target="_blank">Energized Engines (Kit)</a>
+        <a class="dealer-chip" href="https://www.amazon.com/Sumner-Pulley-Assembly-Lifts-783921/dp/B0BD2RYWB2" target="_blank">Amazon</a>
+        <a class="dealer-chip" href="https://www.equipsupply.com/sumner-pulley-assembly-for-series-2000-2100-lifts-783921-mtc-783921" target="_blank">EquipSupply</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Part 3 -->
+  <div class="part-card">
+    <div class="part-header">
+      <div class="part-number-badge">3</div>
+      <div class="part-title">
+        <h2>Wheel / Caster Assembly</h2>
+        <div class="part-nos">779011 &bull; 779005 &bull; 779036 &bull; 783736</div>
+      </div>
+    </div>
+    <div class="sales-pitch">
+      High-margin repeat seller. Lifts roll over rough concrete and debris daily &mdash; wheels crack, casters seize. Multiple SKUs mean recurring opportunity per customer fleet.
+    </div>
+    <div class="part-details">
+      Wheels and casters are listed by EquipSupply as among the most frequently replaced Sumner parts. Multiple SKUs exist for different lift families &mdash; confirm model before ordering.
+    </div>
+    <div class="part-numbers-list">
+      <strong>Part Numbers &amp; Pricing:</strong>
+      <ul>
+        <li><code>779011</code> — 10" Rubber Tire Wheel (2100 Series) &mdash; ~$100–$205</li>
+        <li><code>783736</code> — 10" Wheel Kit &mdash; ~$205–$231</li>
+        <li><code>779001</code> — Caster SC-23, 8"x2" Rubber Tire &mdash; ~$229</li>
+        <li><code>779005</code> — 5" Plate Swivel Caster (Red) &mdash; ~$89–$114</li>
+        <li><code>779036</code> — Dual Wheel Caster with Brake, 3" &mdash; ~$275</li>
+        <li><code>781465</code> — Caster Kit, 5 steel casters (Max Stand) &mdash; ~$591</li>
+      </ul>
+    </div>
+    <div class="price-range">$89 – $600+</div>
+    <div class="where-to-buy">
+      <strong>Where to Buy:</strong>
+      <div class="dealer-grid">
+        <a class="dealer-chip" href="https://sumneroutlet.com/collections/casters" target="_blank">Sumner Outlet (Official)</a>
+        <a class="dealer-chip" href="https://toolup.com/collections/sumner-casters" target="_blank">Toolup.com</a>
+        <a class="dealer-chip" href="https://www.amazon.com/Sumner-779011-P-9011-Wheel-Rubber/dp/B004RIF52Y" target="_blank">Amazon <span class="chip-price">~$200</span></a>
+        <a class="dealer-chip" href="https://gearflow.com/brand/southwire-co-sumner" target="_blank">Gearflow <span class="chip-price">779036 ~$275</span></a>
+        <a class="dealer-chip" href="https://www.equipsupply.com/tools-hardware/material-lifts/material-lift-parts" target="_blank">EquipSupply</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Part 4 -->
+  <div class="part-card">
+    <div class="part-header">
+      <div class="part-number-badge">4</div>
+      <div class="part-title">
+        <h2>Winch Handle Replacement Kit</h2>
+        <div class="part-nos">784841 &bull; 784842 &bull; 783761 &bull; 780244</div>
+      </div>
+    </div>
+    <div class="sales-pitch">
+      Primary operator interface &mdash; when this fails the lift is down. Customers need it fast. Two-handle vs. one-handle depends on the series; always confirm. Good margin item.
+    </div>
+    <div class="part-details">
+      Handle, shaft, and brake components are a matched assembly &mdash; sold as a kit. Handles bend, break, or lose ratchet/brake function under daily use. Sumner's manual specifically calls out inspecting ratchet dogs and brake ratchet for wear.
+    </div>
+    <div class="part-numbers-list">
+      <strong>Part Numbers by Series:</strong>
+      <ul>
+        <li><code>784841</code> — Two Handle Replace Kit (2400 Series &amp; Eventer 16)</li>
+        <li><code>784842</code> — One Handle Replace Kit (2100 Series)</li>
+        <li><code>783761</code> — Two-Speed Winch Handle Kit (2100 Series)</li>
+        <li><code>780244</code> — WJ-47 Winch Handle (Roust-A-Bout series)</li>
+      </ul>
+    </div>
+    <div class="price-range">$130 – $200</div>
+    <div class="where-to-buy">
+      <strong>Where to Buy:</strong>
+      <div class="dealer-grid">
+        <a class="dealer-chip" href="https://www.energizedengines.com/products/winch-two-handle-replace-kit" target="_blank">Energized Engines (free ship $150+)</a>
+        <a class="dealer-chip" href="https://www.amazon.com/SOUTHWIRE-784841-Winch-Handle-Replace/dp/B0BD2GCJV4" target="_blank">Amazon (784841)</a>
+        <a class="dealer-chip" href="https://sumneroutlet.com/products/sumner-783761-two-speed-winch-handle-kit-for-2100-series" target="_blank">Sumner Outlet (783761)</a>
+        <a class="dealer-chip" href="https://www.walmart.com/ip/Sumner-Two-Speed-Winch-Handle-Kit-For-Series-2100-Contractor-Lifts/5034519765" target="_blank">Walmart (2100 Series)</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Part 5 -->
+  <div class="part-card">
+    <div class="part-header">
+      <div class="part-number-badge">5</div>
+      <div class="part-title">
+        <h2>Outrigger / Stabilizer Leg Assembly</h2>
+        <div class="part-nos">783935 &bull; 783936 &bull; 783940 &bull; 783945</div>
+      </div>
+    </div>
+    <div class="sales-pitch">
+      Highest ticket item on the list &mdash; good margin. Safety-critical: without outriggers the lift can't be used at full height. Also pitch the lower-cost lock kit (783945) as a quick add-on.
+    </div>
+    <div class="part-details">
+      Fold-out stabilizer legs that bolt to the base to prevent tipping at full height. Take repeated impact on jobsites &mdash; locking pins and leg tubes are most commonly damaged. #783935 for the 2000/2100 series is the most widely stocked and frequently ordered.
+    </div>
+    <div class="part-numbers-list">
+      <strong>Part Numbers:</strong>
+      <ul>
+        <li><code>783935</code> — Steel Outrigger Assembly, 2000/2100 Series (pair + hardware) &mdash; ~$418–$697</li>
+        <li><code>783936</code> — Outrigger Assembly, 2400 Series</li>
+        <li><code>783940</code> — Outrigger Lock Assembly (2000/2100 &amp; 2400) &mdash; lower-cost subcomponent</li>
+        <li><code>783945</code> — Outrigger Lock Kit (2000/2100) &mdash; good add-on upsell</li>
+      </ul>
+    </div>
+    <div class="price-range">$418 – $700</div>
+    <div class="where-to-buy">
+      <strong>Where to Buy:</strong>
+      <div class="dealer-grid">
+        <a class="dealer-chip" href="https://www.zoro.com/sumner-outrigger-assembly-20002100-783935/i/G6326452/" target="_blank">Zoro <span class="chip-price">~$418 (best price)</span></a>
+        <a class="dealer-chip" href="https://toolup.com/products/sumner-783935-steel-outrigger-assembly-for-contractor-lift-2000-2100-series" target="_blank">Toolup.com <span class="chip-price">~$682</span></a>
+        <a class="dealer-chip" href="https://www.acmetools.com/sumner-steel-outrigger-assembly-for-contractor-lift-2000-2100-series-783935/661165839357.html" target="_blank">Acme Tools (Authorized)</a>
+        <a class="dealer-chip" href="https://sumneroutlet.com/products/sumner-783935-steel-outrigger-assembly-for-contractor-lift-2000-2100-series" target="_blank">Sumner Outlet</a>
+        <a class="dealer-chip" href="https://www.ebay.com/itm/297280111655" target="_blank">eBay <span class="chip-price">~$697</span></a>
+        <a class="dealer-chip" href="https://www.equipsupply.com/sumner-outrigger-assembly-mtc-783935" target="_blank">EquipSupply</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key Distributors -->
+  <div class="distributors">
+    <h2>Key Distributors at a Glance</h2>
+    <div class="dist-grid">
+      <div class="dist-item">
+        <a href="https://sumneroutlet.com/collections/parts" target="_blank">Sumner Outlet</a>
+        <span>Official outlet — broadest OEM selection</span>
+      </div>
+      <div class="dist-item">
+        <a href="https://toolup.com/collections/sumner-material-lift-parts" target="_blank">Toolup.com</a>
+        <span>Good in-stock selection; competitive pricing</span>
+      </div>
+      <div class="dist-item">
+        <a href="https://www.energizedengines.com/pages/about-sumner-lifts-and-parts" target="_blank">Energized Engines</a>
+        <span>Houston, TX specialist; will source, fab, or engineer hard-to-find parts. Free shipping over $150.</span>
+      </div>
+      <div class="dist-item">
+        <a href="https://www.equipsupply.com/tools-hardware/material-lifts/material-lift-parts" target="_blank">EquipSupply</a>
+        <span>Stocks most commonly replaced parts; cables &amp; pulleys</span>
+      </div>
+      <div class="dist-item">
+        <a href="https://www.zoro.com" target="_blank">Zoro</a>
+        <span>Often lowest price on outriggers &amp; pulleys; free shipping</span>
+      </div>
+      <div class="dist-item">
+        <a href="https://gearflow.com/brand/southwire-co-sumner" target="_blank">Gearflow</a>
+        <span>Good for axles, mast braces, small hardware</span>
+      </div>
+      <div class="dist-item">
+        <a href="https://www.acmetools.com/sumner/all/" target="_blank">Acme Tools</a>
+        <span>Authorized dealer</span>
+      </div>
+      <div class="dist-item">
+        <a href="https://www.amazon.com" target="_blank">Amazon</a>
+        <span>Convenient for cables, handles, and wheels</span>
+      </div>
+    </div>
+  </div>
+
+  <a class="back" href="index.html">&larr; Back to Home</a>
+
+</body>
+</html>
