@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tray Mountain Shelter — AT Georgia</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin:0; padding:1.5rem; background:#f0f4f8; font-family:sans-serif; color:#2d3748; }
+    h1 { font-size:1.7rem; margin-bottom:0.2rem; }
+    .subtitle { color:#718096; font-size:0.88rem; margin-bottom:1.25rem; }
+    .breadcrumb { font-size:0.78rem; color:#718096; margin-bottom:0.75rem; }
+    .breadcrumb a { color:#3182ce; text-decoration:none; }
+    .breadcrumb a:hover { text-decoration:underline; }
+    .section { background:white; border-radius:8px; padding:1.25rem; margin-bottom:1.25rem; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+    .section h2 { margin:0 0 1rem; font-size:1.1rem; color:#2b6cb0; border-bottom:1px solid #e2e8f0; padding-bottom:0.5rem; }
+    .stat-grid { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem; }
+    .stat { background:#ebf8ff; border-radius:6px; padding:0.4rem 0.75rem; font-size:0.85rem; }
+    .stat span { font-weight:bold; color:#2b6cb0; }
+    .badge { font-size:0.75rem; padding:0.2rem 0.6rem; border-radius:12px; font-weight:bold; white-space:nowrap; display:inline-block; }
+    .badge-paid { background:#bee3f8; color:#2b6cb0; }
+    .badge-free { background:#c6f6d5; color:#276749; }
+    .badge-donation { background:#fefcbf; color:#744210; }
+    .badge-seasonal { background:#fed7d7; color:#742a2a; }
+    .warning { background:#fff5f5; border-left:4px solid #e53e3e; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#742a2a; margin-bottom:0.6rem; }
+    .tip { background:#fffbeb; border-left:4px solid #f6ad55; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#744210; margin-top:0.75rem; }
+    .route-grid { display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .route-card { flex:1 1 220px; border-radius:8px; padding:1rem; border:2px solid transparent; }
+    .route-card.recommended { background:#f0fff4; border-color:#38a169; }
+    .route-card.alternate { background:#ebf8ff; border-color:#90cdf4; }
+    .route-card.far { background:#f7fafc; border-color:#cbd5e0; }
+    .route-card h3 { margin:0 0 0.3rem; font-size:1rem; }
+    .route-card.recommended h3 { color:#276749; }
+    .route-card.alternate h3 { color:#2b6cb0; }
+    .route-card.far h3 { color:#4a5568; }
+    .route-badge { display:inline-block; font-size:0.72rem; font-weight:bold; padding:0.15rem 0.5rem; border-radius:10px; margin-bottom:0.5rem; }
+    .badge-rec { background:#c6f6d5; color:#276749; }
+    .badge-alt { background:#bee3f8; color:#2b6cb0; }
+    .badge-far { background:#e2e8f0; color:#4a5568; }
+    .route-card p { margin:0; font-size:0.88rem; line-height:1.6; }
+    .lodging-card { border:1px solid #e2e8f0; border-radius:8px; padding:1rem; margin-bottom:0.75rem; }
+    .lodging-card:last-child { margin-bottom:0; }
+    .lodging-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.3rem; }
+    .lodging-name { font-weight:bold; font-size:1rem; color:#1a365d; }
+    .lodging-meta { font-size:0.8rem; color:#718096; margin-bottom:0.5rem; }
+    .lodging-desc { font-size:0.88rem; line-height:1.5; color:#4a5568; margin-bottom:0.75rem; }
+    .pros-cons { display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .pros, .cons { flex:1 1 160px; font-size:0.83rem; line-height:1.7; }
+    .pros { background:#f0fff4; border-radius:6px; padding:0.6rem 0.75rem; }
+    .cons { background:#fff5f5; border-radius:6px; padding:0.6rem 0.75rem; }
+    .pros strong { color:#276749; display:block; margin-bottom:0.2rem; }
+    .cons strong { color:#c53030; display:block; margin-bottom:0.2rem; }
+    .pros ul, .cons ul { margin:0; padding-left:1.2rem; }
+    .contact-row { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.75rem; }
+    .call-btn { display:inline-block; background:#2b6cb0; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; font-weight:bold; }
+    .call-btn:hover { background:#2c5282; }
+    .text-btn { display:inline-block; background:#38a169; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; font-weight:bold; }
+    .text-btn:hover { background:#276749; }
+    .web-btn { display:inline-block; background:#718096; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; }
+    .web-btn:hover { background:#4a5568; }
+    .nav-strip { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-top:1.5rem; }
+    .nav-btn { display:inline-block; padding:0.5rem 1rem; border-radius:6px; font-size:0.88rem; text-decoration:none; background:white; color:#2b6cb0; border:1px solid #bee3f8; }
+    .nav-btn:hover { background:#ebf8ff; }
+    a.back { display:inline-block; margin-top:1rem; color:#3182ce; text-decoration:none; font-size:0.95rem; }
+    a.back:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> &rsaquo;
+    <a href="at-georgia-map.html">AT Georgia Map</a> &rsaquo;
+    Tray Mountain Shelter
+  </div>
+
+  <h1>Tray Mountain Shelter</h1>
+  <p class="subtitle">Appalachian Trail, Georgia &mdash; Mile 56.8 (NOBO) &bull; Lean-to &bull; Elevation ~4,200 ft &mdash; Updated 2026</p>
+
+  <div class="section">
+    <h2>Shelter Overview</h2>
+    <div class="stat-grid">
+      <div class="stat">AT Mile: <span>56.8 from Springer</span></div>
+      <div class="stat">Elevation: <span>~4,200 ft</span></div>
+      <div class="stat">Capacity: <span>~8 hikers</span></div>
+      <div class="stat">Type: <span>Lean-to</span></div>
+      <div class="stat">County: <span>Towns/Rabun, GA</span></div>
+    </div>
+    <p style="font-size:0.88rem; line-height:1.6; margin:0 0 0.75rem;">
+      Tray Mountain Shelter sits high in the Georgia highlands near the summit of Tray Mountain (4,430 ft) — the <strong>second-highest peak on the AT in Georgia</strong> after Blood Mountain. At mile 56.8, it's the midpoint of the northern Georgia section and one of the more remote shelters in the state. The views from the open summit just above the shelter are among the best in all of Georgia on clear days, with a 360-degree panorama stretching toward the Great Smoky Mountains to the north and Blood Mountain to the south.
+    </p>
+    <p style="font-size:0.88rem; line-height:1.6; margin:0 0 0.75rem;">
+      The shelter is a well-maintained lean-to with ample tent sites on the broad ridgeline. The high elevation means colder nights than lower Georgia shelters — temperatures in the low 30s°F are common even in April. Wind can be a significant factor on the exposed ridgeline near the summit.
+    </p>
+    <div class="warning">
+      <strong>Very remote location.</strong> The nearest paved road access requires either hiking south ~6.1 miles to Unicoi Gap (GA-75) or north ~6.5 miles to an intermediate gap with rough forest road access. Plan to self-rescue if injured — this is not a quick bail-out shelter.
+    </div>
+    <div class="warning">
+      <strong>Lightning exposure.</strong> The open summit and ridgeline near Tray Mountain are exposed to afternoon thunderstorms, common in summer. Monitor weather and be off the summit by early afternoon.
+    </div>
+    <div class="tip">
+      <strong>Water:</strong> Spring approximately 200 yards north of the shelter on the AT. Reliable but can be light in late summer drought. Carry water from the last reliable source before the final summit approach.
+    </div>
+    <div class="tip">
+      <strong>Views:</strong> Walk 0.2 miles south from the shelter to the open summit rocks for a full 360° view. On clear days you can see Blood Mountain to the south (15 miles), the Blue Ridge escarpment, and occasionally the distant peaks of the Smokies to the north.
+    </div>
+  </div>
+
+  <!-- Supplies -->
+  <div class="section">
+    <h2>Getting Supplies</h2>
+    <p style="font-size:0.88rem; color:#4a5568; margin-bottom:1rem;">
+      Tray Mountain's remote position makes resupply more of a commitment than most Georgia shelters. Your two road options are Unicoi Gap (south) and Dick's Creek Gap (north), with Hiawassee as the primary town for both.
+    </p>
+    <div class="route-grid">
+
+      <div class="route-card recommended">
+        <span class="route-badge badge-rec">CONTINUE NORTH — 12.6 mi to US-76</span>
+        <h3>Hiawassee, GA via Dick's Creek Gap (US-76)</h3>
+        <p>The preferred option if you have food to continue — push 12.6 miles north to Dick's Creek Gap (AT mile 69.4), the busiest road crossing in Georgia. US-76 carries strong traffic and hitchhiking is reliable. Hiawassee is <strong>11 miles west</strong>: Ingles Supermarket, Trailful Outdoor Co. (gear + mail drops), post office, restaurants. Most shuttle services cover Dick's Creek Gap.</p>
+      </div>
+
+      <div class="route-card alternate">
+        <span class="route-badge badge-alt">BACKTRACK — 6.1 mi south to GA-75</span>
+        <h3>Unicoi Gap (GA-75) &rarr; Helen or Hiawassee</h3>
+        <p>Hike 6.1 miles south back to Unicoi Gap (GA-75). From there, Helen is 9 miles east and Hiawassee is 11 miles west. Hitchhiking GA-75 is moderate — less traffic than US-76 but manageable. Best option if you have an injury or need to exit quickly going south.</p>
+      </div>
+
+      <div class="route-card far">
+        <span class="route-badge badge-far">ROUGH ACCESS — Forest Road nearby</span>
+        <h3>Addis Gap &mdash; USFS Road (very rough)</h3>
+        <p>Some topo maps show a rough forest service road accessing the trail near Addis Gap, a few miles north of Tray Mountain. <strong>This road is unmaintained and should not be counted on.</strong> High-clearance 4WD only, and road conditions are unreliable. Do not attempt to self-shuttle here without local knowledge.</p>
+      </div>
+
+    </div>
+    <div class="tip">
+      <strong>Shuttle tip:</strong> If you're going to Dick's Creek Gap, call Stanimal's (407-435-0294) or Bandits AT Shuttles (828-231-7728) before you leave the shelter so they know your ETA. Cell signal from Tray Mountain summit can reach towers — try from the open rocks above the shelter.
+    </div>
+  </div>
+
+  <!-- Lodging -->
+  <div class="section">
+    <h2>Where to Sleep Nearby</h2>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Stanimal's Around the Bend</div>
+        <span class="badge badge-paid">$60/night bunk</span>
+        <span class="badge badge-free">Free pickup at Dick's Creek Gap</span>
+      </div>
+      <div class="lodging-meta">2708 Highway 17, Hiawassee, GA 30546 &mdash; ~11 miles west of Dick's Creek Gap</div>
+      <div class="lodging-desc">
+        Best overall hostel option for Tray Mountain hikers exiting at Dick's Creek Gap. Free pickup for guests. Bunk includes laundry, linens, privacy curtains, dinner, breakfast, and a free town shuttle. The hiker community here is strong — a great place to dry out gear, eat a real meal, and recover after Tray Mountain's remote miles.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Free pickup at Dick's Creek Gap</li>
+            <li>Dinner &amp; breakfast included</li>
+            <li>Strong hiker community</li>
+            <li>Slackpacking back to Tray area available</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>12.6 miles of hiking north first</li>
+            <li>$60/night — higher cost</li>
+            <li>Dormitory style</li>
+          </ul>
+        </div>
+      </div>
+      <div class="contact-row">
+        <a class="call-btn" href="tel:4074350294">Call 407-435-0294</a>
+      </div>
+    </div>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Top of Georgia Hostel</div>
+        <span class="badge badge-paid">Bunk $50 / Private $95–195</span>
+      </div>
+      <div class="lodging-meta">7675 Hwy 76 E, Hiawassee, GA 30546 &mdash; 0.6 miles west of Dick's Creek Gap on US-76</div>
+      <div class="lodging-desc">
+        The closest hostel to Dick's Creek Gap — literally 0.6 miles west on US-76. You can walk there from the gap. Bunk beds, private rooms (sleeps 2 or 4), laundry, shared kitchen and bathrooms, and shuttle to town.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Walking distance from Dick's Creek Gap</li>
+            <li>Private room option available</li>
+            <li>No shuttle needed to reach it</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>Still 12.6 trail miles from Tray Mountain</li>
+            <li>No meals included in base rate</li>
+            <li>Smaller common areas</li>
+          </ul>
+        </div>
+      </div>
+      <div class="contact-row">
+        <a class="call-btn" href="tel:7063899668">Call 706-389-9668</a>
+      </div>
+    </div>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Holiday Inn Express — Hiawassee</div>
+        <span class="badge badge-paid">~$100–160/night</span>
+      </div>
+      <div class="lodging-meta">100 Big Sky Drive, Hiawassee, GA 30546 &mdash; ~11 miles from Dick's Creek Gap</div>
+      <div class="lodging-desc">
+        If you want a real hotel stay with guaranteed clean sheets, a pool, and a hot breakfast buffet, the Holiday Inn Express in Hiawassee is the top choice. A step up from hostel life. Walking distance to Ingles Supermarket and most Hiawassee restaurants.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Hot breakfast included</li>
+            <li>Private room — genuine rest</li>
+            <li>Pool for sore muscles</li>
+            <li>Walking distance to Ingles grocery</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>Most expensive option</li>
+            <li>Less hiker-community feel</li>
+            <li>No gear drying room</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="nav-strip">
+    <a class="nav-btn" href="shelter-blue-mountain.html">&larr; Blue Mountain</a>
+    <a href="at-georgia-map.html">&#9968; Back to Map</a>
+    <a class="nav-btn" href="shelter-deep-gap.html">Deep Gap &rarr;</a>
+  </div>
+
+  <a class="back" href="index.html">&larr; Back to Home</a>
+
+</body>
+</html>
