@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Green Dragon Hostel vs. Hotel — AT Georgia</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 1.5rem;
+      background-color: #f0f4f8;
+      font-family: sans-serif;
+      color: #2d3748;
+    }
+    h1 { font-size: 1.7rem; margin-bottom: 0.2rem; }
+    .subtitle { color: #718096; font-size: 0.88rem; margin-bottom: 1.25rem; }
+
+    /* Decision helper */
+    .decision-box {
+      background: white;
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .decision-box h2 {
+      margin: 0 0 0.75rem;
+      font-size: 1.1rem;
+      color: #2b6cb0;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 0.5rem;
+    }
+    .choose-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .choose-card {
+      flex: 1 1 220px;
+      border-radius: 8px;
+      padding: 1rem;
+      border: 2px solid transparent;
+    }
+    .choose-card.green { background: #f0fff4; border-color: #38a169; }
+    .choose-card.blue { background: #ebf8ff; border-color: #63b3ed; }
+    .choose-card h3 { margin: 0 0 0.5rem; font-size: 0.95rem; }
+    .choose-card.green h3 { color: #276749; }
+    .choose-card.blue h3 { color: #2b6cb0; }
+    .choose-card ul { margin: 0; padding-left: 1.1rem; font-size: 0.85rem; line-height: 1.8; color: #4a5568; }
+
+    /* Solitude note */
+    .solitude-note {
+      background: #fffbeb;
+      border-left: 4px solid #f6ad55;
+      padding: 0.75rem 1rem;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.9rem;
+      color: #744210;
+      margin-bottom: 1.25rem;
+    }
+    .solitude-note strong { display: block; margin-bottom: 0.3rem; font-size: 0.95rem; }
+
+    /* Option sections */
+    .option-section {
+      background: white;
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .option-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .option-label {
+      font-size: 0.72rem;
+      font-weight: bold;
+      padding: 0.2rem 0.6rem;
+      border-radius: 10px;
+    }
+    .label-hostel { background: #c6f6d5; color: #276749; }
+    .label-hotel { background: #bee3f8; color: #2b6cb0; }
+    .label-nature { background: #fefcbf; color: #744210; }
+    .option-section h2 {
+      margin: 0;
+      font-size: 1.2rem;
+      color: #1a365d;
+    }
+    .option-meta {
+      font-size: 0.82rem;
+      color: #718096;
+      margin-bottom: 0.75rem;
+    }
+    .option-desc {
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: #4a5568;
+      margin-bottom: 0.75rem;
+    }
+
+    /* Pros / Cons */
+    .pros-cons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .pros, .cons {
+      flex: 1 1 180px;
+      border-radius: 6px;
+      padding: 0.75rem;
+      font-size: 0.85rem;
+    }
+    .pros { background: #f0fff4; }
+    .cons { background: #fff5f5; }
+    .pros strong { color: #276749; display: block; margin-bottom: 0.4rem; }
+    .cons strong { color: #c53030; display: block; margin-bottom: 0.4rem; }
+    .pros ul, .cons ul { margin: 0; padding-left: 1.1rem; line-height: 1.8; color: #4a5568; }
+
+    /* Amenity tags */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.75rem;
+    }
+    .tag { background: #edf2f7; border-radius: 12px; padding: 0.2rem 0.6rem; font-size: 0.78rem; color: #4a5568; }
+    .tag-green { background: #c6f6d5; border-radius: 12px; padding: 0.2rem 0.6rem; font-size: 0.78rem; color: #276749; }
+    .tag-blue { background: #bee3f8; border-radius: 12px; padding: 0.2rem 0.6rem; font-size: 0.78rem; color: #2b6cb0; }
+
+    /* Price badge */
+    .price-badge {
+      display: inline-block;
+      background: #f0fff4;
+      border: 1px solid #c6f6d5;
+      border-radius: 6px;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.88rem;
+      color: #276749;
+      font-weight: bold;
+      margin-bottom: 0.75rem;
+    }
+
+    /* Review quote */
+    .review {
+      background: #f7fafc;
+      border-left: 3px solid #a0aec0;
+      padding: 0.6rem 1rem;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.85rem;
+      font-style: italic;
+      color: #4a5568;
+      margin-bottom: 0.75rem;
+    }
+    .review cite { font-style: normal; font-size: 0.78rem; color: #718096; display: block; margin-top: 0.3rem; }
+
+    /* Buttons */
+    .contact-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
+    .call-btn {
+      display: inline-block; background: #2b6cb0; color: white;
+      text-decoration: none; padding: 0.5rem 1rem; border-radius: 6px;
+      font-size: 0.9rem; font-weight: bold;
+    }
+    .call-btn:hover { background: #2c5282; }
+    .web-btn {
+      display: inline-block; background: #718096; color: white;
+      text-decoration: none; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.9rem;
+    }
+    .web-btn:hover { background: #4a5568; }
+    .green-btn {
+      display: inline-block; background: #38a169; color: white;
+      text-decoration: none; padding: 0.5rem 1rem; border-radius: 6px;
+      font-size: 0.9rem; font-weight: bold;
+    }
+    .green-btn:hover { background: #276749; }
+
+    a.back {
+      display: inline-block; margin-top: 1rem;
+      color: #3182ce; text-decoration: none; font-size: 1rem;
+    }
+    a.back:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <h1>Green Dragon Hostel vs. Hotel</h1>
+  <p class="subtitle">Deciding where to stay near the AT in Hiawassee / Helen, Georgia &mdash; Updated March 2026</p>
+
+  <!-- Solitude note -->
+  <div class="solitude-note">
+    <strong>On solitude vs. the hostel experience:</strong>
+    The Green Dragon is unusually quiet for a hostel — privacy curtains, memory foam bunks, and a "super dark, super quiet" room. If you want to dip your toes into the AT hostel culture without giving up sleep or privacy, it's the best gateway. But if you truly need your own space to recharge, a private cabin at Unicoi State Park is the move — surrounded by forest, lake views, and silence.
+  </div>
+
+  <!-- Quick Decision Helper -->
+  <div class="decision-box">
+    <h2>Quick Decision Guide</h2>
+    <div class="choose-grid">
+      <div class="choose-card green">
+        <h3>Choose Green Dragon if you...</h3>
+        <ul>
+          <li>Want the full AT thru-hiker community experience</li>
+          <li>Value laundry, hot breakfast, and shuttle all-in-one</li>
+          <li>Plan to slackpack and return each night</li>
+          <li>Are on a budget ($60/night all-inclusive)</li>
+          <li>Want to push yourself to meet people on trail</li>
+          <li>Love Lord of the Rings 🧙</li>
+        </ul>
+      </div>
+      <div class="choose-card blue">
+        <h3>Choose a hotel/cabin if you...</h3>
+        <ul>
+          <li>Need true solitude to decompress</li>
+          <li>Prefer your own bathroom and space</li>
+          <li>Are section hiking and not in "thru-hiker mode"</li>
+          <li>Want nature surroundings (Unicoi State Park)</li>
+          <li>Don't need an AT-specific shuttle</li>
+          <li>Willing to pay more for privacy</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Green Dragon -->
+  <div class="option-section">
+    <div class="option-header">
+      <span class="option-label label-hostel">AT HOSTEL</span>
+      <h2>Green Dragon Hostel</h2>
+    </div>
+    <div class="option-meta">Hiawassee, GA &mdash; Free pickup at Unicoi Gap &amp; Dick's Creek Gap</div>
+    <div class="price-badge">$60/night + tax &mdash; all-inclusive</div>
+
+    <div class="option-desc">
+      Created by former educators Donna and Bill, the Green Dragon is named after the Lord of the Rings and has become the most popular AT hostel in Georgia. Praised overwhelmingly in 2024–2025 trail journals for its warm hosts, surprisingly quiet bunks, and community feel. Two resident cats and the legendary "Bricky" (carried the entire AT in 2024) add to the charm.
+    </div>
+
+    <div class="review">
+      "Owners Donna &amp; Bill, along with staff member Nimrod, are some of the finest people I've met not just on trail, but anywhere."
+      <cite>— 2025 AT thru-hiker, The Trek</cite>
+    </div>
+    <div class="review">
+      "Super dark, super quiet &amp; super air conditioned — each bunk has its own light and privacy curtains."
+      <cite>— Green Dragon Hostel description, verified 2025</cite>
+    </div>
+
+    <div class="pros-cons">
+      <div class="pros">
+        <strong>Pros</strong>
+        <ul>
+          <li>Free shuttle to/from Unicoi Gap</li>
+          <li>Privacy curtains on every bunk</li>
+          <li>Memory foam mattresses</li>
+          <li>Laundry done for you</li>
+          <li>Hot breakfast (all dietary needs)</li>
+          <li>Slackpacking + day packs loaned</li>
+          <li>Coffee all day, WiFi, streaming</li>
+          <li>Only $60 all-inclusive</li>
+          <li>Loaner clothes while laundry runs</li>
+          <li>4 miles to grocery, pharmacy, restaurants</li>
+        </ul>
+      </div>
+      <div class="cons">
+        <strong>Cons for solitude seekers</strong>
+        <ul>
+          <li>Shared bunk room — not truly private</li>
+          <li>Shared bathrooms</li>
+          <li>Social atmosphere — other hikers present</li>
+          <li>No private room option noted</li>
+          <li>Peak season can fill up fast</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tags">
+      <span class="tag-green">Free Unicoi Gap shuttle</span>
+      <span class="tag-green">Privacy curtains</span>
+      <span class="tag-green">Hot breakfast</span>
+      <span class="tag-green">Laundry included</span>
+      <span class="tag-green">Slackpacking</span>
+      <span class="tag">$60/night</span>
+      <span class="tag">Shared bunk room</span>
+      <span class="tag">2 cats on site</span>
+      <span class="tag">Tolkien themed</span>
+    </div>
+
+    <div class="contact-row">
+      <a class="green-btn" href="https://www.greendragonhostel.com" target="_blank">greendragonhostel.com</a>
+    </div>
+  </div>
+
+  <!-- Unicoi State Park -->
+  <div class="option-section">
+    <div class="option-header">
+      <span class="option-label label-nature">BEST FOR SOLITUDE</span>
+      <h2>Unicoi State Park &amp; Lodge</h2>
+    </div>
+    <div class="option-meta">1788 Highway 356, Helen, GA 30545 &mdash; 2 miles from Helen, ~9 miles from Unicoi Gap</div>
+    <div class="price-badge">Cabins from ~$120–$200/night &mdash; check booking.com for rates</div>
+
+    <div class="option-desc">
+      Set in the Chattahoochee National Forest around Lake Unicoi. The quietest, most private option near this section of the AT. Rustic cabins with balconies overlooking the lake, full kitchens, and complete solitude. On-site restaurant with stone fireplace. No AT shuttle — you'll need to arrange your own transport to/from Unicoi Gap.
+    </div>
+
+    <div class="pros-cons">
+      <div class="pros">
+        <strong>Pros</strong>
+        <ul>
+          <li>Complete privacy — your own cabin</li>
+          <li>Lake and forest setting</li>
+          <li>On-site restaurant</li>
+          <li>Showers, laundry facilities</li>
+          <li>Hiking trails on property</li>
+          <li>Ziplining, fishing, archery available</li>
+          <li>2 miles from Helen restaurants</li>
+          <li>Highly rated (TripAdvisor)</li>
+        </ul>
+      </div>
+      <div class="cons">
+        <strong>Cons</strong>
+        <ul>
+          <li>No AT shuttle — need own transport</li>
+          <li>More expensive than hostel</li>
+          <li>9 miles from Unicoi Gap by road</li>
+          <li>No hiker-specific services</li>
+          <li>Must arrange your own resupply transport</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tags">
+      <span class="tag-blue">Private cabin</span>
+      <span class="tag-blue">Lake views</span>
+      <span class="tag-blue">Full kitchen</span>
+      <span class="tag-blue">On-site restaurant</span>
+      <span class="tag">No AT shuttle</span>
+      <span class="tag">2 miles from Helen</span>
+      <span class="tag">Showers + laundry</span>
+    </div>
+
+    <div class="contact-row">
+      <a class="web-btn" href="https://unicoilodge.com/" target="_blank">unicoilodge.com</a>
+      <a class="web-btn" href="https://www.booking.com/hotel/us/unicoi-state-park-lodge.html" target="_blank">Check rates on Booking.com</a>
+    </div>
+  </div>
+
+  <!-- Holiday Inn Express Helen -->
+  <div class="option-section">
+    <div class="option-header">
+      <span class="option-label label-hotel">HOTEL</span>
+      <h2>Holiday Inn Express &amp; Suites Helen</h2>
+    </div>
+    <div class="option-meta">Helen, GA &mdash; ~9 miles east of Unicoi Gap on GA-75</div>
+    <div class="price-badge">~$120–$180/night &mdash; check IHG or Hotels.com for rates</div>
+
+    <div class="option-desc">
+      Rated 4.7/5 — the highest-rated standard hotel in the Helen area. Private rooms, pool, and predictable chain-hotel comfort. Good base if you want your own space but don't need the wilderness vibe of Unicoi State Park. No AT-specific shuttle but Helen is right on GA-75 making Unicoi Gap hitchable or rideshare-accessible.
+    </div>
+
+    <div class="pros-cons">
+      <div class="pros">
+        <strong>Pros</strong>
+        <ul>
+          <li>Highest-rated hotel in Helen (4.7/5)</li>
+          <li>Private room and bathroom</li>
+          <li>Pool</li>
+          <li>In-town location — restaurants walkable</li>
+          <li>Reliable chain quality</li>
+          <li>Free breakfast (IHG standard)</li>
+        </ul>
+      </div>
+      <div class="cons">
+        <strong>Cons</strong>
+        <ul>
+          <li>No AT shuttle</li>
+          <li>No hiker-specific amenities</li>
+          <li>No laundry service</li>
+          <li>Touristic town vibe — less trail atmosphere</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tags">
+      <span class="tag-blue">Private room</span>
+      <span class="tag-blue">Pool</span>
+      <span class="tag-blue">Free breakfast</span>
+      <span class="tag">4.7/5 rated</span>
+      <span class="tag">No AT shuttle</span>
+      <span class="tag">Helen town center</span>
+    </div>
+  </div>
+
+  <!-- Stanimal's — middle ground option -->
+  <div class="option-section">
+    <div class="option-header">
+      <span class="option-label label-hostel">HOSTEL ALTERNATIVE</span>
+      <h2>Stanimal's Around the Bend</h2>
+    </div>
+    <div class="option-meta">2708 Highway 17, Hiawassee, GA &mdash; AT Mile 52.7, 7.4 miles west of Unicoi Gap</div>
+    <div class="price-badge">$60/night bunk &bull; Private queen room available &bull; Private cabin available</div>
+
+    <div class="option-desc">
+      Run by Stanimal, a 2004 AT thru-hiker. Offers a <strong>private queen room</strong> and a <strong>semi-private cabin</strong> — making it a middle-ground option between hostel and hotel. Free pickup at Unicoi Gap for guests. Good for those who want AT culture and shuttle convenience but with more space than a bunk room.
+    </div>
+
+    <div class="pros-cons">
+      <div class="pros">
+        <strong>Pros</strong>
+        <ul>
+          <li>Private room and cabin options</li>
+          <li>Free Unicoi Gap shuttle</li>
+          <li>Community dinner + hot breakfast</li>
+          <li>Laundry included</li>
+          <li>Slackpacking offered</li>
+          <li>AT thru-hiker owned &amp; operated</li>
+        </ul>
+      </div>
+      <div class="cons">
+        <strong>Cons</strong>
+        <ul>
+          <li>Private room costs more than bunk</li>
+          <li>Still a hostel atmosphere overall</li>
+          <li>Book ahead in peak season</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tags">
+      <span class="tag-green">Private room option</span>
+      <span class="tag-green">Free Unicoi Gap shuttle</span>
+      <span class="tag-green">Laundry + meals included</span>
+      <span class="tag">AT culture</span>
+    </div>
+
+    <div class="contact-row">
+      <a class="call-btn" href="tel:4074350294">Call 407-435-0294</a>
+      <a class="web-btn" href="https://www.hostelaroundthebend.com" target="_blank">hostelaroundthebend.com</a>
+    </div>
+  </div>
+
+  <a class="back" href="index.html">&larr; Back to Home</a>
+
+</body>
+</html>
