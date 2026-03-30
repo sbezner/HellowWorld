@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plumorchard Gap Shelter — AT Georgia</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin:0; padding:1.5rem; background:#f0f4f8; font-family:sans-serif; color:#2d3748; }
+    h1 { font-size:1.7rem; margin-bottom:0.2rem; }
+    .subtitle { color:#718096; font-size:0.88rem; margin-bottom:1.25rem; }
+    .breadcrumb { font-size:0.78rem; color:#718096; margin-bottom:0.75rem; }
+    .breadcrumb a { color:#3182ce; text-decoration:none; }
+    .breadcrumb a:hover { text-decoration:underline; }
+    .section { background:white; border-radius:8px; padding:1.25rem; margin-bottom:1.25rem; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+    .section h2 { margin:0 0 1rem; font-size:1.1rem; color:#2b6cb0; border-bottom:1px solid #e2e8f0; padding-bottom:0.5rem; }
+    .stat-grid { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem; }
+    .stat { background:#ebf8ff; border-radius:6px; padding:0.4rem 0.75rem; font-size:0.85rem; }
+    .stat span { font-weight:bold; color:#2b6cb0; }
+    .badge { font-size:0.75rem; padding:0.2rem 0.6rem; border-radius:12px; font-weight:bold; white-space:nowrap; display:inline-block; }
+    .badge-paid { background:#bee3f8; color:#2b6cb0; }
+    .badge-free { background:#c6f6d5; color:#276749; }
+    .badge-donation { background:#fefcbf; color:#744210; }
+    .badge-seasonal { background:#fed7d7; color:#742a2a; }
+    .alert { background:#f0fff4; border-left:4px solid #38a169; padding:0.75rem 1rem; border-radius:0 6px 6px 0; font-size:0.9rem; color:#276749; margin-bottom:1.25rem; }
+    .alert strong { display:block; margin-bottom:0.2rem; }
+    .warning { background:#fff5f5; border-left:4px solid #e53e3e; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#742a2a; margin-bottom:0.6rem; }
+    .tip { background:#fffbeb; border-left:4px solid #f6ad55; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#744210; margin-top:0.75rem; }
+    .route-grid { display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .route-card { flex:1 1 220px; border-radius:8px; padding:1rem; border:2px solid transparent; }
+    .route-card.recommended { background:#f0fff4; border-color:#38a169; }
+    .route-card.alternate { background:#ebf8ff; border-color:#90cdf4; }
+    .route-card.far { background:#f7fafc; border-color:#cbd5e0; }
+    .route-card h3 { margin:0 0 0.3rem; font-size:1rem; }
+    .route-card.recommended h3 { color:#276749; }
+    .route-card.alternate h3 { color:#2b6cb0; }
+    .route-card.far h3 { color:#4a5568; }
+    .route-badge { display:inline-block; font-size:0.72rem; font-weight:bold; padding:0.15rem 0.5rem; border-radius:10px; margin-bottom:0.5rem; }
+    .badge-rec { background:#c6f6d5; color:#276749; }
+    .badge-alt { background:#bee3f8; color:#2b6cb0; }
+    .badge-far { background:#e2e8f0; color:#4a5568; }
+    .route-card p { margin:0; font-size:0.88rem; line-height:1.6; }
+    .lodging-card { border:1px solid #e2e8f0; border-radius:8px; padding:1rem; margin-bottom:0.75rem; }
+    .lodging-card:last-child { margin-bottom:0; }
+    .lodging-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.3rem; }
+    .lodging-name { font-weight:bold; font-size:1rem; color:#1a365d; }
+    .lodging-meta { font-size:0.8rem; color:#718096; margin-bottom:0.5rem; }
+    .lodging-desc { font-size:0.88rem; line-height:1.5; color:#4a5568; margin-bottom:0.75rem; }
+    .pros-cons { display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .pros, .cons { flex:1 1 160px; font-size:0.83rem; line-height:1.7; }
+    .pros { background:#f0fff4; border-radius:6px; padding:0.6rem 0.75rem; }
+    .cons { background:#fff5f5; border-radius:6px; padding:0.6rem 0.75rem; }
+    .pros strong { color:#276749; display:block; margin-bottom:0.2rem; }
+    .cons strong { color:#c53030; display:block; margin-bottom:0.2rem; }
+    .pros ul, .cons ul { margin:0; padding-left:1.2rem; }
+    .contact-row { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.75rem; }
+    .call-btn { display:inline-block; background:#2b6cb0; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; font-weight:bold; }
+    .call-btn:hover { background:#2c5282; }
+    .text-btn { display:inline-block; background:#38a169; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; font-weight:bold; }
+    .text-btn:hover { background:#276749; }
+    .web-btn { display:inline-block; background:#718096; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; }
+    .web-btn:hover { background:#4a5568; }
+    .nav-strip { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-top:1.5rem; }
+    .nav-btn { display:inline-block; padding:0.5rem 1rem; border-radius:6px; font-size:0.88rem; text-decoration:none; background:white; color:#2b6cb0; border:1px solid #bee3f8; }
+    .nav-btn:hover { background:#ebf8ff; }
+    .nav-btn.next-state { background:#2d5a27; color:white; border-color:#2d5a27; }
+    .nav-btn.next-state:hover { background:#1a3a15; }
+    a.back { display:inline-block; margin-top:1rem; color:#3182ce; text-decoration:none; font-size:0.95rem; }
+    a.back:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> &rsaquo;
+    <a href="at-georgia-map.html">AT Georgia Map</a> &rsaquo;
+    Plumorchard Gap Shelter
+  </div>
+
+  <h1>Plumorchard Gap Shelter</h1>
+  <p class="subtitle">Appalachian Trail, Georgia &mdash; Mile 68.4 (NOBO) &bull; Lean-to &bull; Elevation ~4,080 ft &mdash; Last shelter before North Carolina</p>
+
+  <div class="alert">
+    <strong>Dick's Creek Gap (US-76) is just 1 mile north — and North Carolina begins ~9 miles ahead at Bly Gap.</strong>
+    This is the final shelter in Georgia. After crossing into NC, the next shelter is Muskrat Creek Shelter in the Nantahala National Forest.
+  </div>
+
+  <div class="section">
+    <h2>Shelter Overview</h2>
+    <div class="stat-grid">
+      <div class="stat">AT Mile: <span>68.4 from Springer</span></div>
+      <div class="stat">Elevation: <span>~4,080 ft</span></div>
+      <div class="stat">Capacity: <span>~8 hikers</span></div>
+      <div class="stat">Type: <span>Lean-to</span></div>
+      <div class="stat">Next State: <span>NC border ~9 mi north</span></div>
+      <div class="stat">County: <span>Rabun, GA</span></div>
+    </div>
+    <p style="font-size:0.88rem; line-height:1.6; margin:0 0 0.75rem;">
+      Plumorchard Gap Shelter is the <strong>last shelter in Georgia</strong> and one of the most strategically positioned on the entire southern AT. Sitting just 1 mile south of Dick's Creek Gap (US-76) — the busiest highway crossing in Georgia — it offers superb access to Hiawassee for a final Georgia town stop before crossing into North Carolina.
+    </p>
+    <p style="font-size:0.88rem; line-height:1.6; margin:0 0 0.75rem;">
+      Most NOBO thru-hikers use this shelter as a pre-NC staging point. You can exit to Hiawassee in the morning, resupply, and return to the trail to push into North Carolina the same day or the next. The shelter sits at a moderately high elevation with access via a short blue-blazed side trail off the AT. Tent sites are available in the surrounding area.
+    </p>
+    <p style="font-size:0.88rem; line-height:1.6; margin:0 0 0.75rem;">
+      Beyond Dick's Creek Gap, the trail climbs through the final Georgia highlands to Bly Gap (~mile 78) — the actual Georgia/North Carolina state line. The crossing is marked with a simple sign and a change in the character of the forest, with Fraser fir and spruce appearing as you climb into the higher Nantahala terrain.
+    </p>
+    <div class="warning">
+      <strong>NC requires different planning.</strong> North Carolina shelters and towns require new logistics. Stock up in Hiawassee — the next town access after Dick's Creek Gap is Fontana Dam or Bryson City, NC, both significantly further. Carry adequate food for the next 25–30 miles into NC before your next resupply.
+    </div>
+    <div class="tip">
+      <strong>Water:</strong> Spring accessible via a short blue-blazed side trail near the shelter. Reliable in most conditions. Also check the creek at the bottom of the approach from Dick's Creek Gap.
+    </div>
+    <div class="tip">
+      <strong>Georgia milestone:</strong> At mile 68.4, you have hiked almost the full length of the Georgia AT (approximately 75 miles total to the NC border). Congratulations — most thru-hiker attrition happens in Georgia. If you're still going, you're doing it.
+    </div>
+  </div>
+
+  <!-- Supplies -->
+  <div class="section">
+    <h2>Getting Supplies</h2>
+    <div class="route-grid">
+
+      <div class="route-card recommended">
+        <span class="route-badge badge-rec">RECOMMENDED — 1 mi north to US-76</span>
+        <h3>Hiawassee, GA via Dick's Creek Gap (US-76)</h3>
+        <p>Hike just 1 mile north to Dick's Creek Gap — the easiest road exit on the Georgia AT relative to a nearby shelter. US-76 westbound to Hiawassee (11 miles) carries heavy traffic; average hitch wait is 10–20 minutes. <strong>Ingles Supermarket</strong> has the best grocery selection. <strong>Trailful Outdoor Co.</strong> handles gear, mail drops, and a free cookout at Town Square 2–4pm. Post office, pharmacy, and laundromat all in Hiawassee. Free city shuttle runs during peak season. See the <a href="hiawassee-shuttle.html" style="color:#2b6cb0;">full Hiawassee guide</a>.</p>
+      </div>
+
+      <div class="route-card alternate">
+        <span class="route-badge badge-alt">ALTERNATE — 1 mi north + 13 mi east</span>
+        <h3>Clayton, GA via Dick's Creek Gap (US-76 East)</h3>
+        <p>From Dick's Creek Gap, head east 13 miles on US-76 to Clayton. Growing mountain town with Ingles grocery, Sunburst Trails outfitter, breweries, and good restaurants. Less hiker-infrastructure than Hiawassee but a more vibrant food scene. Hitchhiking east from Dick's Creek is slower. Uber/Lyft sometimes available.
+        </p>
+      </div>
+
+      <div class="route-card far">
+        <span class="route-badge badge-far">LAST CHANCE IN GA</span>
+        <h3>Stock Up Before Crossing Into NC</h3>
+        <p>After Dick's Creek Gap, the next major resupply opportunity is in North Carolina — either Franklin, NC (~30 trail miles from the border) or Fontana Dam. Carry enough food for at least 3–4 days when you leave Dick's Creek Gap heading north. Hiawassee is your last chance for a full Georgia resupply.</p>
+      </div>
+
+    </div>
+    <div class="tip">
+      <strong>Trailful Outdoor Co. mail drop address:</strong> 75 North Main St, Hiawassee GA 30546. Hold for AT Hiker. Include name, phone, and ETA. Call <a href="tel:7065214453" style="color:#744210;">(706) 521-HIKE</a> to arrange.
+    </div>
+  </div>
+
+  <!-- Lodging -->
+  <div class="section">
+    <h2>Where to Sleep Nearby</h2>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Top of Georgia Hostel</div>
+        <span class="badge badge-paid">Bunk $50 / Private $95–195</span>
+      </div>
+      <div class="lodging-meta">7675 Hwy 76 E, Hiawassee, GA &mdash; 0.6 miles west of Dick's Creek Gap — walkable from gap</div>
+      <div class="lodging-desc">
+        The closest hostel to Plumorchard Gap — just 1 mile north to Dick's Creek Gap, then 0.6 miles west on US-76. You can literally walk there from the trail. Bunk rooms and private rooms. Shuttle to downtown Hiawassee available. Great option for a quick in-and-out without a long road shuttle.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Walkable from Dick's Creek Gap</li>
+            <li>Private room option</li>
+            <li>Fastest access from Plumorchard Gap</li>
+            <li>Shuttle to town grocery available</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>No meals included</li>
+            <li>Must shuttle to Ingles for full resupply</li>
+            <li>Smaller common areas</li>
+          </ul>
+        </div>
+      </div>
+      <div class="contact-row">
+        <a class="call-btn" href="tel:7063899668">Call 706-389-9668</a>
+      </div>
+    </div>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Stanimal's Around the Bend</div>
+        <span class="badge badge-paid">$60/night bunk</span>
+        <span class="badge badge-free">Free pickup at Dick's Creek Gap</span>
+      </div>
+      <div class="lodging-meta">2708 Highway 17, Hiawassee, GA 30546 &mdash; ~11 miles west via shuttle</div>
+      <div class="lodging-desc">
+        Free pickup at Dick's Creek Gap for all guests — just hike your 1 mile to the gap and call. Full bunk package includes dinner, breakfast, laundry, linens, hot shower, and a free town shuttle. Slackpacking back to Dick's Creek Gap the next day is available, letting you resupply while your pack is stored at the hostel.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Free pickup at Dick's Creek Gap</li>
+            <li>All meals + laundry included</li>
+            <li>Slackpacking for NC transition</li>
+            <li>Long-distance shuttles to/from Fontana Dam</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>$60/night — higher cost</li>
+            <li>Bunk only — no private rooms</li>
+            <li>11 miles by road from Dick's Creek</li>
+          </ul>
+        </div>
+      </div>
+      <div class="contact-row">
+        <a class="call-btn" href="tel:4074350294">Call 407-435-0294</a>
+      </div>
+    </div>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Henson Cove Place</div>
+        <span class="badge badge-paid">~$50–95/night</span>
+      </div>
+      <div class="lodging-meta">Near Hiawassee, GA &mdash; ~11 miles west of Dick's Creek Gap (guests only for shuttle)</div>
+      <div class="lodging-desc">
+        Pet-friendly hiker lodging run by David &amp; Mariah Nugent. Shuttle from Dick's Creek Gap is <strong>$10</strong> for guests. Mon–Sat 9AM–6PM, Sun 9AM–5PM. Free parking for 1–2 cars — useful if section-hiking the Georgia AT with a car shuttle. Slackpacking available.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Pet-friendly</li>
+            <li>Free parking for section hikers</li>
+            <li>Only $10 shuttle from Dick's Creek</li>
+            <li>Personal, small-scale atmosphere</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>Shuttle only for paying guests</li>
+            <li>Limited to business hours</li>
+          </ul>
+        </div>
+      </div>
+      <div class="contact-row">
+        <a class="call-btn" href="tel:7069701533">Call 706-970-1533</a>
+        <a class="web-btn" href="https://www.henson-cove-place.com" target="_blank">henson-cove-place.com</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="nav-strip">
+    <a class="nav-btn" href="shelter-deep-gap.html">&larr; Deep Gap</a>
+    <a href="at-georgia-map.html">&#9968; Back to Map</a>
+    <span class="nav-btn next-state">Next: North Carolina &#8599;</span>
+  </div>
+
+  <a class="back" href="index.html">&larr; Back to Home</a>
+
+</body>
+</html>

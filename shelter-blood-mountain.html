@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blood Mountain Shelter — AT Georgia</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin:0; padding:1.5rem; background:#f0f4f8; font-family:sans-serif; color:#2d3748; }
+    h1 { font-size:1.7rem; margin-bottom:0.2rem; }
+    .subtitle { color:#718096; font-size:0.88rem; margin-bottom:1.25rem; }
+    .breadcrumb { font-size:0.78rem; color:#718096; margin-bottom:0.75rem; }
+    .breadcrumb a { color:#3182ce; text-decoration:none; }
+    .breadcrumb a:hover { text-decoration:underline; }
+    .section { background:white; border-radius:8px; padding:1.25rem; margin-bottom:1.25rem; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+    .section h2 { margin:0 0 1rem; font-size:1.1rem; color:#2b6cb0; border-bottom:1px solid #e2e8f0; padding-bottom:0.5rem; }
+    .stat-grid { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem; }
+    .stat { background:#ebf8ff; border-radius:6px; padding:0.4rem 0.75rem; font-size:0.85rem; }
+    .stat span { font-weight:bold; color:#2b6cb0; }
+    .badge { font-size:0.75rem; padding:0.2rem 0.6rem; border-radius:12px; font-weight:bold; white-space:nowrap; display:inline-block; }
+    .badge-paid { background:#bee3f8; color:#2b6cb0; }
+    .badge-free { background:#c6f6d5; color:#276749; }
+    .badge-donation { background:#fefcbf; color:#744210; }
+    .badge-highlight { background:#faf5ff; color:#553c9a; }
+    .alert { background:#f0fff4; border-left:4px solid #38a169; padding:0.75rem 1rem; border-radius:0 6px 6px 0; font-size:0.9rem; color:#276749; margin-bottom:1.25rem; }
+    .alert strong { display:block; margin-bottom:0.2rem; }
+    .warning { background:#fff5f5; border-left:4px solid #e53e3e; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#742a2a; margin-bottom:0.6rem; }
+    .tip { background:#fffbeb; border-left:4px solid #f6ad55; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#744210; margin-top:0.75rem; }
+    .route-grid { display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .route-card { flex:1 1 220px; border-radius:8px; padding:1rem; border:2px solid transparent; }
+    .route-card.recommended { background:#f0fff4; border-color:#38a169; }
+    .route-card.alternate { background:#ebf8ff; border-color:#90cdf4; }
+    .route-card.far { background:#f7fafc; border-color:#cbd5e0; }
+    .route-card h3 { margin:0 0 0.3rem; font-size:1rem; }
+    .route-card.recommended h3 { color:#276749; }
+    .route-card.alternate h3 { color:#2b6cb0; }
+    .route-card.far h3 { color:#4a5568; }
+    .route-badge { display:inline-block; font-size:0.72rem; font-weight:bold; padding:0.15rem 0.5rem; border-radius:10px; margin-bottom:0.5rem; }
+    .badge-rec { background:#c6f6d5; color:#276749; }
+    .badge-alt { background:#bee3f8; color:#2b6cb0; }
+    .badge-far { background:#e2e8f0; color:#4a5568; }
+    .route-card p { margin:0; font-size:0.88rem; line-height:1.6; }
+    .lodging-card { border:1px solid #e2e8f0; border-radius:8px; padding:1rem; margin-bottom:0.75rem; }
+    .lodging-card:last-child { margin-bottom:0; }
+    .lodging-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.3rem; }
+    .lodging-name { font-weight:bold; font-size:1rem; color:#1a365d; }
+    .lodging-meta { font-size:0.8rem; color:#718096; margin-bottom:0.5rem; }
+    .lodging-desc { font-size:0.88rem; line-height:1.5; color:#4a5568; margin-bottom:0.75rem; }
+    .pros-cons { display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .pros, .cons { flex:1 1 160px; font-size:0.83rem; line-height:1.7; }
+    .pros { background:#f0fff4; border-radius:6px; padding:0.6rem 0.75rem; }
+    .cons { background:#fff5f5; border-radius:6px; padding:0.6rem 0.75rem; }
+    .pros strong { color:#276749; display:block; margin-bottom:0.2rem; }
+    .cons strong { color:#c53030; display:block; margin-bottom:0.2rem; }
+    .pros ul, .cons ul { margin:0; padding-left:1.2rem; }
+    .contact-row { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.75rem; }
+    .call-btn { display:inline-block; background:#2b6cb0; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; font-weight:bold; }
+    .call-btn:hover { background:#2c5282; }
+    .web-btn { display:inline-block; background:#718096; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; }
+    .web-btn:hover { background:#4a5568; }
+    .nav-strip { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-top:1.5rem; }
+    .nav-btn { display:inline-block; padding:0.5rem 1rem; border-radius:6px; font-size:0.88rem; text-decoration:none; background:white; color:#2b6cb0; border:1px solid #bee3f8; }
+    .nav-btn:hover { background:#ebf8ff; }
+    a.back { display:inline-block; margin-top:1rem; color:#3182ce; text-decoration:none; font-size:0.95rem; }
+    a.back:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> &rsaquo;
+    <a href="at-georgia-map.html">AT Georgia Map</a> &rsaquo;
+    Blood Mountain Shelter
+  </div>
+
+  <h1>Blood Mountain Shelter</h1>
+  <p class="subtitle">Appalachian Trail, Georgia &mdash; Mile 31.7 (NOBO) &bull; Historic Stone Cabin &bull; Elevation ~4,461 ft &mdash; Highest point in Georgia on the AT</p>
+
+  <div class="alert">
+    <strong>Mountain Crossings at Neel Gap is 1.1 miles north on the AT.</strong>
+    The only outfitter through which the Appalachian Trail literally passes through the building. Full resupply, gear shakedowns, bunk rooms, and shuttles — all without leaving the trail corridor.
+  </div>
+
+  <div class="section">
+    <h2>Shelter Overview</h2>
+    <div class="stat-grid">
+      <div class="stat">AT Mile: <span>31.7 from Springer</span></div>
+      <div class="stat">Elevation: <span>~4,461 ft</span></div>
+      <div class="stat">Capacity: <span>~8 hikers</span></div>
+      <div class="stat">Type: <span>Historic Stone Cabin (CCC, 1930s)</span></div>
+      <div class="stat">County: <span>Union, GA</span></div>
+    </div>
+    <p style="font-size:0.88rem; line-height:1.6; margin:0 0 0.75rem;">
+      Blood Mountain Shelter is <strong>the most iconic shelter in Georgia</strong> — a two-room stone cabin built by the Civilian Conservation Corps in the 1930s, perched near the summit of Blood Mountain at 4,461 ft, the highest point on the AT in Georgia. The cabin is solid stone with a plank floor and two separate rooms. It has weathered nearly a century of Appalachian storms and remains a proud landmark on the southern AT.
+    </p>
+    <p style="font-size:0.88rem; line-height:1.6; margin:0 0 0.75rem;">
+      The summit offers sweeping 360-degree views on clear days — one of the best viewpoints in the Georgia AT. On clear nights, the lights of the Atlanta metro can sometimes be seen to the south. The cabin walls are thick and provide significant wind protection, but interior temperatures can still drop sharply on exposed nights.
+    </p>
+    <div class="warning">
+      <strong>NO WATER at the shelter.</strong> The nearest reliable water source is approximately 0.5 miles south back down the AT, near Slaughter Creek. This is one of the most critical planning points for Blood Mountain — carry adequate water from Slaughter Creek before the final climb to the summit.
+    </div>
+    <div class="warning">
+      <strong>No fires allowed.</strong> Open fires are prohibited in and around the historic cabin. Leave No Trace strictly enforced by USFS rangers who regularly patrol this high-use area.
+    </div>
+    <div class="warning">
+      <strong>Very high use.</strong> Blood Mountain sees significant day-hiker traffic from Neel Gap and Byron Reece trailheads. On weekends, the summit and shelter can be extremely crowded. Arrive early or plan to camp elsewhere.
+    </div>
+    <div class="tip">
+      <strong>Views:</strong> The open granite summit just north of the cabin has panoramic views. In October and early November, fall foliage on surrounding ridges is spectacular. The name "Blood Mountain" comes from a Cherokee legend about a battle that turned the mountain red with blood.
+    </div>
+  </div>
+
+  <!-- Supplies -->
+  <div class="section">
+    <h2>Getting Supplies</h2>
+    <div class="route-grid">
+
+      <div class="route-card recommended">
+        <span class="route-badge badge-rec">ON THE TRAIL — 1.1 miles north</span>
+        <h3>Mountain Crossings at Neel Gap (Walasi-Yi Center)</h3>
+        <p>The AT passes <em>directly through the building</em> — the only place on the entire 2,190-mile trail where this happens. Mountain Crossings stocks hiker food, fuel, gear, stove parts, water filters, maps, and apparel. Expert gear advice and free pack shakedowns (they've thrown hundreds of pounds of unnecessary gear over the years). <strong>No shuttle or road crossing required.</strong></p>
+        <div class="contact-row" style="margin-top:0.5rem;">
+          <a class="call-btn" href="tel:7067456095">Call 706-745-6095</a>
+          <a class="web-btn" href="https://mountaincrossings.com" target="_blank">mountaincrossings.com</a>
+        </div>
+      </div>
+
+      <div class="route-card alternate">
+        <span class="route-badge badge-alt">FULL SERVICES — 13 mi north by road</span>
+        <h3>Blairsville, GA via US-19/129 N from Neel Gap</h3>
+        <p>Hike to Neel Gap (1.1 miles north) and hitch or shuttle north on US-19/129 to Blairsville (~13 miles). Full grocery (Ingles), pharmacy, hardware, restaurants, and chain motels. Better for a full resupply box than Mountain Crossings alone. Shuttles available via Mountain Crossings or local services.</p>
+      </div>
+
+      <div class="route-card far">
+        <span class="route-badge badge-far">PRE/POST HIKE — 17 mi south by road</span>
+        <h3>Dahlonega, GA via US-19/129 S from Neel Gap</h3>
+        <p>17 miles south of Neel Gap. Walmart, full grocery, outfitters, restaurants. Best used for staging before your hike or for a full resupply if heading to Blairsville isn't convenient. Hitch at Neel Gap — US-19/129 has good traffic in both directions.</p>
+      </div>
+
+    </div>
+    <div class="tip">
+      <strong>Hitchhiking from Neel Gap:</strong> US-19/129 (Gainesville Highway) carries steady traffic. Stand at the Mountain Crossings parking lot exit. Drivers heading north toward Blairsville or south toward Dahlonega stop regularly for hikers. Average wait: 10–20 minutes in season.
+    </div>
+  </div>
+
+  <!-- Lodging -->
+  <div class="section">
+    <h2>Where to Sleep Nearby</h2>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Mountain Crossings at Neel Gap — Bunk Room</div>
+        <span class="badge badge-paid">~$25–35/night</span>
+        <span class="badge badge-highlight">ON THE TRAIL</span>
+      </div>
+      <div class="lodging-meta">12471 US-19 N (Walasi-Yi Center), Blairsville, GA 30512 &mdash; 1.1 miles north on the AT</div>
+      <div class="lodging-desc">
+        The most convenient lodging option for Blood Mountain — literally on the AT. The bunk room is basic (dormitory style) but includes hot showers and laundry access. A spot here means you can resupply, gear-fix, and rest all in one place without any road travel. <strong>Fills up fast in season — call or arrive early.</strong>
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Zero road travel required</li>
+            <li>Cheapest option near Blood Mountain</li>
+            <li>Resupply, gear repair, showers all on-site</li>
+            <li>Great hiker community hub</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>Very basic — dormitory bunks only</li>
+            <li>Limited privacy</li>
+            <li>Fills up early in peak season</li>
+            <li>No restaurant on site</li>
+          </ul>
+        </div>
+      </div>
+      <div class="contact-row">
+        <a class="call-btn" href="tel:7067456095">Call 706-745-6095</a>
+        <a class="web-btn" href="https://mountaincrossings.com" target="_blank">mountaincrossings.com</a>
+      </div>
+    </div>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Blood Mountain Cabins</div>
+        <span class="badge badge-paid">~$90–150/night</span>
+      </div>
+      <div class="lodging-meta">Near Neel Gap, Cleveland, GA area &mdash; ~2 miles east of Neel Gap by road</div>
+      <div class="lodging-desc">
+        Private cabins just off US-129 near Neel Gap. A step up from the bunk room — actual privacy, a real bed, and cabin amenities. Popular for section hikers or couples. No food provided but Neel Gap (Mountain Crossings) is within a short drive. Call Mountain Crossings for current recommendations as cabin availability in this area fluctuates.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Private room/cabin — real rest</li>
+            <li>Close to Neel Gap</li>
+            <li>Good for couples or solo hikers wanting quiet</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>Requires road transportation</li>
+            <li>More expensive than bunk room</li>
+            <li>No meals included</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Hotels in Blairsville, GA</div>
+        <span class="badge badge-paid">~$80–140/night</span>
+      </div>
+      <div class="lodging-meta">Blairsville, GA &mdash; ~13 miles north of Neel Gap on US-19/129</div>
+      <div class="lodging-desc">
+        Blairsville has chain hotels (Holiday Inn Express, Quality Inn) and local motels. It's a small mountain town with full grocery (Ingles), restaurants, and a pharmacy. Shuttles from Neel Gap available via Mountain Crossings. Good choice if you want a proper bed, a restaurant meal, and a solid resupply before continuing north.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Full services — grocery, pharmacy, restaurants</li>
+            <li>Comfortable hotel rooms</li>
+            <li>Quieter than hiker hostel</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>13 miles from Neel Gap by road</li>
+            <li>Less hiker-community feel</li>
+            <li>Shuttle cost adds up</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="nav-strip">
+    <a class="nav-btn" href="shelter-gooch-mountain.html">&larr; Gooch Mountain</a>
+    <a href="at-georgia-map.html">&#9968; Back to Map</a>
+    <a class="nav-btn" href="shelter-whitley-gap.html">Whitley Gap &rarr;</a>
+  </div>
+
+  <a class="back" href="index.html">&larr; Back to Home</a>
+
+</body>
+</html>

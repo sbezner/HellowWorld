@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hawk Mountain Shelter — AT Georgia</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin:0; padding:1.5rem; background:#f0f4f8; font-family:sans-serif; color:#2d3748; }
+    h1 { font-size:1.7rem; margin-bottom:0.2rem; }
+    .subtitle { color:#718096; font-size:0.88rem; margin-bottom:1.25rem; }
+    .breadcrumb { font-size:0.78rem; color:#718096; margin-bottom:0.75rem; }
+    .breadcrumb a { color:#3182ce; text-decoration:none; }
+    .breadcrumb a:hover { text-decoration:underline; }
+    .section { background:white; border-radius:8px; padding:1.25rem; margin-bottom:1.25rem; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+    .section h2 { margin:0 0 1rem; font-size:1.1rem; color:#2b6cb0; border-bottom:1px solid #e2e8f0; padding-bottom:0.5rem; }
+    .stat-grid { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem; }
+    .stat { background:#ebf8ff; border-radius:6px; padding:0.4rem 0.75rem; font-size:0.85rem; }
+    .stat span { font-weight:bold; color:#2b6cb0; }
+    .badge { font-size:0.75rem; padding:0.2rem 0.6rem; border-radius:12px; font-weight:bold; white-space:nowrap; display:inline-block; }
+    .badge-paid { background:#bee3f8; color:#2b6cb0; }
+    .warning { background:#fff5f5; border-left:4px solid #e53e3e; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#742a2a; margin-bottom:0.6rem; }
+    .tip { background:#fffbeb; border-left:4px solid #f6ad55; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#744210; margin-top:0.75rem; }
+    .route-grid { display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .route-card { flex:1 1 220px; border-radius:8px; padding:1rem; border:2px solid transparent; }
+    .route-card.recommended { background:#f0fff4; border-color:#38a169; }
+    .route-card.alternate { background:#ebf8ff; border-color:#90cdf4; }
+    .route-card h3 { margin:0 0 0.3rem; font-size:1rem; }
+    .route-card.recommended h3 { color:#276749; }
+    .route-card.alternate h3 { color:#2b6cb0; }
+    .route-badge { display:inline-block; font-size:0.72rem; font-weight:bold; padding:0.15rem 0.5rem; border-radius:10px; margin-bottom:0.5rem; }
+    .badge-rec { background:#c6f6d5; color:#276749; }
+    .badge-alt { background:#bee3f8; color:#2b6cb0; }
+    .route-card p { margin:0; font-size:0.88rem; line-height:1.6; }
+    .lodging-card { border:1px solid #e2e8f0; border-radius:8px; padding:1rem; margin-bottom:0.75rem; }
+    .lodging-card:last-child { margin-bottom:0; }
+    .lodging-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.3rem; }
+    .lodging-name { font-weight:bold; font-size:1rem; color:#1a365d; }
+    .lodging-meta { font-size:0.8rem; color:#718096; margin-bottom:0.5rem; }
+    .lodging-desc { font-size:0.88rem; line-height:1.5; color:#4a5568; margin-bottom:0.75rem; }
+    .pros-cons { display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .pros, .cons { flex:1 1 160px; font-size:0.83rem; line-height:1.7; }
+    .pros { background:#f0fff4; border-radius:6px; padding:0.6rem 0.75rem; }
+    .cons { background:#fff5f5; border-radius:6px; padding:0.6rem 0.75rem; }
+    .pros strong { color:#276749; display:block; margin-bottom:0.2rem; }
+    .cons strong { color:#c53030; display:block; margin-bottom:0.2rem; }
+    .pros ul, .cons ul { margin:0; padding-left:1.2rem; }
+    .contact-row { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.75rem; }
+    .call-btn { display:inline-block; background:#2b6cb0; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; font-weight:bold; }
+    .call-btn:hover { background:#2c5282; }
+    .web-btn { display:inline-block; background:#718096; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; }
+    .web-btn:hover { background:#4a5568; }
+    .nav-strip { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-top:1.5rem; }
+    .nav-btn { display:inline-block; padding:0.5rem 1rem; border-radius:6px; font-size:0.88rem; text-decoration:none; background:white; color:#2b6cb0; border:1px solid #bee3f8; }
+    .nav-btn:hover { background:#ebf8ff; }
+    a.back { display:inline-block; margin-top:1rem; color:#3182ce; text-decoration:none; font-size:0.95rem; }
+    a.back:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> &rsaquo;
+    <a href="at-georgia-map.html">AT Georgia Map</a> &rsaquo;
+    Hawk Mountain Shelter
+  </div>
+
+  <h1>Hawk Mountain Shelter</h1>
+  <p class="subtitle">Appalachian Trail, Georgia &mdash; Mile 8.1 (NOBO) &bull; Lean-to &bull; Elevation ~3,200 ft &mdash; Updated 2026</p>
+
+  <div class="section">
+    <h2>Shelter Overview</h2>
+    <div class="stat-grid">
+      <div class="stat">AT Mile: <span>8.1 from Springer</span></div>
+      <div class="stat">Elevation: <span>~3,200 ft</span></div>
+      <div class="stat">Capacity: <span>~8 hikers</span></div>
+      <div class="stat">Type: <span>Lean-to</span></div>
+      <div class="stat">County: <span>Gilmer, GA</span></div>
+    </div>
+    <p style="font-size:0.88rem; line-height:1.6; margin:0 0 0.75rem;">
+      Hawk Mountain Shelter sits on a ridge below Hawk Mountain's summit (~3,658 ft) in the southern portion of the Georgia AT. At mile 8.1, this is a natural second-night stop for NOBO hikers who camped at Stover Creek and are now midway through their first hundred miles. The trail climbs moderately through hardwood forest to reach the shelter, which is set back from the AT on a blue-blazed side trail.
+    </p>
+    <p style="font-size:0.88rem; line-height:1.6; margin:0 0 0.75rem;">
+      The shelter is a standard lean-to with good tent sites in the surrounding area. A spring provides reliable water nearby. The ridge location means cool nights even in summer and potential for icy conditions in winter and early spring — come prepared for subfreezing temps in February and March.
+    </p>
+    <div class="warning">
+      <strong>Black bears frequent this area.</strong> Hang all food from the provided cables or use a bear canister. Never cook in or near the shelter.
+    </div>
+    <div class="tip">
+      <strong>Water:</strong> Spring approximately 100 yards east of the shelter. Reliable in all but the driest conditions. Treat before drinking.
+    </div>
+    <div class="tip">
+      <strong>Day 2 mileage note:</strong> Some hikers push from Springer to Hawk Mountain in one long day (8.1 miles). Others split it at Stover Creek (2.6 mi) then Hawk Mountain (5.5 more miles). Both are reasonable depending on fitness and pack weight.
+    </div>
+  </div>
+
+  <!-- Supplies -->
+  <div class="section">
+    <h2>Getting Supplies</h2>
+    <p style="font-size:0.88rem; color:#4a5568; margin-bottom:1rem;">
+      At mile 8, the trail is still remote. The forest service roads in this area are rough and not suitable for standard vehicles. Your best path to supplies is continuing north to Neel Gap (23 more trail miles) or arranging a shuttle from Three Forks (~2.5 miles south on trail, accessible via USFS Road 58).
+    </p>
+    <div class="route-grid">
+      <div class="route-card recommended">
+        <span class="route-badge badge-rec">KEEP HIKING — 23.6 miles ahead</span>
+        <h3>Mountain Crossings at Neel Gap &mdash; Mile 31.7</h3>
+        <p>Continue north through Gooch Mountain (mile 15.8), over Ramrock Mountain, and through Woody Gap to reach Neel Gap. This is the standard first resupply. Pack at least 4 days of food from your starting point to comfortably cover Springer → Neel Gap without stressing about supplies.</p>
+      </div>
+      <div class="route-card alternate">
+        <span class="route-badge badge-alt">BAIL-OUT POINT</span>
+        <h3>Three Forks / USFS Road 58 &mdash; ~2.5 mi south</h3>
+        <p>Three Forks is a trail junction near Springer with road access via Forest Service Road 58 (rough but passable in good conditions). From here you can reach Dahlonega (~18 miles by road) or call a shuttle. This is a gear/emergency bail-out point, not a supply destination.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lodging -->
+  <div class="section">
+    <h2>Where to Sleep Nearby</h2>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Hiker Hostel (Suches)</div>
+        <span class="badge badge-paid">~$30–40 bunk / ~$75 private</span>
+      </div>
+      <div class="lodging-meta">7693 Hiker Hostel Way, Suches, GA &mdash; ~12 mi by road via USFS roads and GA-60</div>
+      <div class="lodging-desc">
+        The Hiker Hostel offers shuttle pickup from trail access points in the area. From Hawk Mountain, the closest road access is either Three Forks (USFS 58, ~2.5 miles south) or Woody Gap (GA-60, ~10 miles north). Call ahead to arrange shuttle — they are familiar with all Georgia AT access points.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Knows all GA AT access roads</li>
+            <li>Hiker-focused, gear-drying room</li>
+            <li>Shuttle to Neel Gap possible</li>
+            <li>Cheaper than lodge options</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>Requires calling ahead</li>
+            <li>Road to Three Forks is rough</li>
+            <li>Limited grocery nearby</li>
+          </ul>
+        </div>
+      </div>
+      <div class="contact-row">
+        <a class="call-btn" href="tel:7069452876">Call 706-945-2876</a>
+        <a class="web-btn" href="https://hikerhostel.com" target="_blank">hikerhostel.com</a>
+      </div>
+    </div>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Mountain Crossings at Neel Gap — Bunk Room</div>
+        <span class="badge badge-paid">~$25–30 bunk</span>
+      </div>
+      <div class="lodging-meta">12471 US-19 N, Blairsville, GA &mdash; 23.6 trail miles north (mile 31.7)</div>
+      <div class="lodging-desc">
+        If you're healthy and your pack is holding up, the better option from Hawk Mountain is to continue hiking north and stay at Mountain Crossings in ~2–3 days. The bunk room is basic but the location on the trail can't be beat. Showers, laundry, gear repairs all on site.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Right on the AT — no shuttle</li>
+            <li>Combines shelter + resupply</li>
+            <li>No backtracking</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>23+ more miles of hiking first</li>
+            <li>Very basic bunk room</li>
+          </ul>
+        </div>
+      </div>
+      <div class="contact-row">
+        <a class="call-btn" href="tel:7067456095">Call 706-745-6095</a>
+        <a class="web-btn" href="https://mountaincrossings.com" target="_blank">mountaincrossings.com</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="nav-strip">
+    <a class="nav-btn" href="shelter-stover-creek.html">&larr; Stover Creek</a>
+    <a href="at-georgia-map.html">&#9968; Back to Map</a>
+    <a class="nav-btn" href="shelter-gooch-mountain.html">Gooch Mountain &rarr;</a>
+  </div>
+
+  <a class="back" href="index.html">&larr; Back to Home</a>
+
+</body>
+</html>

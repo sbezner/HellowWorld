@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Whitley Gap Shelter — AT Georgia</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin:0; padding:1.5rem; background:#f0f4f8; font-family:sans-serif; color:#2d3748; }
+    h1 { font-size:1.7rem; margin-bottom:0.2rem; }
+    .subtitle { color:#718096; font-size:0.88rem; margin-bottom:1.25rem; }
+    .breadcrumb { font-size:0.78rem; color:#718096; margin-bottom:0.75rem; }
+    .breadcrumb a { color:#3182ce; text-decoration:none; }
+    .breadcrumb a:hover { text-decoration:underline; }
+    .section { background:white; border-radius:8px; padding:1.25rem; margin-bottom:1.25rem; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+    .section h2 { margin:0 0 1rem; font-size:1.1rem; color:#2b6cb0; border-bottom:1px solid #e2e8f0; padding-bottom:0.5rem; }
+    .stat-grid { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem; }
+    .stat { background:#ebf8ff; border-radius:6px; padding:0.4rem 0.75rem; font-size:0.85rem; }
+    .stat span { font-weight:bold; color:#2b6cb0; }
+    .badge { font-size:0.75rem; padding:0.2rem 0.6rem; border-radius:12px; font-weight:bold; white-space:nowrap; display:inline-block; }
+    .badge-paid { background:#bee3f8; color:#2b6cb0; }
+    .badge-free { background:#c6f6d5; color:#276749; }
+    .warning { background:#fff5f5; border-left:4px solid #e53e3e; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#742a2a; margin-bottom:0.6rem; }
+    .tip { background:#fffbeb; border-left:4px solid #f6ad55; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#744210; margin-top:0.75rem; }
+    .route-grid { display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .route-card { flex:1 1 220px; border-radius:8px; padding:1rem; border:2px solid transparent; }
+    .route-card.recommended { background:#f0fff4; border-color:#38a169; }
+    .route-card.alternate { background:#ebf8ff; border-color:#90cdf4; }
+    .route-card.far { background:#f7fafc; border-color:#cbd5e0; }
+    .route-card h3 { margin:0 0 0.3rem; font-size:1rem; }
+    .route-card.recommended h3 { color:#276749; }
+    .route-card.alternate h3 { color:#2b6cb0; }
+    .route-card.far h3 { color:#4a5568; }
+    .route-badge { display:inline-block; font-size:0.72rem; font-weight:bold; padding:0.15rem 0.5rem; border-radius:10px; margin-bottom:0.5rem; }
+    .badge-rec { background:#c6f6d5; color:#276749; }
+    .badge-alt { background:#bee3f8; color:#2b6cb0; }
+    .badge-far { background:#e2e8f0; color:#4a5568; }
+    .route-card p { margin:0; font-size:0.88rem; line-height:1.6; }
+    .lodging-card { border:1px solid #e2e8f0; border-radius:8px; padding:1rem; margin-bottom:0.75rem; }
+    .lodging-card:last-child { margin-bottom:0; }
+    .lodging-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.3rem; }
+    .lodging-name { font-weight:bold; font-size:1rem; color:#1a365d; }
+    .lodging-meta { font-size:0.8rem; color:#718096; margin-bottom:0.5rem; }
+    .lodging-desc { font-size:0.88rem; line-height:1.5; color:#4a5568; margin-bottom:0.75rem; }
+    .pros-cons { display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .pros, .cons { flex:1 1 160px; font-size:0.83rem; line-height:1.7; }
+    .pros { background:#f0fff4; border-radius:6px; padding:0.6rem 0.75rem; }
+    .cons { background:#fff5f5; border-radius:6px; padding:0.6rem 0.75rem; }
+    .pros strong { color:#276749; display:block; margin-bottom:0.2rem; }
+    .cons strong { color:#c53030; display:block; margin-bottom:0.2rem; }
+    .pros ul, .cons ul { margin:0; padding-left:1.2rem; }
+    .contact-row { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.75rem; }
+    .call-btn { display:inline-block; background:#2b6cb0; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; font-weight:bold; }
+    .call-btn:hover { background:#2c5282; }
+    .web-btn { display:inline-block; background:#718096; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; }
+    .web-btn:hover { background:#4a5568; }
+    .nav-strip { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-top:1.5rem; }
+    .nav-btn { display:inline-block; padding:0.5rem 1rem; border-radius:6px; font-size:0.88rem; text-decoration:none; background:white; color:#2b6cb0; border:1px solid #bee3f8; }
+    .nav-btn:hover { background:#ebf8ff; }
+    a.back { display:inline-block; margin-top:1rem; color:#3182ce; text-decoration:none; font-size:0.95rem; }
+    a.back:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> &rsaquo;
+    <a href="at-georgia-map.html">AT Georgia Map</a> &rsaquo;
+    Whitley Gap Shelter
+  </div>
+
+  <h1>Whitley Gap Shelter</h1>
+  <p class="subtitle">Appalachian Trail, Georgia &mdash; Mile 36.5 (NOBO) &bull; Lean-to &bull; Elevation ~3,500 ft &mdash; Updated 2026</p>
+
+  <div class="section">
+    <h2>Shelter Overview</h2>
+    <div class="stat-grid">
+      <div class="stat">AT Mile: <span>36.5 from Springer</span></div>
+      <div class="stat">Elevation: <span>~3,500 ft</span></div>
+      <div class="stat">Capacity: <span>~6 hikers</span></div>
+      <div class="stat">Type: <span>Lean-to</span></div>
+      <div class="stat">County: <span>White/Union, GA</span></div>
+    </div>
+    <p style="font-size:0.88rem; line-height:1.6; margin:0 0 0.75rem;">
+      Whitley Gap Shelter sits on a ridge between Neel Gap (mile 31.7) and Low Gap (mile 43.3). Located roughly 4.8 miles north of Neel Gap, this shelter is a natural stopping point for hikers who spent the previous night at Blood Mountain or Neel Gap and are pushing toward Hogpen Gap and Low Gap.
+    </p>
+    <p style="font-size:0.88rem; line-height:1.6; margin:0 0 0.75rem;">
+      The trail in this section traverses the ridgeline east of the Chattahoochee National Forest boundary, passing through rhododendron tunnels and mixed hardwood forests. Whitley Gap sees far less traffic than Blood Mountain or Low Gap, offering a quieter overnight experience. The shelter is accessed via a short blue-blazed side trail from the AT.
+    </p>
+    <div class="warning">
+      <strong>Verify condition before arriving.</strong> Whitley Gap is a lower-visited shelter and some hiker reports have noted it needs maintenance. Check recent trail reports on FarOut (Guthook) or WhiteBlaze before counting on a night here in bad weather.
+    </div>
+    <div class="tip">
+      <strong>Water:</strong> Spring source is accessible via a short blue-blazed path from the shelter. Treat all water. Reliable in normal conditions but can be marginal in late summer drought.
+    </div>
+  </div>
+
+  <!-- Supplies -->
+  <div class="section">
+    <h2>Getting Supplies</h2>
+    <p style="font-size:0.88rem; color:#4a5568; margin-bottom:1rem;">
+      The nearest road access from Whitley Gap is Hogpen Gap / Tesnatee Gap (GA-348 / Richard B. Russell Scenic Highway), approximately 6.8 miles north on the AT. This highway runs between Blairsville (west) and Helen (east) but is a low-traffic scenic road.
+    </p>
+    <div class="route-grid">
+
+      <div class="route-card recommended">
+        <span class="route-badge badge-rec">RECOMMENDED — 4.8 mi back south</span>
+        <h3>Mountain Crossings at Neel Gap &mdash; Mile 31.7</h3>
+        <p>If you need supplies urgently, backtrack 4.8 miles south to Mountain Crossings at Neel Gap. The AT literally passes through the building — best selection of hiker food, fuel, and gear repair in the area. Or continue north 6.8 miles to Hogpen Gap and hitch to Helen or Blairsville.</p>
+      </div>
+
+      <div class="route-card alternate">
+        <span class="route-badge badge-alt">NORTH — 6.8 mi ahead to road</span>
+        <h3>Helen, GA via Hogpen/Tesnatee Gap (GA-348)</h3>
+        <p>Hike 6.8 miles north to Hogpen Gap (GA-348). Turn right (east) toward Helen (~12 miles). Helen is a quirky Bavarian-themed tourist town with grocery stores, restaurants, hotels, and basic supplies. <strong>Hitchhiking GA-348 is harder</strong> than US-76 or GA-75 — it's a scenic byway with lower traffic. Unicoi State Park is 2 miles northeast of Helen with camping and showers.</p>
+      </div>
+
+      <div class="route-card far">
+        <span class="route-badge badge-far">SERVICES — 6.8 mi north + 20 mi west</span>
+        <h3>Blairsville, GA via GA-348 West</h3>
+        <p>From Hogpen Gap, turn left (west) on GA-348 toward Blairsville (~20 miles by road). Full grocery, pharmacy, and chain hotels. Much farther than Helen but has better supply options (Ingles supermarket). Only worth it for a serious resupply or gear issue.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Lodging -->
+  <div class="section">
+    <h2>Where to Sleep Nearby</h2>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Mountain Crossings at Neel Gap — Bunk Room</div>
+        <span class="badge badge-paid">~$25–35/night</span>
+      </div>
+      <div class="lodging-meta">12471 US-19 N, Blairsville, GA &mdash; 4.8 mi south back on the AT</div>
+      <div class="lodging-desc">
+        Best option if you're turning back toward Neel Gap anyway. The bunk room is on the trail and the most hiker-convenient option in this section of Georgia.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Most hiker-convenient option</li>
+            <li>Resupply and lodging combined</li>
+            <li>Cheapest near-trail option</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>4.8 miles backtracking south</li>
+            <li>Basic dormitory bunks</li>
+          </ul>
+        </div>
+      </div>
+      <div class="contact-row">
+        <a class="call-btn" href="tel:7067456095">Call 706-745-6095</a>
+        <a class="web-btn" href="https://mountaincrossings.com" target="_blank">mountaincrossings.com</a>
+      </div>
+    </div>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Unicoi State Park — Cabins &amp; Camping</div>
+        <span class="badge badge-paid">Camping ~$25 / Cabins ~$90–150</span>
+      </div>
+      <div class="lodging-meta">1788 GA-356, Helen, GA 30545 &mdash; ~2 miles northeast of Helen (reach via Hogpen Gap + hitch)</div>
+      <div class="lodging-desc">
+        Unicoi State Park offers lakeside camping, rustic and full-service cabins, hot showers, laundry, and a park restaurant. A great option for a zero day near the trail. Only 2 miles from downtown Helen's grocery and restaurants.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Beautiful lake setting</li>
+            <li>Multiple lodging types (tent to cabin)</li>
+            <li>Restaurant on site</li>
+            <li>Laundry and showers</li>
+            <li>Close to Helen grocery</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>Requires reaching Hogpen Gap first</li>
+            <li>Hitchhiking GA-348 is slow</li>
+            <li>Not a hiker-specific hostel</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Hotels in Helen, GA</div>
+        <span class="badge badge-paid">~$80–200/night</span>
+      </div>
+      <div class="lodging-meta">Helen, GA &mdash; ~12 miles east of Hogpen Gap on GA-348 (reach via Hogpen Gap hitch)</div>
+      <div class="lodging-desc">
+        Helen is a heavily Bavarian-themed tourist town with dozens of hotels and B&amp;Bs. Prices vary widely — budget options exist but the town caters heavily to tourists. Grocery store (Ingles), post office, restaurants including breweries. More of a weekend tourist feel than hiker-focused, but functional as a resupply stop.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Wide range of restaurants</li>
+            <li>Full grocery store (Ingles)</li>
+            <li>Many lodging options</li>
+            <li>Tubing and recreation if zeroing</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>Very touristy — can feel un-hiker-like</li>
+            <li>Overpriced on weekends/holidays</li>
+            <li>12 miles from Hogpen Gap by road</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="nav-strip">
+    <a class="nav-btn" href="shelter-blood-mountain.html">&larr; Blood Mountain</a>
+    <a href="at-georgia-map.html">&#9968; Back to Map</a>
+    <a class="nav-btn" href="low-gap-resupply.html">Low Gap &rarr;</a>
+  </div>
+
+  <a class="back" href="index.html">&larr; Back to Home</a>
+
+</body>
+</html>

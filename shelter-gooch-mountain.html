@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gooch Mountain Shelter — AT Georgia</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin:0; padding:1.5rem; background:#f0f4f8; font-family:sans-serif; color:#2d3748; }
+    h1 { font-size:1.7rem; margin-bottom:0.2rem; }
+    .subtitle { color:#718096; font-size:0.88rem; margin-bottom:1.25rem; }
+    .breadcrumb { font-size:0.78rem; color:#718096; margin-bottom:0.75rem; }
+    .breadcrumb a { color:#3182ce; text-decoration:none; }
+    .breadcrumb a:hover { text-decoration:underline; }
+    .section { background:white; border-radius:8px; padding:1.25rem; margin-bottom:1.25rem; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+    .section h2 { margin:0 0 1rem; font-size:1.1rem; color:#2b6cb0; border-bottom:1px solid #e2e8f0; padding-bottom:0.5rem; }
+    .stat-grid { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem; }
+    .stat { background:#ebf8ff; border-radius:6px; padding:0.4rem 0.75rem; font-size:0.85rem; }
+    .stat span { font-weight:bold; color:#2b6cb0; }
+    .badge { font-size:0.75rem; padding:0.2rem 0.6rem; border-radius:12px; font-weight:bold; white-space:nowrap; display:inline-block; }
+    .badge-paid { background:#bee3f8; color:#2b6cb0; }
+    .badge-free { background:#c6f6d5; color:#276749; }
+    .alert { background:#f0fff4; border-left:4px solid #38a169; padding:0.75rem 1rem; border-radius:0 6px 6px 0; font-size:0.9rem; color:#276749; margin-bottom:1.25rem; }
+    .alert strong { display:block; margin-bottom:0.2rem; }
+    .warning { background:#fff5f5; border-left:4px solid #e53e3e; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#742a2a; margin-bottom:0.6rem; }
+    .tip { background:#fffbeb; border-left:4px solid #f6ad55; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#744210; margin-top:0.75rem; }
+    .route-grid { display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .route-card { flex:1 1 220px; border-radius:8px; padding:1rem; border:2px solid transparent; }
+    .route-card.recommended { background:#f0fff4; border-color:#38a169; }
+    .route-card.alternate { background:#ebf8ff; border-color:#90cdf4; }
+    .route-card.far { background:#f7fafc; border-color:#cbd5e0; }
+    .route-card h3 { margin:0 0 0.3rem; font-size:1rem; }
+    .route-card.recommended h3 { color:#276749; }
+    .route-card.alternate h3 { color:#2b6cb0; }
+    .route-card.far h3 { color:#4a5568; }
+    .route-badge { display:inline-block; font-size:0.72rem; font-weight:bold; padding:0.15rem 0.5rem; border-radius:10px; margin-bottom:0.5rem; }
+    .badge-rec { background:#c6f6d5; color:#276749; }
+    .badge-alt { background:#bee3f8; color:#2b6cb0; }
+    .badge-far { background:#e2e8f0; color:#4a5568; }
+    .route-card p { margin:0; font-size:0.88rem; line-height:1.6; }
+    .lodging-card { border:1px solid #e2e8f0; border-radius:8px; padding:1rem; margin-bottom:0.75rem; }
+    .lodging-card:last-child { margin-bottom:0; }
+    .lodging-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.3rem; }
+    .lodging-name { font-weight:bold; font-size:1rem; color:#1a365d; }
+    .lodging-meta { font-size:0.8rem; color:#718096; margin-bottom:0.5rem; }
+    .lodging-desc { font-size:0.88rem; line-height:1.5; color:#4a5568; margin-bottom:0.75rem; }
+    .pros-cons { display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .pros, .cons { flex:1 1 160px; font-size:0.83rem; line-height:1.7; }
+    .pros { background:#f0fff4; border-radius:6px; padding:0.6rem 0.75rem; }
+    .cons { background:#fff5f5; border-radius:6px; padding:0.6rem 0.75rem; }
+    .pros strong { color:#276749; display:block; margin-bottom:0.2rem; }
+    .cons strong { color:#c53030; display:block; margin-bottom:0.2rem; }
+    .pros ul, .cons ul { margin:0; padding-left:1.2rem; }
+    .contact-row { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.75rem; }
+    .call-btn { display:inline-block; background:#2b6cb0; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; font-weight:bold; }
+    .call-btn:hover { background:#2c5282; }
+    .web-btn { display:inline-block; background:#718096; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; }
+    .web-btn:hover { background:#4a5568; }
+    .nav-strip { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-top:1.5rem; }
+    .nav-btn { display:inline-block; padding:0.5rem 1rem; border-radius:6px; font-size:0.88rem; text-decoration:none; background:white; color:#2b6cb0; border:1px solid #bee3f8; }
+    .nav-btn:hover { background:#ebf8ff; }
+    a.back { display:inline-block; margin-top:1rem; color:#3182ce; text-decoration:none; font-size:0.95rem; }
+    a.back:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> &rsaquo;
+    <a href="at-georgia-map.html">AT Georgia Map</a> &rsaquo;
+    Gooch Mountain Shelter
+  </div>
+
+  <h1>Gooch Mountain Shelter</h1>
+  <p class="subtitle">Appalachian Trail, Georgia &mdash; Mile 15.8 (NOBO) &bull; Lean-to &bull; Elevation ~2,784 ft &mdash; Updated 2026</p>
+
+  <div class="alert">
+    <strong>Road access at Woody Gap (GA-60) — 2.8 miles north on trail.</strong>
+    This is the most accessible shelter in the first 20 miles of the Georgia AT. Hitch or shuttle to Suches (1.5 miles west on GA-60) or Dahlonega (~13 miles south on GA-60/US-19).
+  </div>
+
+  <div class="section">
+    <h2>Shelter Overview</h2>
+    <div class="stat-grid">
+      <div class="stat">AT Mile: <span>15.8 from Springer</span></div>
+      <div class="stat">Elevation: <span>~2,784 ft</span></div>
+      <div class="stat">Capacity: <span>~8 hikers</span></div>
+      <div class="stat">Type: <span>Lean-to</span></div>
+      <div class="stat">County: <span>Dawson/Lumpkin, GA</span></div>
+    </div>
+    <p style="font-size:0.88rem; line-height:1.6; margin:0 0 0.75rem;">
+      Gooch Mountain Shelter is roughly halfway between Springer Mountain and Neel Gap, making it a popular stopping point for 3-day NOBO hikers heading to their first town stop. The shelter sits on a somewhat exposed ridgeline near the summit of Gooch Mountain at a relatively modest 2,784 ft — lower than many Georgia shelters. The surrounding forest provides good wind protection but less dramatic views.
+    </p>
+    <p style="font-size:0.88rem; line-height:1.6; margin:0 0 0.75rem;">
+      Woody Gap (GA-60) is just 2.8 miles ahead — making this shelter the <strong>first practical road-accessible bail-out or resupply point</strong> in the southern Georgia AT. Many early-season NOBO hikers make it to Gooch Mountain on Day 2 or 3 and either push on to Neel Gap or slip out to town for a night.
+    </p>
+    <div class="warning">
+      <strong>Active bear corridor.</strong> Black bears are very active between Springer and Neel Gap. Use the food hang cables or a bear canister. Several hiker reports of bear encounters near this shelter in recent seasons.
+    </div>
+    <div class="tip">
+      <strong>Water:</strong> Spring east of the shelter, approximately 50–100 yards on the blue-blazed trail. Reliable year-round in normal conditions.
+    </div>
+  </div>
+
+  <!-- Supplies -->
+  <div class="section">
+    <h2>Getting Supplies</h2>
+    <div class="route-grid">
+
+      <div class="route-card recommended">
+        <span class="route-badge badge-rec">BEST OPTION — 2.8 mi north + hitch</span>
+        <h3>Suches, GA via Woody Gap (GA-60)</h3>
+        <p>Hike 2.8 miles north to Woody Gap. Turn left (west) on GA-60 and walk or hitch 1.5 miles to Suches. The <strong>Wolf Pen Gap Country Store</strong> in Suches has basic supplies, beer, snacks, and sometimes hot food. Very limited but real supplies. Woody Gap has a small parking area with moderate traffic — hitching is possible. Dahlonega is 13 miles south from Woody Gap.</p>
+      </div>
+
+      <div class="route-card alternate">
+        <span class="route-badge badge-alt">BEST FULL RESUPPLY — 15.9 trail mi ahead</span>
+        <h3>Mountain Crossings at Neel Gap &mdash; Mile 31.7</h3>
+        <p>Continue 15.9 miles north through the Ramrock Mountain area and Blood Mountain to reach the iconic Mountain Crossings outfitter at Neel Gap. Full resupply, gear, fuel, and a bunk room. If you are well-supplied and healthy, this is the preferred first resupply — no backtracking needed.</p>
+      </div>
+
+      <div class="route-card far">
+        <span class="route-badge badge-far">FULL SERVICES — 13 mi by road</span>
+        <h3>Dahlonega, GA via Woody Gap &amp; GA-60/US-19</h3>
+        <p>From Woody Gap, hitchhike south ~13 miles on GA-60 to Dahlonega. Full grocery, Walmart, restaurants, pharmacies, and outfitters. Worth a trip if you need to replace gear or want a real resupply. Call ahead for a shuttle rather than hitching — GA-60 has moderate traffic.</p>
+      </div>
+
+    </div>
+    <div class="tip">
+      <strong>Hitchhiking at Woody Gap:</strong> GA-60 is lightly trafficked compared to US-76 (Dick's Creek Gap) later in the trail, but hikers are picked up regularly. Weekend traffic is better. Hold a sign or just start walking and stick your thumb out. Average wait: 20–45 minutes.
+    </div>
+  </div>
+
+  <!-- Lodging -->
+  <div class="section">
+    <h2>Where to Sleep Nearby</h2>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Hiker Hostel (Suches)</div>
+        <span class="badge badge-paid">~$30–40 bunk / ~$75 private</span>
+      </div>
+      <div class="lodging-meta">7693 Hiker Hostel Way, Suches, GA 30572 &mdash; ~4.3 miles from Woody Gap (1.5 mi to Suches + 2.8 mi back to shelter = shuttle from Woody Gap recommended)</div>
+      <div class="lodging-desc">
+        The Hiker Hostel in Suches is the closest hostel to Gooch Mountain — about 4–5 miles total via Woody Gap. It offers a genuine AT hiker experience with bunk rooms, private cabins, laundry, hot showers, and a kitchen. Free tent camping available. Known for its welcoming owners who have been part of the hiker community for years. Shuttle pickup at Woody Gap available if you call ahead.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Closest hostel to Gooch Mountain</li>
+            <li>Shuttle from Woody Gap</li>
+            <li>Genuine hiker community atmosphere</li>
+            <li>Free tent camping option</li>
+            <li>Laundry + hot shower</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>Requires hike to Woody Gap first</li>
+            <li>Very small — book ahead in March/April</li>
+            <li>Limited food options in Suches</li>
+          </ul>
+        </div>
+      </div>
+      <div class="contact-row">
+        <a class="call-btn" href="tel:7069452876">Call 706-945-2876</a>
+        <a class="web-btn" href="https://hikerhostel.com" target="_blank">hikerhostel.com</a>
+      </div>
+    </div>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Hotels in Dahlonega</div>
+        <span class="badge badge-paid">~$80–160/night</span>
+      </div>
+      <div class="lodging-meta">Dahlonega, GA &mdash; ~13 miles south of Woody Gap on GA-60/US-19</div>
+      <div class="lodging-desc">
+        Dahlonega has several hotels and B&amp;Bs. The <strong>Barefoot Hills Hotel</strong> (hiker-friendly, gear drying room, downtown location) and various chain motels on US-19 are popular options. Full grocery (Ingles), restaurants, and the University of North Georgia give the town energy and good food options.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Full Walmart and grocery</li>
+            <li>Multiple restaurant choices</li>
+            <li>University town vibe — fun to visit</li>
+            <li>Gear shop (Black Bear Adventures)</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>13 miles by road from Woody Gap</li>
+            <li>More expensive than hostel</li>
+            <li>No direct trail access — shuttle needed</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="nav-strip">
+    <a class="nav-btn" href="shelter-hawk-mountain.html">&larr; Hawk Mountain</a>
+    <a href="at-georgia-map.html">&#9968; Back to Map</a>
+    <a class="nav-btn" href="shelter-blood-mountain.html">Blood Mountain &rarr;</a>
+  </div>
+
+  <a class="back" href="index.html">&larr; Back to Home</a>
+
+</body>
+</html>

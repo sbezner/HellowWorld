@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AT Georgia — Shelter Map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: sans-serif; height: 100vh; display: flex; flex-direction: column; overflow: hidden; background: #1a1a1a; color: #2d3748; }
+
+    #header {
+      background: #2d5a27;
+      color: white;
+      padding: 0.65rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+    #header h1 { font-size: 1.05rem; font-weight: bold; }
+    #header .sub { font-size: 0.75rem; opacity: 0.82; margin-bottom: 0.1rem; }
+    .offline-badge {
+      background: rgba(0,0,0,0.3);
+      border-radius: 12px;
+      padding: 0.25rem 0.65rem;
+      font-size: 0.7rem;
+      white-space: nowrap;
+    }
+
+    #map-wrap { flex: 1; position: relative; overflow: hidden; }
+    #map { height: 100%; width: 100%; }
+
+    /* Shelter list panel — slides up from bottom */
+    #panel {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: white;
+      border-top: 3px solid #2d5a27;
+      max-height: 240px;
+      overflow-y: auto;
+      z-index: 1000;
+      transform: translateY(calc(100% - 42px));
+      transition: transform 0.3s ease;
+    }
+    #panel.open { transform: translateY(0); }
+
+    #panel-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 1rem;
+      background: #2d5a27;
+      color: white;
+      cursor: pointer;
+      font-size: 0.83rem;
+      font-weight: bold;
+      user-select: none;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      height: 42px;
+    }
+    .arrow { transition: transform 0.3s; display: inline-block; }
+    #panel.open .arrow { transform: rotate(180deg); }
+
+    .shelter-list { padding: 0.4rem 0.5rem; }
+    .shelter-item {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.45rem 0.6rem;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      color: #2d3748;
+    }
+    .shelter-item:hover { background: #f0f4f8; }
+    .s-icon { font-size: 1rem; flex-shrink: 0; }
+    .s-name { font-weight: bold; font-size: 0.85rem; flex: 1; min-width: 0; }
+    .s-meta { font-size: 0.73rem; color: #718096; white-space: nowrap; }
+
+    /* Popup */
+    .sp h3 { font-size: 0.95rem; margin-bottom: 0.3rem; color: #2d5a27; line-height: 1.3; }
+    .sp .pm { font-size: 0.8rem; color: #718096; margin-bottom: 0.6rem; line-height: 1.5; }
+    .sp a {
+      display: block;
+      background: #2d5a27;
+      color: white;
+      text-align: center;
+      padding: 0.4rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.83rem;
+      font-weight: bold;
+    }
+    .sp a:hover { background: #1a3a15; }
+
+    /* Leaflet legend */
+    .legend {
+      background: white;
+      border-radius: 8px;
+      padding: 0.55rem 0.75rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      font-size: 0.76rem;
+      line-height: 1.8;
+    }
+    .leg-title { font-weight: bold; margin-bottom: 0.2rem; color: #2d3748; font-size: 0.78rem; }
+    .leg-row { display: flex; align-items: center; gap: 0.4rem; }
+
+    /* Back button */
+    .back-btn {
+      position: absolute;
+      top: 10px; left: 10px;
+      z-index: 1000;
+      background: white;
+      border-radius: 6px;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
+      text-decoration: none;
+      color: #2d3748;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+      font-weight: bold;
+    }
+    .back-btn:hover { background: #f0f4f8; }
+  </style>
+</head>
+<body>
+
+<div id="header">
+  <div>
+    <div class="sub">Appalachian Trail &mdash; Georgia Section &bull; Springer Mountain to NC Border</div>
+    <h1>&#9968; Georgia AT Shelter Map &mdash; 11 Shelters</h1>
+  </div>
+  <span class="offline-badge">&#9888; Map tiles require internet &bull; All shelter detail pages work offline</span>
+</div>
+
+<div id="map-wrap">
+  <a href="index.html" class="back-btn">&larr; Home</a>
+  <div id="map"></div>
+
+  <div id="panel">
+    <div id="panel-toggle" onclick="togglePanel()">
+      <span>&#9968; All Shelters &mdash; Click to expand list</span>
+      <span class="arrow">&#9650;</span>
+    </div>
+    <div class="shelter-list" id="shelter-list"></div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// ── Shelter data ──────────────────────────────────────────────────────────────
+const shelters = [
+  { name:'Springer Mountain Shelter',  type:'lean-to',     lat:34.6279, lng:-84.1934, mile:0,    elev:3782, cap:8, url:'shelter-springer-mountain.html', water:'Spring 0.2 mi south on blue-blazed trail' },
+  { name:'Stover Creek Shelter',       type:'lean-to',     lat:34.659,  lng:-84.202,  mile:2.6,  elev:2900, cap:8, url:'shelter-stover-creek.html',       water:'Stover Creek, year-round' },
+  { name:'Hawk Mountain Shelter',      type:'lean-to',     lat:34.693,  lng:-84.198,  mile:8.1,  elev:3200, cap:8, url:'shelter-hawk-mountain.html',      water:'Spring 100 yds from shelter' },
+  { name:'Gooch Mountain Shelter',     type:'lean-to',     lat:34.738,  lng:-84.182,  mile:15.8, elev:2784, cap:8, url:'shelter-gooch-mountain.html',     water:'Spring east of shelter' },
+  { name:'Blood Mountain Shelter',     type:'stone-cabin', lat:34.797,  lng:-83.939,  mile:31.7, elev:4340, cap:8, url:'shelter-blood-mountain.html',     water:'NO WATER on site &mdash; nearest 0.5 mi south' },
+  { name:'Whitley Gap Shelter',        type:'lean-to',     lat:34.833,  lng:-83.882,  mile:36.5, elev:3500, cap:6, url:'shelter-whitley-gap.html',        water:'Spring via blue-blazed trail' },
+  { name:'Low Gap Shelter',            type:'lean-to',     lat:34.859,  lng:-83.813,  mile:43.3, elev:2966, cap:6, url:'low-gap-resupply.html',           water:'30&ndash;40 yards in front of shelter' },
+  { name:'Blue Mountain Shelter',      type:'lean-to',     lat:34.884,  lng:-83.759,  mile:50.7, elev:3889, cap:7, url:'shelter-blue-mountain.html',      water:'Spring nearby, bear cables on site' },
+  { name:'Tray Mountain Shelter',      type:'lean-to',     lat:34.901,  lng:-83.703,  mile:56.8, elev:4200, cap:8, url:'shelter-tray-mountain.html',      water:'Spring 200 yds north on AT' },
+  { name:'Deep Gap Shelter',           type:'lean-to',     lat:34.927,  lng:-83.637,  mile:63.3, elev:3550, cap:8, url:'shelter-deep-gap.html',           water:'Spring nearby' },
+  { name:'Plumorchard Gap Shelter',    type:'lean-to',     lat:34.953,  lng:-83.572,  mile:68.4, elev:4080, cap:8, url:'shelter-plumorchard-gap.html',    water:'Spring on blue-blazed trail' },
+];
+
+// ── AT trail polyline through Georgia (approximate waypoints) ─────────────────
+const trail = [
+  [34.6279,-84.1934], // Springer Mountain (southern terminus)
+  [34.645, -84.206],
+  [34.659, -84.202],  // Stover Creek
+  [34.675, -84.195],
+  [34.693, -84.198],  // Hawk Mountain
+  [34.710, -84.180],
+  [34.725, -84.170],
+  [34.738, -84.182],  // Gooch Mountain
+  [34.752, -84.120],
+  [34.758, -84.096],  // Woody Gap (GA-60)
+  [34.778, -84.020],
+  [34.797, -83.939],  // Blood Mountain
+  [34.790, -83.928],  // Neel Gap (Mountain Crossings)
+  [34.812, -83.900],
+  [34.833, -83.882],  // Whitley Gap
+  [34.851, -83.830],
+  [34.859, -83.813],  // Low Gap
+  [34.873, -83.810],  // Hogpen / Tesnatee Gap (GA-348)
+  [34.876, -83.769],  // Unicoi Gap (GA-75)
+  [34.884, -83.759],  // Blue Mountain
+  [34.901, -83.703],  // Tray Mountain
+  [34.918, -83.660],
+  [34.927, -83.637],  // Deep Gap
+  [34.946, -83.596],
+  [34.959, -83.590],  // Dick's Creek Gap (US-76)
+  [34.953, -83.572],  // Plumorchard Gap
+  [34.980, -83.527],  // Bly Gap / NC border
+];
+
+// ── Map ───────────────────────────────────────────────────────────────────────
+const map = L.map('map', { zoomControl: true }).setView([34.80, -83.95], 9);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  maxZoom: 18,
+}).addTo(map);
+
+// Trail: dark border + white line (AT white blaze style)
+L.polyline(trail, { color: '#3a1e00', weight: 6, opacity: 0.6 }).addTo(map);
+L.polyline(trail, { color: '#ffffff', weight: 3, opacity: 1.0 }).addTo(map);
+
+// ── Icon factory ──────────────────────────────────────────────────────────────
+function makeIcon(type) {
+  const isCabin = type === 'stone-cabin';
+  const bg = isCabin ? '#5a6e7e' : '#8B4513';
+  // Lean-to: triangle (roof silhouette); Stone cabin: house outline
+  const svg = isCabin
+    ? `<svg width="14" height="14" viewBox="0 0 14 14"><rect x="2" y="6" width="10" height="7" fill="white"/><polygon points="7,0 14,6 0,6" fill="white"/></svg>`
+    : `<svg width="14" height="12" viewBox="0 0 14 12"><polygon points="7,0 14,12 0,12" fill="white"/></svg>`;
+  return L.divIcon({
+    className: '',
+    html: `<div style="background:${bg};width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2.5px solid rgba(255,255,255,0.9);box-shadow:0 2px 6px rgba(0,0,0,0.5);">${svg}</div>`,
+    iconSize: [30,30],
+    iconAnchor: [15,15],
+    popupAnchor: [0,-18],
+  });
+}
+
+// ── Markers ───────────────────────────────────────────────────────────────────
+const markers = shelters.map((s, i) => {
+  const m = L.marker([s.lat, s.lng], { icon: makeIcon(s.type) }).addTo(map);
+  const typeLabel = s.type === 'stone-cabin' ? 'Historic Stone Cabin' : 'Lean-to';
+  m.bindPopup(`
+    <div class="sp">
+      <h3>${s.name}</h3>
+      <div class="pm">
+        Mile ${s.mile} (NOBO) &bull; ${s.elev.toLocaleString()} ft &bull; ${typeLabel}<br>
+        Capacity: ~${s.cap} &bull; <strong>Water:</strong> ${s.water}
+      </div>
+      <a href="${s.url}">View Shelter Details &rarr;</a>
+    </div>
+  `, { maxWidth: 240, minWidth: 200 });
+  return m;
+});
+
+// ── Legend ────────────────────────────────────────────────────────────────────
+const legend = L.control({ position: 'bottomright' });
+legend.onAdd = () => {
+  const div = L.DomUtil.create('div', 'legend');
+  div.innerHTML = `
+    <div class="leg-title">Shelter Types</div>
+    <div class="leg-row"><div style="background:#8B4513;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,0.8);flex-shrink:0;"></div><span>Lean-to (10)</span></div>
+    <div class="leg-row"><div style="background:#5a6e7e;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,0.8);flex-shrink:0;"></div><span>Stone Cabin (1)</span></div>
+    <div class="leg-row" style="margin-top:0.3rem;"><div style="width:22px;height:3px;background:white;border:1px solid #3a1e00;flex-shrink:0;"></div><span>AT Route</span></div>
+  `;
+  return div;
+};
+legend.addTo(map);
+
+// ── Shelter list panel ────────────────────────────────────────────────────────
+const listEl = document.getElementById('shelter-list');
+shelters.forEach((s, i) => {
+  const a = document.createElement('a');
+  a.className = 'shelter-item';
+  a.href = s.url;
+  a.innerHTML = `
+    <span class="s-icon">${s.type === 'stone-cabin' ? '🏛' : '⛺'}</span>
+    <span class="s-name">${s.name}</span>
+    <span class="s-meta">Mile ${s.mile} &bull; ${s.elev.toLocaleString()} ft</span>
+  `;
+  // Fly to marker on hover
+  a.addEventListener('mouseenter', () => map.setView([s.lat, s.lng], 13, { animate: true }));
+  a.addEventListener('click', e => {
+    // Allow navigation — don't preventDefault
+  });
+  listEl.appendChild(a);
+});
+
+function togglePanel() {
+  document.getElementById('panel').classList.toggle('open');
+}
+
+// Notch road crossings as small labels
+const crossings = [
+  { name: 'Woody Gap\n(GA-60)', lat: 34.758, lng: -84.096 },
+  { name: 'Neel Gap\n(US-19)', lat: 34.790, lng: -83.928 },
+  { name: 'Hogpen Gap\n(GA-348)', lat: 34.873, lng: -83.810 },
+  { name: 'Unicoi Gap\n(GA-75)', lat: 34.876, lng: -83.769 },
+  { name: "Dick's Creek Gap\n(US-76)", lat: 34.959, lng: -83.590 },
+];
+crossings.forEach(c => {
+  L.marker([c.lat, c.lng], {
+    icon: L.divIcon({
+      className: '',
+      html: `<div style="background:rgba(255,255,255,0.85);border:1px solid #aaa;border-radius:4px;padding:2px 5px;font-size:9px;color:#333;white-space:nowrap;line-height:1.3;text-align:center;">${c.name.replace('\n','<br>')}</div>`,
+      iconSize: null,
+      iconAnchor: [0, 0],
+    })
+  }).addTo(map);
+});
+</script>
+</body>
+</html>

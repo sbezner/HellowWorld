@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Springer Mountain Shelter — AT Georgia</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin:0; padding:1.5rem; background:#f0f4f8; font-family:sans-serif; color:#2d3748; }
+    h1 { font-size:1.7rem; margin-bottom:0.2rem; }
+    .subtitle { color:#718096; font-size:0.88rem; margin-bottom:1.25rem; }
+    .breadcrumb { font-size:0.78rem; color:#718096; margin-bottom:0.75rem; }
+    .breadcrumb a { color:#3182ce; text-decoration:none; }
+    .breadcrumb a:hover { text-decoration:underline; }
+
+    .section { background:white; border-radius:8px; padding:1.25rem; margin-bottom:1.25rem; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+    .section h2 { margin:0 0 1rem; font-size:1.1rem; color:#2b6cb0; border-bottom:1px solid #e2e8f0; padding-bottom:0.5rem; }
+
+    .stat-grid { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem; }
+    .stat { background:#ebf8ff; border-radius:6px; padding:0.4rem 0.75rem; font-size:0.85rem; }
+    .stat span { font-weight:bold; color:#2b6cb0; }
+
+    .badge { font-size:0.75rem; padding:0.2rem 0.6rem; border-radius:12px; font-weight:bold; white-space:nowrap; display:inline-block; }
+    .badge-paid { background:#bee3f8; color:#2b6cb0; }
+    .badge-free { background:#c6f6d5; color:#276749; }
+    .badge-donation { background:#fefcbf; color:#744210; }
+    .badge-seasonal { background:#fed7d7; color:#742a2a; }
+
+    .alert { background:#f0fff4; border-left:4px solid #38a169; padding:0.75rem 1rem; border-radius:0 6px 6px 0; font-size:0.9rem; color:#276749; margin-bottom:1.25rem; }
+    .alert strong { display:block; margin-bottom:0.2rem; }
+    .warning { background:#fff5f5; border-left:4px solid #e53e3e; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#742a2a; margin-bottom:0.6rem; }
+    .tip { background:#fffbeb; border-left:4px solid #f6ad55; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#744210; margin-top:0.75rem; }
+
+    .route-grid { display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .route-card { flex:1 1 220px; border-radius:8px; padding:1rem; border:2px solid transparent; }
+    .route-card.recommended { background:#f0fff4; border-color:#38a169; }
+    .route-card.alternate { background:#ebf8ff; border-color:#90cdf4; }
+    .route-card.far { background:#f7fafc; border-color:#cbd5e0; }
+    .route-card h3 { margin:0 0 0.3rem; font-size:1rem; }
+    .route-card.recommended h3 { color:#276749; }
+    .route-card.alternate h3 { color:#2b6cb0; }
+    .route-card.far h3 { color:#4a5568; }
+    .route-badge { display:inline-block; font-size:0.72rem; font-weight:bold; padding:0.15rem 0.5rem; border-radius:10px; margin-bottom:0.5rem; }
+    .badge-rec { background:#c6f6d5; color:#276749; }
+    .badge-alt { background:#bee3f8; color:#2b6cb0; }
+    .badge-far { background:#e2e8f0; color:#4a5568; }
+    .route-card p { margin:0; font-size:0.88rem; line-height:1.6; }
+
+    .lodging-card { border:1px solid #e2e8f0; border-radius:8px; padding:1rem; margin-bottom:0.75rem; }
+    .lodging-card:last-child { margin-bottom:0; }
+    .lodging-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.3rem; }
+    .lodging-name { font-weight:bold; font-size:1rem; color:#1a365d; }
+    .lodging-meta { font-size:0.8rem; color:#718096; margin-bottom:0.5rem; }
+    .lodging-desc { font-size:0.88rem; line-height:1.5; color:#4a5568; margin-bottom:0.75rem; }
+    .pros-cons { display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .pros, .cons { flex:1 1 160px; font-size:0.83rem; line-height:1.7; }
+    .pros { background:#f0fff4; border-radius:6px; padding:0.6rem 0.75rem; }
+    .cons { background:#fff5f5; border-radius:6px; padding:0.6rem 0.75rem; }
+    .pros strong { color:#276749; display:block; margin-bottom:0.2rem; }
+    .cons strong { color:#c53030; display:block; margin-bottom:0.2rem; }
+    .pros ul, .cons ul { margin:0; padding-left:1.2rem; }
+
+    .contact-row { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.75rem; }
+    .call-btn { display:inline-block; background:#2b6cb0; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; font-weight:bold; }
+    .call-btn:hover { background:#2c5282; }
+    .web-btn { display:inline-block; background:#718096; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; }
+    .web-btn:hover { background:#4a5568; }
+
+    .nav-strip { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-top:1.5rem; }
+    .nav-btn { display:inline-block; padding:0.5rem 1rem; border-radius:6px; font-size:0.88rem; text-decoration:none; background:white; color:#2b6cb0; border:1px solid #bee3f8; }
+    .nav-btn:hover { background:#ebf8ff; }
+    .nav-btn.disabled { color:#a0aec0; border-color:#e2e8f0; pointer-events:none; }
+
+    a.back { display:inline-block; margin-top:1rem; color:#3182ce; text-decoration:none; font-size:0.95rem; }
+    a.back:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> &rsaquo;
+    <a href="at-georgia-map.html">AT Georgia Map</a> &rsaquo;
+    Springer Mountain Shelter
+  </div>
+
+  <h1>Springer Mountain Shelter</h1>
+  <p class="subtitle">Appalachian Trail, Georgia &mdash; Mile 0 (Southern Terminus) &bull; Lean-to &mdash; Southern gateway to the AT</p>
+
+  <div class="alert">
+    <strong>You're at the beginning of the Appalachian Trail.</strong>
+    Springer Mountain (3,782 ft) is the southern terminus. The AT white blaze starts at the summit plaque. The shelter is ~0.3 miles from the summit on the approach from USFS Road 42. Most hikers reach Springer via the 8.8-mile Approach Trail from Amicalola Falls State Park.
+  </div>
+
+  <!-- Stats -->
+  <div class="section">
+    <h2>Shelter Overview</h2>
+    <div class="stat-grid">
+      <div class="stat">AT Mile: <span>0 (NOBO)</span></div>
+      <div class="stat">Elevation: <span>3,782 ft</span></div>
+      <div class="stat">Capacity: <span>~8 hikers</span></div>
+      <div class="stat">Type: <span>Lean-to (open front)</span></div>
+      <div class="stat">County: <span>Fannin/Gilmer, GA</span></div>
+    </div>
+    <p style="font-size:0.88rem; line-height:1.6; margin:0 0 0.75rem;">
+      Springer Mountain Shelter sits at the southern terminus of the Appalachian Trail. There are actually <strong>two shelters</strong> on Springer: the main lean-to near the summit approach and an older lower shelter. The main lean-to sleeps ~8 and has a picnic table and privy. Very heavily used during NOBO season (late February–April) as hikers begin their journey to Katahdin.
+    </p>
+    <div class="warning">
+      <strong>No on-site water.</strong> Water source is a spring ~0.2 miles south on a blue-blazed trail. Treat all water before drinking.
+    </div>
+    <div class="warning">
+      <strong>Extremely crowded February–April.</strong> During peak NOBO season the shelter and surrounding tent sites fill by mid-afternoon. Arrive early or plan to tent on flat areas nearby.
+    </div>
+    <div class="tip">
+      <strong>Springer summit plaque:</strong> The AT southern terminus plaque is on the summit rocks ~0.3 miles from the shelter. Hikers traditionally take a photo here before setting out. Cell service is very limited — Verizon has best coverage on the summit.
+    </div>
+  </div>
+
+  <!-- Getting Supplies -->
+  <div class="section">
+    <h2>Getting Supplies</h2>
+    <p style="font-size:0.88rem; color:#4a5568; margin-bottom:1rem;">
+      Springer Mountain is <strong>deep in the Chattahoochee National Forest</strong>. There are no stores within easy walking distance. Most hikers carry food from Amicalola Falls or pre-stage resupply at Mountain Crossings at Neel Gap (32 miles north). Your first real resupply will likely be Neel Gap (mile 31.7) or Dahlonega.
+    </p>
+    <div class="route-grid">
+
+      <div class="route-card recommended">
+        <span class="route-badge badge-rec">BEST FIRST RESUPPLY</span>
+        <h3>Mountain Crossings at Neel Gap &mdash; 31.7 trail miles north</h3>
+        <p>The legendary outfitter at Neel Gap (mile 31.7) is the de facto first resupply for most NOBO hikers. The AT passes <em>directly through the building</em> — no road crossing needed. Carry 4–5 days of food from Amicalola. Mountain Crossings offers gear, food, fuel, pack shakedowns, and a bunk room. <strong>~$25–30/night bunk. 706-745-6095.</strong></p>
+      </div>
+
+      <div class="route-card alternate">
+        <span class="route-badge badge-alt">PRE-HIKE SUPPLIES</span>
+        <h3>Dahlonega, GA &mdash; ~22 miles by road</h3>
+        <p>The nearest full-service town for pre-hike provisioning. Walmart Supercenter, outfitters, restaurants, and lodging. Reached via Forest Service roads to GA-52, then south. Most hikers drive through Dahlonega on the way to Amicalola Falls. <strong>Stock up here before your hike begins.</strong></p>
+      </div>
+
+      <div class="route-card far">
+        <span class="route-badge badge-far">EMERGENCY ONLY</span>
+        <h3>Amicalola Falls State Park Store &mdash; 8.8 mi south via Approach Trail</h3>
+        <p>The park store at Amicalola Falls sells basic snacks, drinks, and hiker supplies. It is 8.8 miles back south via the blue-blazed Approach Trail (or ~20 miles by car via USFS roads). Only worth it as an emergency bailout — going back to Amicalola defeats your northbound progress.</p>
+      </div>
+
+    </div>
+    <div class="tip">
+      <strong>Mail drops:</strong> Mountain Crossings at Neel Gap accepts resupply boxes. Address: <em>Mountain Crossings, 12471 Gainesville Hwy (US-19 N), Blairsville, GA 30512</em> — include your name, "HOLD FOR AT HIKER," and approximate arrival date.
+    </div>
+  </div>
+
+  <!-- Where to Sleep -->
+  <div class="section">
+    <h2>Where to Sleep Nearby</h2>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Amicalola Falls State Park Lodge</div>
+        <span class="badge badge-paid">~$100–180/night</span>
+      </div>
+      <div class="lodging-meta">Amicalola Falls State Park, Dawsonville, GA &mdash; 8.8 mi south via Approach Trail / ~20 mi by car</div>
+      <div class="lodging-desc">
+        The classic pre-hike or first/last-night stay for AT hikers. The park lodge sits at the base of the Approach Trail. Amenities include a restaurant, gift shop, showers, and laundry. A hostel bunk room is also available at the trailhead for a lower price. Many hikers spend the night here, register at the park, and begin the Approach Trail the next morning.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Iconic AT starting point</li>
+            <li>Restaurant on site</li>
+            <li>Hiker registration &amp; welcome center</li>
+            <li>Shuttle service available</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>Expensive for park lodge rooms</li>
+            <li>8.8 miles from Springer (via trail)</li>
+            <li>Pricey restaurant</li>
+          </ul>
+        </div>
+      </div>
+      <div class="contact-row">
+        <a class="call-btn" href="tel:7062657818">Call 706-265-7818</a>
+        <a class="web-btn" href="https://gastateparks.org/AmicalollaFalls" target="_blank">gastateparks.org</a>
+      </div>
+    </div>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Hiker Hostel</div>
+        <span class="badge badge-paid">~$30–40 bunk / ~$75 private</span>
+      </div>
+      <div class="lodging-meta">7693 Hiker Hostel Way, Suches, GA 30572 &mdash; ~13 mi by road (near Woody Gap on GA-60)</div>
+      <div class="lodging-desc">
+        A beloved hiker hostel in the Suches community, roughly 13 road miles from the trail. Offers shuttles to/from Springer Mountain, Amicalola Falls, and Neel Gap. Owned by the same family for years — genuine hiker community feel. Free camping on grounds for those who prefer to tent.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Shuttle to/from Springer available</li>
+            <li>Genuine hiker community</li>
+            <li>Free tent camping option</li>
+            <li>Cheaper than park lodge</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>~13 miles from trail by road</li>
+            <li>Small — book ahead in season</li>
+            <li>Limited food on site</li>
+          </ul>
+        </div>
+      </div>
+      <div class="contact-row">
+        <a class="call-btn" href="tel:7069452876">Call 706-945-2876</a>
+        <a class="web-btn" href="https://hikerhostel.com" target="_blank">hikerhostel.com</a>
+      </div>
+    </div>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Dahlonega Hotels (Various)</div>
+        <span class="badge badge-paid">~$80–150/night</span>
+      </div>
+      <div class="lodging-meta">Dahlonega, GA &mdash; ~22 miles by road from Springer trailhead</div>
+      <div class="lodging-desc">
+        Dahlonega (Georgia's gold rush town) has multiple hotels, B&amp;Bs, and motels suitable for pre-hike staging. Best options include the Barefoot Hills Hotel (hiker-friendly, gear room) and several chain motels on US-19. Full grocery, Walmart, restaurants, and gear shops (including Hiker Yearning) all in town.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Full grocery &amp; Walmart nearby</li>
+            <li>Many restaurant options</li>
+            <li>Good for pre-hike resupply</li>
+            <li>Multiple price ranges</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>~22 miles from Springer by road</li>
+            <li>Requires car or shuttle to trailhead</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Navigation -->
+  <div class="nav-strip">
+    <span class="nav-btn disabled">&larr; Southern Terminus</span>
+    <a href="at-georgia-map.html">&#9968; Back to Map</a>
+    <a class="nav-btn" href="shelter-stover-creek.html">Stover Creek Shelter &rarr;</a>
+  </div>
+
+  <a class="back" href="index.html">&larr; Back to Home</a>
+
+</body>
+</html>

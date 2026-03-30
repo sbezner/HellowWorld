@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stover Creek Shelter — AT Georgia</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin:0; padding:1.5rem; background:#f0f4f8; font-family:sans-serif; color:#2d3748; }
+    h1 { font-size:1.7rem; margin-bottom:0.2rem; }
+    .subtitle { color:#718096; font-size:0.88rem; margin-bottom:1.25rem; }
+    .breadcrumb { font-size:0.78rem; color:#718096; margin-bottom:0.75rem; }
+    .breadcrumb a { color:#3182ce; text-decoration:none; }
+    .breadcrumb a:hover { text-decoration:underline; }
+    .section { background:white; border-radius:8px; padding:1.25rem; margin-bottom:1.25rem; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+    .section h2 { margin:0 0 1rem; font-size:1.1rem; color:#2b6cb0; border-bottom:1px solid #e2e8f0; padding-bottom:0.5rem; }
+    .stat-grid { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem; }
+    .stat { background:#ebf8ff; border-radius:6px; padding:0.4rem 0.75rem; font-size:0.85rem; }
+    .stat span { font-weight:bold; color:#2b6cb0; }
+    .badge { font-size:0.75rem; padding:0.2rem 0.6rem; border-radius:12px; font-weight:bold; white-space:nowrap; display:inline-block; }
+    .badge-paid { background:#bee3f8; color:#2b6cb0; }
+    .badge-free { background:#c6f6d5; color:#276749; }
+    .warning { background:#fff5f5; border-left:4px solid #e53e3e; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#742a2a; margin-bottom:0.6rem; }
+    .tip { background:#fffbeb; border-left:4px solid #f6ad55; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#744210; margin-top:0.75rem; }
+    .route-grid { display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .route-card { flex:1 1 220px; border-radius:8px; padding:1rem; border:2px solid transparent; }
+    .route-card.recommended { background:#f0fff4; border-color:#38a169; }
+    .route-card.alternate { background:#ebf8ff; border-color:#90cdf4; }
+    .route-card h3 { margin:0 0 0.3rem; font-size:1rem; }
+    .route-card.recommended h3 { color:#276749; }
+    .route-card.alternate h3 { color:#2b6cb0; }
+    .route-badge { display:inline-block; font-size:0.72rem; font-weight:bold; padding:0.15rem 0.5rem; border-radius:10px; margin-bottom:0.5rem; }
+    .badge-rec { background:#c6f6d5; color:#276749; }
+    .badge-alt { background:#bee3f8; color:#2b6cb0; }
+    .route-card p { margin:0; font-size:0.88rem; line-height:1.6; }
+    .lodging-card { border:1px solid #e2e8f0; border-radius:8px; padding:1rem; margin-bottom:0.75rem; }
+    .lodging-card:last-child { margin-bottom:0; }
+    .lodging-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.3rem; }
+    .lodging-name { font-weight:bold; font-size:1rem; color:#1a365d; }
+    .lodging-meta { font-size:0.8rem; color:#718096; margin-bottom:0.5rem; }
+    .lodging-desc { font-size:0.88rem; line-height:1.5; color:#4a5568; margin-bottom:0.75rem; }
+    .pros-cons { display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .pros, .cons { flex:1 1 160px; font-size:0.83rem; line-height:1.7; }
+    .pros { background:#f0fff4; border-radius:6px; padding:0.6rem 0.75rem; }
+    .cons { background:#fff5f5; border-radius:6px; padding:0.6rem 0.75rem; }
+    .pros strong { color:#276749; display:block; margin-bottom:0.2rem; }
+    .cons strong { color:#c53030; display:block; margin-bottom:0.2rem; }
+    .pros ul, .cons ul { margin:0; padding-left:1.2rem; }
+    .contact-row { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.75rem; }
+    .call-btn { display:inline-block; background:#2b6cb0; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; font-weight:bold; }
+    .call-btn:hover { background:#2c5282; }
+    .web-btn { display:inline-block; background:#718096; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; }
+    .web-btn:hover { background:#4a5568; }
+    .nav-strip { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-top:1.5rem; }
+    .nav-btn { display:inline-block; padding:0.5rem 1rem; border-radius:6px; font-size:0.88rem; text-decoration:none; background:white; color:#2b6cb0; border:1px solid #bee3f8; }
+    .nav-btn:hover { background:#ebf8ff; }
+    a.back { display:inline-block; margin-top:1rem; color:#3182ce; text-decoration:none; font-size:0.95rem; }
+    a.back:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> &rsaquo;
+    <a href="at-georgia-map.html">AT Georgia Map</a> &rsaquo;
+    Stover Creek Shelter
+  </div>
+
+  <h1>Stover Creek Shelter</h1>
+  <p class="subtitle">Appalachian Trail, Georgia &mdash; Mile 2.6 (NOBO) &bull; Lean-to &bull; Elevation ~2,900 ft &mdash; Updated 2026</p>
+
+  <div class="section">
+    <h2>Shelter Overview</h2>
+    <div class="stat-grid">
+      <div class="stat">AT Mile: <span>2.6 from Springer</span></div>
+      <div class="stat">Elevation: <span>~2,900 ft</span></div>
+      <div class="stat">Capacity: <span>~8 hikers</span></div>
+      <div class="stat">Type: <span>Lean-to (open front)</span></div>
+      <div class="stat">County: <span>Fannin, GA</span></div>
+    </div>
+    <p style="font-size:0.88rem; line-height:1.6; margin:0 0 0.75rem;">
+      Stover Creek Shelter is the <strong>first overnight shelter for NOBO thru-hikers</strong>, just 2.6 miles from Springer Mountain. It sits in a pleasant hollow near Stover Creek, offering a reliable creek water source and good tent sites nearby. Most early-season hikers stop here after their first day from Amicalola Falls (via the approach trail, total ~11 miles), making it one of the most crowded shelters in Georgia during peak NOBO season.
+    </p>
+    <p style="font-size:0.88rem; line-height:1.6; margin:0 0 0.75rem;">
+      The shelter is a standard three-sided lean-to with a sleeping platform, privy nearby, and a picnic table. Short-distance hikers from Springer often use it as a turnaround camp. Expect to share with many other freshly-minted thru-hikers in late February through April.
+    </p>
+    <div class="warning">
+      <strong>Bears are active in this area.</strong> Use the bear cables (if available) or hang your food properly. Do not leave food unattended at the picnic table.
+    </div>
+    <div class="tip">
+      <strong>Water:</strong> Stover Creek runs year-round and is the primary water source. The creek crossing is just below the shelter. Filter or treat all water.
+    </div>
+  </div>
+
+  <!-- Supplies -->
+  <div class="section">
+    <h2>Getting Supplies</h2>
+    <p style="font-size:0.88rem; color:#4a5568; margin-bottom:1rem;">
+      At mile 2.6, you are still very deep in the national forest. There are no nearby stores. Your realistic supply options are either going back to Amicalola (not recommended unless emergency) or continuing north to Neel Gap at mile 31.7 — the standard first resupply for Georgia NOBO hikers.
+    </p>
+    <div class="route-grid">
+      <div class="route-card recommended">
+        <span class="route-badge badge-rec">STANDARD RESUPPLY — 29 trail miles ahead</span>
+        <h3>Mountain Crossings at Neel Gap &mdash; Mile 31.7</h3>
+        <p>The AT passes directly through the Mountain Crossings outfitter building at Neel Gap. This is the universally accepted first resupply for Georgia thru-hikers. Carry enough food from your start point (Amicalola or Dahlonega) to reach here. The store offers food, fuel, gear, and pack shakedowns. Bunk room available.</p>
+      </div>
+      <div class="route-card alternate">
+        <span class="route-badge badge-alt">PRE-HIKE ONLY</span>
+        <h3>Dahlonega, GA &mdash; ~22 miles by road</h3>
+        <p>Dahlonega is the main staging town for Springer-area hikers. Walmart, grocery stores, restaurants, and outfitters. Not accessible from the trail without a long road walk or shuttle — plan your food here <em>before</em> starting your hike. You should already have Neel Gap supplies when you reach Stover Creek.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lodging -->
+  <div class="section">
+    <h2>Where to Sleep Nearby</h2>
+    <p style="font-size:0.88rem; color:#4a5568; margin-bottom:1rem;">
+      Stover Creek is very remote. The most practical lodging options require either a long shuttle back to Amicalola/Dahlonega or continuing ahead to the Neel Gap area.
+    </p>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Amicalola Falls State Park — Hiker Hostel / Lodge</div>
+        <span class="badge badge-paid">Bunk ~$30 / Lodge ~$120+</span>
+      </div>
+      <div class="lodging-meta">Amicalola Falls State Park &mdash; 8.8 mi back via Approach Trail or ~20 mi by road</div>
+      <div class="lodging-desc">
+        If you need to bail out early, Amicalola Falls is the closest facility. The park lodge and a hiker hostel room are available. A shuttle back to your car at Amicalola or ahead to Neel Gap can be arranged through the park or local services.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Legitimate bail-out option</li>
+            <li>Restaurant and showers</li>
+            <li>Shuttle options available</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>Going backwards on the trail</li>
+            <li>Long road shuttle distance</li>
+            <li>Lodge rooms expensive</li>
+          </ul>
+        </div>
+      </div>
+      <div class="contact-row">
+        <a class="call-btn" href="tel:7062657818">Call Park: 706-265-7818</a>
+      </div>
+    </div>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Hiker Hostel (Suches)</div>
+        <span class="badge badge-paid">~$30–40 bunk / ~$75 private</span>
+      </div>
+      <div class="lodging-meta">7693 Hiker Hostel Way, Suches, GA &mdash; ~15 mi by road (shuttle required)</div>
+      <div class="lodging-desc">
+        The Hiker Hostel in Suches offers shuttle service from trail access points including Three Forks (near mile 3.5, accessible via USFS Road 58). Call ahead — they are very hiker-friendly and can arrange pickup for early-trip issues.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Shuttle from Three Forks available</li>
+            <li>True hiker hostel culture</li>
+            <li>Reasonably priced</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>Requires shuttle — no walk-in</li>
+            <li>Small, book ahead in season</li>
+          </ul>
+        </div>
+      </div>
+      <div class="contact-row">
+        <a class="call-btn" href="tel:7069452876">Call 706-945-2876</a>
+        <a class="web-btn" href="https://hikerhostel.com" target="_blank">hikerhostel.com</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="nav-strip">
+    <a class="nav-btn" href="shelter-springer-mountain.html">&larr; Springer Mountain</a>
+    <a href="at-georgia-map.html">&#9968; Back to Map</a>
+    <a class="nav-btn" href="shelter-hawk-mountain.html">Hawk Mountain &rarr;</a>
+  </div>
+
+  <a class="back" href="index.html">&larr; Back to Home</a>
+
+</body>
+</html>
