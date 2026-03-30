@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resupply from Low Gap Shelter — AT Georgia</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 1.5rem;
+      background-color: #f0f4f8;
+      font-family: sans-serif;
+      color: #2d3748;
+    }
+    h1 { font-size: 1.7rem; margin-bottom: 0.2rem; }
+    .subtitle { color: #718096; font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+    .alert {
+      background: #f0fff4;
+      border-left: 4px solid #38a169;
+      padding: 0.75rem 1rem;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.95rem;
+      color: #276749;
+      margin-bottom: 1.5rem;
+    }
+    .alert strong { display: block; margin-bottom: 0.2rem; }
+
+    .section {
+      background: white;
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+    .section h2 {
+      margin: 0 0 1rem;
+      font-size: 1.1rem;
+      color: #2b6cb0;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 0.5rem;
+    }
+
+    /* Route options */
+    .route-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
+    .route-card {
+      flex: 1 1 240px;
+      border-radius: 8px;
+      padding: 1rem;
+      border: 2px solid transparent;
+    }
+    .route-card.recommended {
+      background: #f0fff4;
+      border-color: #38a169;
+    }
+    .route-card.alternate {
+      background: #ebf8ff;
+      border-color: #90cdf4;
+    }
+    .route-card h3 {
+      margin: 0 0 0.3rem;
+      font-size: 1rem;
+    }
+    .route-card.recommended h3 { color: #276749; }
+    .route-card.alternate h3 { color: #2b6cb0; }
+    .route-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: bold;
+      padding: 0.15rem 0.5rem;
+      border-radius: 10px;
+      margin-bottom: 0.5rem;
+    }
+    .badge-rec { background: #c6f6d5; color: #276749; }
+    .badge-alt { background: #bee3f8; color: #2b6cb0; }
+    .route-card p { margin: 0; font-size: 0.88rem; line-height: 1.6; }
+
+    /* Shuttle cards */
+    .shuttle-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .shuttle-card:last-child { margin-bottom: 0; }
+    .shuttle-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .shuttle-name { font-weight: bold; font-size: 1rem; color: #1a365d; }
+    .badge {
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+    .badge-free { background: #c6f6d5; color: #276749; }
+    .badge-paid { background: #bee3f8; color: #2b6cb0; }
+    .badge-donation { background: #fefcbf; color: #744210; }
+    .badge-seasonal { background: #fed7d7; color: #742a2a; }
+    .shuttle-desc { font-size: 0.88rem; line-height: 1.5; color: #4a5568; margin-bottom: 0.75rem; }
+
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .call-btn {
+      display: inline-block;
+      background: #2b6cb0;
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+    .call-btn:hover { background: #2c5282; }
+    .text-btn {
+      display: inline-block;
+      background: #38a169;
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+    .text-btn:hover { background: #276749; }
+    .web-btn {
+      display: inline-block;
+      background: #718096;
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+    }
+    .web-btn:hover { background: #4a5568; }
+
+    /* Resupply locations */
+    .resupply-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+    }
+    .resupply-card:last-child { margin-bottom: 0; }
+    .resupply-name { font-weight: bold; font-size: 1rem; color: #1a365d; margin-bottom: 0.2rem; }
+    .resupply-meta { font-size: 0.8rem; color: #718096; margin-bottom: 0.5rem; }
+    .resupply-desc { font-size: 0.88rem; line-height: 1.5; color: #4a5568; margin-bottom: 0.75rem; }
+    .resupply-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.75rem;
+    }
+    .tag {
+      background: #edf2f7;
+      border-radius: 12px;
+      padding: 0.2rem 0.6rem;
+      font-size: 0.78rem;
+      color: #4a5568;
+    }
+
+    .tip {
+      background: #fffbeb;
+      border-left: 4px solid #f6ad55;
+      padding: 0.75rem 1rem;
+      border-radius: 0 6px 6px 0;
+      font-size: 0.88rem;
+      color: #744210;
+      margin-top: 0.75rem;
+    }
+
+    a.back {
+      display: inline-block;
+      margin-top: 1rem;
+      color: #3182ce;
+      text-decoration: none;
+      font-size: 1rem;
+    }
+    a.back:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <h1>Resupply from Low Gap Shelter</h1>
+  <p class="subtitle">Appalachian Trail, Georgia &mdash; AT Mile ~42</p>
+
+  <div class="alert">
+    <strong>Quickest option: Hike 1.8 miles north to Unicoi Gap</strong>
+    Unicoi Gap (GA-75) is the closest road crossing. From there, Helen is 9 miles east and Hiawassee is 10 miles west. Call Stanimal's (407-435-0294) or text Encourager Shuttles (806-897-7281) for a pickup.
+  </div>
+
+  <!-- Where You Are -->
+  <div class="section">
+    <h2>Your Location</h2>
+    <p style="font-size:0.9rem; line-height:1.6; margin:0 0 0.75rem;">
+      Low Gap Shelter sits at <strong>AT Mile ~42</strong> in Georgia, between Neel Gap (Mile 31.7) and Unicoi Gap (Mile 43.8). The shelter has a reliable spring 0.1 miles off trail.
+    </p>
+    <div class="tip">
+      You are <strong>1.8 miles south</strong> of Unicoi Gap and <strong>10 miles north</strong> of Neel Gap (Mountain Crossings). Unicoi Gap is by far your closest road exit.
+    </div>
+  </div>
+
+  <!-- Route Options -->
+  <div class="section">
+    <h2>Exit Options</h2>
+    <div class="route-grid">
+      <div class="route-card recommended">
+        <span class="route-badge badge-rec">RECOMMENDED</span>
+        <h3>North 1.8 mi &rarr; Unicoi Gap (GA-75)</h3>
+        <p>Hike north past Blue Mountain to Unicoi Gap. Easy descent. GA-75 has decent traffic — hitchhiking east to Helen (~9 mi) or west to Hiawassee (~10 mi) is common. Most shuttle services cover this gap.</p>
+      </div>
+      <div class="route-card alternate">
+        <span class="route-badge badge-alt">ALTERNATE</span>
+        <h3>South 10 mi &rarr; Neel Gap (US-19/129)</h3>
+        <p>Hike back south to Neel Gap. Mountain Crossings outfitter is <em>on the trail</em> — no shuttle needed. Good for gear and basic resupply but limited food selection. Hiawassee is 11 miles west by road from here.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shuttles from Unicoi Gap -->
+  <div class="section">
+    <h2>Shuttles from Unicoi Gap</h2>
+
+    <div class="shuttle-card">
+      <div class="shuttle-header">
+        <div class="shuttle-name">Stanimal's Around the Bend</div>
+        <span class="badge badge-free">FREE for guests</span>
+      </div>
+      <div class="shuttle-desc">
+        Offers free pickup at Unicoi Gap for hostel guests. Non-guests can arrange a paid ride. Covers Unicoi Gap, Indian Grave Gap, Dick's Creek Gap, and Blue Ridge Gap. Runs Amicalola Falls to Fontana Dam.
+      </div>
+      <div class="contact-row">
+        <a class="call-btn" href="tel:4074350294">Call 407-435-0294</a>
+      </div>
+    </div>
+
+    <div class="shuttle-card">
+      <div class="shuttle-header">
+        <div class="shuttle-name">Encourager Shuttles</div>
+        <span class="badge badge-donation">DONATION</span>
+      </div>
+      <div class="shuttle-desc">
+        Based in Hiawassee. Donation-only for local trips. Covers Unicoi Gap to Hiawassee and surrounding area. All donations support trail magic and rescues. <strong>Text preferred.</strong>
+      </div>
+      <div class="contact-row">
+        <a class="text-btn" href="sms:8068977281">Text 806-897-7281</a>
+      </div>
+    </div>
+
+    <div class="shuttle-card">
+      <div class="shuttle-header">
+        <div class="shuttle-name">Hitch-A-Hiker Shuttle</div>
+        <span class="badge badge-paid">PAID &mdash; 24/7</span>
+      </div>
+      <div class="shuttle-desc">
+        Owned by Gracie Rogers, based in Hiawassee. Pet friendly, insured, operates 365 days/24 hours. Covers Atlanta to Fontana Dam including airports. <strong>Text preferred.</strong>
+      </div>
+      <div class="contact-row">
+        <a class="call-btn" href="tel:8132946994">Call 813-294-6994</a>
+        <a class="text-btn" href="sms:8132946994">Text</a>
+      </div>
+    </div>
+
+    <div class="shuttle-card">
+      <div class="shuttle-header">
+        <div class="shuttle-name">Henson Cove Shuttles</div>
+        <span class="badge badge-paid">PAID</span>
+      </div>
+      <div class="shuttle-desc">
+        Based in Hiawassee. Owned by David and Mariah Nugent. Pet friendly, insured. Unicoi Gap shuttle is <strong>$20</strong>. Operates Mon–Sat 9AM–6PM, Sun 9AM–5PM. Guests staying with them get priority.
+      </div>
+      <div class="contact-row">
+        <a class="call-btn" href="tel:7069701533">Call 706-970-1533</a>
+      </div>
+    </div>
+
+    <div class="shuttle-card">
+      <div class="shuttle-header">
+        <div class="shuttle-name">Hiawassee Budget Inn Shuttle</div>
+        <span class="badge badge-paid">$10</span>
+        <span class="badge badge-seasonal">Morning Runs</span>
+      </div>
+      <div class="shuttle-desc">
+        Runs a shuttle bus from Unicoi Gap to Hiawassee at approximately <strong>9:45 AM and 11:45 AM</strong>. Drops off at Holiday Inn Express, Mulls, and the Budget Inn. $10 fee; free for guests.
+      </div>
+      <div class="contact-row">
+        <a class="web-btn" href="https://www.whiteblaze.net" target="_blank">Verify on Whiteblaze</a>
+      </div>
+    </div>
+
+    <div class="shuttle-card">
+      <div class="shuttle-header">
+        <div class="shuttle-name">City of Hiawassee Free Shuttle</div>
+        <span class="badge badge-free">FREE</span>
+        <span class="badge badge-seasonal">Seasonal</span>
+      </div>
+      <div class="shuttle-desc">
+        Free daily shuttle during peak NOBO season (late February through early May). Picks up at Unicoi Gap and Dick's Creek Gap. Check with Trailful to confirm it's running.
+      </div>
+      <div class="contact-row">
+        <a class="call-btn" href="tel:7065214453">Call Trailful (706) 521-HIKE</a>
+      </div>
+    </div>
+
+    <div class="tip">
+      <strong>Hitchhiking from Unicoi Gap:</strong> GA-75 is a state highway with reasonable traffic. Stand on the right shoulder heading east for Helen (~9 miles) or west for Hiawassee (~10 miles). Hikers commonly get picked up within 20–30 minutes in season.
+    </div>
+  </div>
+
+  <!-- Resupply in Helen vs Hiawassee -->
+  <div class="section">
+    <h2>Where to Resupply</h2>
+
+    <div class="resupply-card">
+      <div class="resupply-name">Hiawassee, GA (Recommended)</div>
+      <div class="resupply-meta">~10 miles west of Unicoi Gap on GA-75</div>
+      <div class="resupply-desc">
+        The top thru-hiker resupply destination in North Georgia. Walkable Main Street with everything a hiker needs. Free city shuttle runs during peak season from Unicoi Gap.
+      </div>
+      <div class="resupply-tags">
+        <span class="tag">Ingles Supermarket</span>
+        <span class="tag">Trailful Outdoor Co. (gear + food)</span>
+        <span class="tag">Post Office</span>
+        <span class="tag">Laundromat</span>
+        <span class="tag">Pharmacy</span>
+        <span class="tag">Restaurants</span>
+        <span class="tag">Hotels</span>
+        <span class="tag">Brewery</span>
+      </div>
+      <div class="contact-row">
+        <a class="call-btn" href="tel:7065214453">Trailful: (706) 521-HIKE</a>
+        <a class="web-btn" href="https://trailful.com/pages/georgia-thru-hiker-resupply-outfitter-store" target="_blank">Trailful Website</a>
+      </div>
+    </div>
+
+    <div class="resupply-card">
+      <div class="resupply-name">Helen, GA</div>
+      <div class="resupply-meta">~9 miles east of Unicoi Gap on GA-75</div>
+      <div class="resupply-desc">
+        Georgia's alpine village — popular tourist town. Good food and lodging options. Grocery store and post office available. Unicoi State Park (2 miles NE of Helen) offers camping, cabins, showers, laundry, and a restaurant.
+      </div>
+      <div class="resupply-tags">
+        <span class="tag">Grocery Store</span>
+        <span class="tag">Post Office</span>
+        <span class="tag">Restaurants</span>
+        <span class="tag">Hotels / Motels</span>
+        <span class="tag">Unicoi State Park (showers + laundry)</span>
+      </div>
+    </div>
+
+    <div class="resupply-card">
+      <div class="resupply-name">Mountain Crossings at Neel Gap (On-Trail Option)</div>
+      <div class="resupply-meta">10 miles south on the AT &mdash; no road exit needed</div>
+      <div class="resupply-desc">
+        If you'd rather not leave the trail, hike 10 miles south back to Neel Gap. Mountain Crossings is the only outfitter in the country where the AT passes directly through the building. Good for gear repairs, fuel, and basic food — but limited full resupply compared to Hiawassee or Helen.
+      </div>
+      <div class="resupply-tags">
+        <span class="tag">Gear &amp; Repairs</span>
+        <span class="tag">Fuel</span>
+        <span class="tag">Hiker Food</span>
+        <span class="tag">Pack Shakedowns</span>
+        <span class="tag">No shuttle needed</span>
+      </div>
+      <div class="contact-row">
+        <a class="web-btn" href="https://mountaincrossings.com" target="_blank">mountaincrossings.com</a>
+      </div>
+    </div>
+
+  </div>
+
+  <a class="back" href="index.html">&larr; Back to Home</a>
+
+</body>
+</html>
