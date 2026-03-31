@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spence Field Shelter — AT Shelter Guide</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin:0; padding:1.5rem; background:#f0f4f8; font-family:sans-serif; color:#2d3748; }
+    h1 { font-size:1.7rem; margin-bottom:0.2rem; }
+    .subtitle { color:#718096; font-size:0.88rem; margin-bottom:1.25rem; }
+    .breadcrumb { font-size:0.78rem; color:#718096; margin-bottom:0.75rem; }
+    .breadcrumb a { color:#3182ce; text-decoration:none; }
+    .breadcrumb a:hover { text-decoration:underline; }
+    .section { background:white; border-radius:8px; padding:1.25rem; margin-bottom:1.25rem; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+    .section h2 { margin:0 0 1rem; font-size:1.1rem; color:#065f46; border-bottom:1px solid #d1fae5; padding-bottom:0.5rem; }
+    .stat-grid { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem; }
+    .stat { background:#ecfdf5; border-radius:6px; padding:0.4rem 0.75rem; font-size:0.85rem; }
+    .stat span { font-weight:bold; color:#065f46; }
+    .badge { font-size:0.75rem; padding:0.2rem 0.6rem; border-radius:12px; font-weight:bold; white-space:nowrap; display:inline-block; }
+    .badge-free { background:#c6f6d5; color:#276749; }
+    .badge-paid { background:#bee3f8; color:#2b6cb0; }
+    .gsmnp-banner { background:linear-gradient(135deg, #065f46, #047857); color:white; border-radius:10px; padding:1rem 1.25rem; margin-bottom:1.25rem; font-size:0.88rem; line-height:1.6; }
+    .gsmnp-banner strong { display:block; font-size:1rem; margin-bottom:0.3rem; }
+    .warning { background:#fff5f5; border-left:4px solid #e53e3e; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#742a2a; margin-bottom:0.75rem; }
+    .tip { background:#fffbeb; border-left:4px solid #f6ad55; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#744210; margin-top:0.75rem; }
+    .route-grid { display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .route-card { flex:1 1 220px; border-radius:8px; padding:1rem; border:2px solid transparent; }
+    .route-card.recommended { background:#f0fff4; border-color:#38a169; }
+    .route-card.alternate { background:#ebf8ff; border-color:#90cdf4; }
+    .route-card h3 { margin:0 0 0.3rem; font-size:1rem; }
+    .route-card.recommended h3 { color:#276749; }
+    .route-card.alternate h3 { color:#2b6cb0; }
+    .route-badge { display:inline-block; font-size:0.72rem; font-weight:bold; padding:0.15rem 0.5rem; border-radius:10px; margin-bottom:0.5rem; }
+    .badge-rec { background:#c6f6d5; color:#276749; }
+    .badge-alt { background:#bee3f8; color:#2b6cb0; }
+    .route-card p { margin:0; font-size:0.88rem; line-height:1.6; }
+    .lodging-card { border:1px solid #e2e8f0; border-radius:8px; padding:1rem; margin-bottom:0.75rem; }
+    .lodging-card:last-child { margin-bottom:0; }
+    .lodging-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.3rem; }
+    .lodging-name { font-weight:bold; font-size:1rem; color:#1a365d; }
+    .lodging-meta { font-size:0.8rem; color:#718096; margin-bottom:0.5rem; }
+    .lodging-desc { font-size:0.88rem; line-height:1.5; color:#4a5568; margin-bottom:0.75rem; }
+    .pros-cons { display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .pros, .cons { flex:1 1 160px; font-size:0.83rem; line-height:1.7; }
+    .pros { background:#f0fff4; border-radius:6px; padding:0.6rem 0.75rem; }
+    .cons { background:#fff5f5; border-radius:6px; padding:0.6rem 0.75rem; }
+    .pros strong { color:#276749; display:block; margin-bottom:0.2rem; }
+    .cons strong { color:#c53030; display:block; margin-bottom:0.2rem; }
+    .pros ul, .cons ul { margin:0; padding-left:1.2rem; }
+    .nav-strip { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-top:1.5rem; }
+    .nav-btn { display:inline-block; padding:0.5rem 1rem; border-radius:6px; font-size:0.88rem; text-decoration:none; background:white; color:#065f46; border:1px solid #a7f3d0; }
+    .nav-btn:hover { background:#ecfdf5; }
+    a.back { display:inline-block; margin-top:1rem; color:#3182ce; text-decoration:none; font-size:0.95rem; }
+    a.back:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> &rsaquo;
+    <a href="at-map.html">AT Map</a> &rsaquo;
+    Spence Field Shelter
+  </div>
+
+  <h1>Spence Field Shelter</h1>
+  <div class="subtitle">Great Smoky Mountains National Park &mdash; NC/TN Border &mdash; AT Mile ~180.7</div>
+
+  <div class="gsmnp-banner">
+    <strong>Great Smoky Mountains NP &mdash; Permit Required</strong>
+    All AT shelters in GSMNP require a reservation through <strong>recreation.gov</strong>. Cost: <strong>$40 reservation fee + $8 per person per night</strong>. Purchase your permit before entering the park &mdash; you cannot buy one on the trail. All shelters have <strong>chain-link bear enclosures</strong>: you must sleep inside the enclosure and the gate must remain latched at all times. No dispersed camping is permitted anywhere in the park. You must stay at the shelter listed on your permit &mdash; to change shelters, call <strong>(865) 436-1231</strong>.
+  </div>
+
+  <div class="section">
+    <h2>Shelter Overview</h2>
+    <div class="stat-grid">
+      <div class="stat">AT Mile <span>~180.7</span></div>
+      <div class="stat">Elevation <span>~4,900 ft</span></div>
+      <div class="stat">Capacity <span>12</span></div>
+      <div class="stat">State <span>NC/TN Border</span></div>
+      <div class="stat">Water <span>Spring 0.1 mi downhill</span></div>
+      <div class="stat">Privy <span>Yes</span></div>
+    </div>
+    <p style="font-size:0.88rem; line-height:1.6; color:#4a5568; margin:0 0 0.75rem;">
+      Spence Field Shelter is one of the most celebrated camp spots in the Smokies. It sits adjacent to Spence Field, one of the largest natural grassy balds in the entire Great Smoky Mountains &mdash; a sweeping open meadow that provides panoramic views in all directions. On a clear day, Cades Cove is visible to the north in Tennessee, one of the park's most visited and historically significant valleys. To the south and east, the main ridge of the Smokies rolls on in both directions.
+    </p>
+    <p style="font-size:0.88rem; line-height:1.6; color:#4a5568; margin:0;">
+      The grassy bald is actively maintained by the National Park Service &mdash; without periodic mowing and management, the forest would begin reclaiming this meadow within decades, as forest succession naturally fills in open areas at this elevation. The bald is believed to have originated from a combination of Indigenous burning practices, early settlement grazing, and possibly natural factors; its exact origin remains a subject of ecological research.
+    </p>
+    <div class="tip">
+      <strong>"Rocky Top":</strong> Rocky Top, the famous Tennessee state song (and University of Tennessee fight song), was written by Felice and Boudleaux Bryant in 1967 &mdash; inspired by this area of the Smokies. The actual rocky summit of Rocky Top is visible from Spence Field, about 0.5 miles east on the main ridge. Many hikers make the short detour to stand on the summit celebrated in song.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>GSMNP Rules at a Glance</h2>
+    <div class="warning">
+      <strong>Permit required before entering:</strong> Book at recreation.gov ($40 + $8/person/night). You cannot legally camp here without a valid permit for this specific shelter.
+    </div>
+    <ul style="font-size:0.88rem; line-height:1.9; color:#4a5568; margin:0; padding-left:1.3rem;">
+      <li>Sleep inside the chain-link bear enclosure &mdash; no exceptions.</li>
+      <li>Keep the enclosure gate latched at all times, even while entering or exiting.</li>
+      <li>No dispersed camping anywhere in Great Smoky Mountains NP.</li>
+      <li>Stay only at the shelter listed on your permit. To change shelters, call <strong>(865) 436-1231</strong>.</li>
+      <li>Campfires only in established fire rings where permitted &mdash; check current conditions for fire bans.</li>
+      <li>Stay on designated trails &mdash; the bald meadow vegetation is fragile; do not trample off-trail.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Getting Supplies</h2>
+    <p style="font-size:0.88rem; color:#4a5568; margin:0 0 0.75rem;">
+      Spence Field is at mile ~180.7 with no in-park resupply available. You are approximately 19+ trail miles from Newfound Gap and the Gatlinburg hitch northbound.
+    </p>
+    <div class="route-grid">
+      <div class="route-card recommended">
+        <h3>Fontana Village, NC</h3>
+        <div class="route-badge badge-rec">Recommended &mdash; Pre-Entry Resupply</div>
+        <p>The essential resupply point before entering GSMNP from the south. Fontana Village has a camp store, restaurant, and hiker services. You are roughly 11 trail miles north of Fontana Dam from here &mdash; not practical to backtrack mid-traverse, but critical for pre-entry planning. Carry sufficient food before you start.</p>
+      </div>
+      <div class="route-card alternate">
+        <h3>Gatlinburg, TN</h3>
+        <div class="route-badge badge-alt">Alternate &mdash; Northbound Exit</div>
+        <p>Gatlinburg is your next resupply northbound &mdash; accessible from Newfound Gap via a hitch on US-441 (~15 road miles west). From Spence Field, you are approximately 19+ trail miles from Newfound Gap. Plan 4 days of food to cover this stretch. Gatlinburg has full grocery (Food City, Walmart), outfitters, and multiple hiker lodging options.</p>
+      </div>
+    </div>
+    <div class="tip">
+      <strong>No resupply inside the park.</strong> Spence Field is roughly the midpoint of the Smokies AT traverse. You should be tracking your food supply carefully &mdash; you need enough to make it another 19+ miles to Newfound Gap.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Where to Sleep Nearby</h2>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Spence Field Shelter</div>
+        <span class="badge badge-free">Permit Required</span>
+      </div>
+      <div class="lodging-meta">AT Mile ~180.7 &bull; Capacity: 12 &bull; Chain-link bear enclosure &bull; Privy on-site &bull; Spring 0.1 mi downhill</div>
+      <div class="lodging-desc">
+        One of the most scenically positioned shelters in the Smokies, sitting at the edge of a large grassy bald with sweeping views. The chain-link bear enclosure is mandatory for sleeping. The spring is 0.1 miles downhill &mdash; collect water before settling in for the evening. Sunsets over the Tennessee mountains from Spence Field bald are among the best on the entire AT.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Spectacular bald views</li>
+            <li>On-trail &mdash; no extra miles</li>
+            <li>Privy on-site</li>
+            <li>Rocky Top access nearby</li>
+            <li>Memorable Smokies experience</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>Must sleep in bear enclosure</li>
+            <li>$40 + $8/person permit cost</li>
+            <li>Spring is 0.1 mi downhill</li>
+            <li>Only 12-person capacity; books up</li>
+            <li>Exposed to weather on the bald</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Fontana Village Resort</div>
+        <span class="badge badge-paid">Paid &bull; ~11 mi south</span>
+      </div>
+      <div class="lodging-meta">Fontana Dam, NC &bull; ~11 trail miles south &bull; Cabins, hotel rooms, bunks available</div>
+      <div class="lodging-desc">
+        Fontana Village is the nearest town-style lodging, located outside the park's southern boundary. Full amenities include cabins, hotel rooms, a restaurant, camp store, laundry, and showers. From Spence Field it is roughly 11 trail miles south &mdash; only practical for hikers exiting the park or doing a supported section hike.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Full resort amenities</li>
+            <li>Showers, laundry, restaurant</li>
+            <li>Camp store for resupply</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>~11 miles south &mdash; significant backtrack</li>
+            <li>Requires leaving the park</li>
+            <li>Resort pricing</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="nav-strip">
+    <a class="nav-btn" href="shelter-mollies-ridge.html">&larr; Mollies Ridge</a>
+    <a class="nav-btn" href="at-map.html">AT Map</a>
+    <a class="nav-btn" href="shelter-derrick-knob.html">Derrick Knob &rarr;</a>
+  </div>
+
+  <a class="back" href="at-map.html">&larr; Back to AT Map</a>
+
+</body>
+</html>

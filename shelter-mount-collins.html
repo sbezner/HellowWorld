@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mount Collins Shelter – Appalachian Trail, Great Smoky Mountains</title>
+<style>
+* { box-sizing: border-box; }
+body { margin:0; padding:1.5rem; background:#f0f4f8; font-family:sans-serif; color:#2d3748; }
+h1 { font-size:1.7rem; margin-bottom:0.2rem; }
+.subtitle { color:#718096; font-size:0.88rem; margin-bottom:1.25rem; }
+.breadcrumb { font-size:0.78rem; color:#718096; margin-bottom:0.75rem; }
+.breadcrumb a { color:#3182ce; text-decoration:none; }
+.breadcrumb a:hover { text-decoration:underline; }
+.section { background:white; border-radius:8px; padding:1.25rem; margin-bottom:1.25rem; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+.section h2 { margin:0 0 1rem; font-size:1.1rem; color:#065f46; border-bottom:1px solid #d1fae5; padding-bottom:0.5rem; }
+.stat-grid { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem; }
+.stat { background:#ecfdf5; border-radius:6px; padding:0.4rem 0.75rem; font-size:0.85rem; }
+.stat span { font-weight:bold; color:#065f46; }
+.badge { font-size:0.75rem; padding:0.2rem 0.6rem; border-radius:12px; font-weight:bold; white-space:nowrap; display:inline-block; }
+.badge-free { background:#c6f6d5; color:#276749; }
+.badge-paid { background:#bee3f8; color:#2b6cb0; }
+.gsmnp-banner { background:linear-gradient(135deg, #065f46, #047857); color:white; border-radius:10px; padding:1rem 1.25rem; margin-bottom:1.25rem; font-size:0.88rem; line-height:1.6; }
+.gsmnp-banner strong { display:block; font-size:1rem; margin-bottom:0.3rem; }
+.clingmans-banner { background:linear-gradient(135deg, #1e3a5f, #2b6cb0); color:white; border-radius:10px; padding:1rem 1.25rem; margin-bottom:1.25rem; font-size:0.88rem; line-height:1.6; }
+.clingmans-banner strong { display:block; font-size:1rem; margin-bottom:0.3rem; }
+.warning { background:#fff5f5; border-left:4px solid #e53e3e; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#742a2a; margin-bottom:0.75rem; }
+.tip { background:#fffbeb; border-left:4px solid #f6ad55; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#744210; margin-top:0.75rem; }
+.route-grid { display:flex; flex-wrap:wrap; gap:0.75rem; }
+.route-card { flex:1 1 220px; border-radius:8px; padding:1rem; border:2px solid transparent; }
+.route-card.recommended { background:#f0fff4; border-color:#38a169; }
+.route-card.alternate { background:#ebf8ff; border-color:#90cdf4; }
+.route-card h3 { margin:0 0 0.3rem; font-size:1rem; }
+.route-card.recommended h3 { color:#276749; }
+.route-card.alternate h3 { color:#2b6cb0; }
+.route-badge { display:inline-block; font-size:0.72rem; font-weight:bold; padding:0.15rem 0.5rem; border-radius:10px; margin-bottom:0.5rem; }
+.badge-rec { background:#c6f6d5; color:#276749; }
+.badge-alt { background:#bee3f8; color:#2b6cb0; }
+.route-card p { margin:0; font-size:0.88rem; line-height:1.6; }
+.lodging-card { border:1px solid #e2e8f0; border-radius:8px; padding:1rem; margin-bottom:0.75rem; }
+.lodging-card:last-child { margin-bottom:0; }
+.lodging-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.3rem; }
+.lodging-name { font-weight:bold; font-size:1rem; color:#1a365d; }
+.lodging-meta { font-size:0.8rem; color:#718096; margin-bottom:0.5rem; }
+.lodging-desc { font-size:0.88rem; line-height:1.5; color:#4a5568; margin-bottom:0.75rem; }
+.pros-cons { display:flex; flex-wrap:wrap; gap:0.75rem; }
+.pros, .cons { flex:1 1 160px; font-size:0.83rem; line-height:1.7; }
+.pros { background:#f0fff4; border-radius:6px; padding:0.6rem 0.75rem; }
+.cons { background:#fff5f5; border-radius:6px; padding:0.6rem 0.75rem; }
+.pros strong { color:#276749; display:block; margin-bottom:0.2rem; }
+.cons strong { color:#c53030; display:block; margin-bottom:0.2rem; }
+.pros ul, .cons ul { margin:0; padding-left:1.2rem; }
+.nav-strip { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-top:1.5rem; }
+.nav-btn { display:inline-block; padding:0.5rem 1rem; border-radius:6px; font-size:0.88rem; text-decoration:none; background:white; color:#065f46; border:1px solid #a7f3d0; }
+.nav-btn:hover { background:#ecfdf5; }
+a.back { display:inline-block; margin-top:1rem; color:#3182ce; text-decoration:none; font-size:0.95rem; }
+a.back:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+
+<div class="breadcrumb">
+  <a href="index.html">Home</a> &rsaquo;
+  <a href="at-map.html">AT Map</a> &rsaquo;
+  Mount Collins Shelter
+</div>
+
+<h1>Mount Collins Shelter</h1>
+<p class="subtitle">Great Smoky Mountains NP &nbsp;&middot;&nbsp; AT Mile ~200.5 &nbsp;&middot;&nbsp; Lean-to &nbsp;&middot;&nbsp; Elev. ~5,870 ft</p>
+
+<div class="clingmans-banner">
+  <strong>&#9968; Clingmans Dome — 0.5 Miles Away — Highest Point on the AT</strong>
+  Clingmans Dome (6,643 ft) is the highest point on the entire 2,194-mile Appalachian Trail. A 0.5-mile paved spur trail leads from the AT to the summit observation tower. The views on a clear day are unmatched anywhere on the AT — 100-mile visibility into seven states. This is not a side trip to skip.
+</div>
+
+<div class="gsmnp-banner">
+  <strong>&#127956; Great Smoky Mountains National Park — Permit Required</strong>
+  Purchase at recreation.gov before entering the park. Cost: $40 + $8/person/night. Must stay at the shelter listed on your permit. Gate on bear enclosure must stay latched. Call (865) 436-1231 to modify shelter reservations.
+</div>
+
+<div class="section">
+  <h2>Shelter Overview</h2>
+  <div class="stat-grid">
+    <div class="stat">AT Mile <span>~200.5</span></div>
+    <div class="stat">Elevation <span>~5,870 ft</span></div>
+    <div class="stat">Capacity <span>12</span></div>
+    <div class="stat">Type <span>Lean-to (chain-link enclosure)</span></div>
+    <div class="stat">State Line <span>NC / TN border</span></div>
+    <div class="stat">Water <span>Spring 0.3 mi on side trail</span></div>
+    <div class="stat">Privy <span>Yes</span></div>
+    <div class="stat">Fee <span class="badge badge-free">Free (permit required)</span></div>
+  </div>
+
+  <p>Mount Collins Shelter sits just 0.5 miles from Clingmans Dome — the highest point on the entire Appalachian Trail at 6,643 feet. This proximity makes it one of the most strategically valuable shelters in the entire 2,194-mile trail, and it's one of the most sought-after shelter reservations in GSMNP. If you're timing your hike to have a clear-day visit to Clingmans Dome, plan your permit to include this shelter specifically.</p>
+
+  <p>At nearly 5,900 feet, Mount Collins Shelter is among the highest-elevation shelters on the AT. The surrounding forest is pure high-elevation red spruce and Fraser fir — the boreal-type ecosystem that crowns the tallest Smokies peaks. The forest here feels more like Canada than Tennessee. On cold nights, temperatures can drop below freezing even in July. The terrain above the tree line at Clingmans Dome is exposed to fierce winds; the shelter in its hollow is protected, but the summit ridge is not.</p>
+
+  <p>The spring is 0.3 miles away on a side trail — the longest water carry of the Smokies shelter chain. Plan to fill up before arriving or make the trip first thing in the morning. A privy is maintained near the shelter. The AT crosses the Forney Ridge Trail near here, and the Clingmans Dome Road passes 0.5 miles away — the only road crossing opportunity in this section of the Smokies.</p>
+
+  <div class="tip">
+    <strong>Clingmans Dome Timing:</strong> Visit the summit at sunrise if you can. The observation tower is a 50-foot concrete ramp above the tree line with unobstructed 360° views. Clear days in spring and fall offer 100+ mile visibility. The dome is typically fogged in during summer afternoons — go early.
+  </div>
+</div>
+
+<div class="section">
+  <h2>Getting Supplies</h2>
+
+  <div class="route-grid">
+    <div class="route-card recommended">
+      <span class="route-badge badge-rec">RECOMMENDED</span>
+      <h3>Gatlinburg, TN via Newfound Gap (US-441)</h3>
+      <p><strong>~6.8 trail miles northeast to Newfound Gap, then ~15 road miles west to Gatlinburg.</strong> Newfound Gap on US-441 is the primary road crossing and resupply access point for the Smokies. From Mount Collins, it's about 6.8 miles to the gap. Hitch west into Gatlinburg for a full grocery (Food City or Walmart), outfitters, restaurants, laundry, and lodging. Most hikers plan a Gatlinburg resupply stop from Newfound Gap. Average hitch wait: 15–30 minutes.</p>
+    </div>
+    <div class="route-card alternate">
+      <span class="route-badge badge-alt">ALTERNATE — SOUTH</span>
+      <h3>Fontana Village (backtrack)</h3>
+      <p><strong>~36 trail miles south</strong> — not practical for resupply from Mount Collins. The only realistic resupply direction is Newfound Gap to the northeast. If you're running low on food here, push the 6.8 miles to Newfound Gap and hitch to Gatlinburg. Do not head back south.</p>
+    </div>
+  </div>
+
+  <div class="tip">
+    <strong>Clingmans Dome Road:</strong> The paved road to the Clingmans Dome parking area is 0.5 miles from the shelter. In season (April–November), day hikers with cars are at the parking area — a potential emergency exit or ride request point. The road is closed to vehicles in winter.
+  </div>
+</div>
+
+<div class="section">
+  <h2>Where to Sleep</h2>
+
+  <div class="lodging-card">
+    <div class="lodging-header">
+      <span class="lodging-name">Mount Collins Shelter (GSMNP Lean-to)</span>
+      <span class="badge badge-free">Free (permit req.)</span>
+    </div>
+    <div class="lodging-meta">On trail · AT Mile ~200.5 · Permit required · Capacity 12</div>
+    <div class="lodging-desc">Chain-link enclosed lean-to at nearly 6,000 ft — cold at night in any season. The location 0.5 miles from Clingmans Dome makes this the most coveted shelter reservation in the Smokies. Book well in advance for spring (March–May). Spring water 0.3 miles away. Privy on site. Gate must stay latched. Insulation layers are essential — even in June this shelter can drop below 45°F at night.</div>
+    <div class="pros-cons">
+      <div class="pros"><strong>Pros</strong>
+        <ul>
+          <li>0.5 mi from highest AT point (6,643 ft)</li>
+          <li>Extraordinary high-elevation location</li>
+          <li>Classic boreal spruce-fir forest</li>
+          <li>Free (just the permit fee)</li>
+        </ul>
+      </div>
+      <div class="cons"><strong>Cons</strong>
+        <ul>
+          <li>Most popular Smokies shelter — books early</li>
+          <li>Very cold at 5,870 ft</li>
+          <li>Spring 0.3 mi away — longest water carry</li>
+          <li>Exposed to wind on summit approach</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="lodging-card">
+    <div class="lodging-header">
+      <span class="lodging-name">Gatlinburg, TN — Various Hotels</span>
+      <span class="badge badge-paid">~$80–150/night</span>
+    </div>
+    <div class="lodging-meta">~6.8 trail miles NE to Newfound Gap + 15 road miles west · Year-round</div>
+    <div class="lodging-desc">Gatlinburg is a full resort town at the northwest entrance to GSMNP. Wide range of hotels, motels, and vacation rentals at all price points. Hiker-friendly options include the Gatlinburg Inn (historic, downtown) and various budget motels on US-441. A good zero-day base for drying out and resupplying before the eastern Smokies section.</div>
+    <div class="pros-cons">
+      <div class="pros"><strong>Pros</strong>
+        <ul>
+          <li>Full grocery and outfitter access</li>
+          <li>Hot food, laundry, showers</li>
+          <li>Easy hitch from Newfound Gap</li>
+        </ul>
+      </div>
+      <div class="cons"><strong>Cons</strong>
+        <ul>
+          <li>6.8 miles + hitch away</li>
+          <li>Very touristy — can be overwhelming</li>
+          <li>Prices spike on weekends</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="nav-strip">
+  <a href="shelter-double-spring-gap.html" class="nav-btn">&larr; Double Spring Gap</a>
+  <a href="at-map.html" class="nav-btn">&#9968; Back to Map</a>
+  <a href="shelter-icewater-spring.html" class="nav-btn">Icewater Spring &rarr;</a>
+</div>
+
+<a href="index.html" class="back">&larr; Back to Home</a>
+
+</body>
+</html>

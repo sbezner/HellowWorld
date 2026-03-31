@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Appalachian Trail Map — Georgia &amp; North Carolina</title>
+  <title>Appalachian Trail Map — Georgia, North Carolina &amp; Great Smoky Mountains</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -99,6 +99,7 @@
     .sp .state-tag { display:inline-block; font-size:0.7rem; font-weight:bold; padding:0.1rem 0.45rem; border-radius:10px; margin-bottom:0.5rem; }
     .sp .state-ga { background:#c6f6d5; color:#276749; }
     .sp .state-nc { background:#bee3f8; color:#2b6cb0; }
+    .sp .state-gsmnp { background:#d1fae5; color:#065f46; }
     .sp a {
       display: block;
       background: #2d5a27;
@@ -154,8 +155,8 @@
 
 <div id="header">
   <div>
-    <div class="sub">Appalachian Trail &mdash; Georgia &amp; North Carolina &bull; Springer Mountain to Fontana Dam</div>
-    <h1>&#9968; Appalachian Trail Map &mdash; 24 Shelters</h1>
+    <div class="sub">Appalachian Trail &mdash; Georgia, North Carolina &amp; Great Smoky Mountains &bull; Springer Mountain to Davenport Gap</div>
+    <h1>&#9968; Appalachian Trail Map &mdash; 37 Shelters</h1>
   </div>
   <span class="offline-badge">&#9888; Map tiles require internet &bull; All shelter pages work offline</span>
 </div>
@@ -166,7 +167,7 @@
 
   <div id="panel">
     <div id="panel-toggle" onclick="togglePanel()">
-      <span>&#9968; All Shelters &mdash; Click to expand list &bull; GA (11) + NC (13)</span>
+      <span>&#9968; All Shelters &mdash; Click to expand list &bull; GA (11) + NC (13) + Smokies (13)</span>
       <span class="arrow">&#9650;</span>
     </div>
     <div id="shelter-list-wrap"></div>
@@ -203,6 +204,20 @@ const shelters = [
   { name:'Brown Fork Gap Shelter',     state:'NC', type:'lean-to',     lat:35.393,  lng:-83.685,  mile:143.8,elev:3740, cap:8,  url:'shelter-brown-fork-gap.html',     water:'Spring 100 yds on blue-blazed trail' },
   { name:'Cable Gap Shelter',          state:'NC', type:'lean-to',     lat:35.422,  lng:-83.741,  mile:150.8,elev:2900, cap:8,  url:'shelter-cable-gap.html',          water:'Spring 50 yds from shelter' },
   { name:'Fontana Dam Shelter',        state:'NC', type:'lean-to',     lat:35.447,  lng:-83.803,  mile:164.7,elev:1680, cap:24, url:'shelter-fontana-dam.html',        water:'Running water on site (piped)', hilton:true },
+  // ── Great Smoky Mountains National Park ──
+  { name:'Birch Spring Gap Shelter',   state:'GSMNP', type:'lean-to', lat:35.512,  lng:-83.836,  mile:168.1,elev:3400, cap:12, url:'shelter-birch-spring-gap.html',   water:'Spring on blue-blaze side trail' },
+  { name:'Russell Field Shelter',      state:'GSMNP', type:'lean-to', lat:35.547,  lng:-83.820,  mile:174.2,elev:4360, cap:14, url:'shelter-russell-field.html',      water:'Spring 0.1 mi on side trail' },
+  { name:'Mollies Ridge Shelter',      state:'GSMNP', type:'lean-to', lat:35.562,  lng:-83.800,  mile:177.8,elev:4570, cap:12, url:'shelter-mollies-ridge.html',      water:'Spring nearby' },
+  { name:'Spence Field Shelter',       state:'GSMNP', type:'lean-to', lat:35.572,  lng:-83.775,  mile:180.7,elev:4900, cap:12, url:'shelter-spence-field.html',       water:'Spring 0.1 mi downhill' },
+  { name:'Derrick Knob Shelter',       state:'GSMNP', type:'lean-to', lat:35.581,  lng:-83.715,  mile:186.6,elev:4880, cap:14, url:'shelter-derrick-knob.html',       water:'Spring on side trail' },
+  { name:'Silers Bald Shelter',        state:'GSMNP', type:'lean-to', lat:35.577,  lng:-83.677,  mile:192.0,elev:5460, cap:12, url:'shelter-silers-bald.html',        water:'Spring 0.15 mi south on side trail' },
+  { name:'Double Spring Gap Shelter',  state:'GSMNP', type:'lean-to', lat:35.572,  lng:-83.652,  mile:195.3,elev:5510, cap:14, url:'shelter-double-spring-gap.html',  water:'Two springs nearby (namesake)' },
+  { name:'Mount Collins Shelter',      state:'GSMNP', type:'lean-to', lat:35.564,  lng:-83.558,  mile:200.5,elev:5870, cap:12, url:'shelter-mount-collins.html',      water:'Spring 0.3 mi on side trail', clingmans:true },
+  { name:'Icewater Spring Shelter',    state:'GSMNP', type:'lean-to', lat:35.623,  lng:-83.405,  mile:207.3,elev:5820, cap:12, url:'shelter-icewater-spring.html',    water:'Icewater Spring (reliable, cold)' },
+  { name:'Pecks Corner Shelter',       state:'GSMNP', type:'lean-to', lat:35.687,  lng:-83.315,  mile:213.0,elev:5280, cap:12, url:'shelter-pecks-corner.html',       water:'Spring nearby' },
+  { name:'Tricorner Knob Shelter',     state:'GSMNP', type:'lean-to', lat:35.712,  lng:-83.265,  mile:216.7,elev:5920, cap:12, url:'shelter-tricorner-knob.html',     water:'Spring 0.2 mi south on side trail' },
+  { name:'Cosby Knob Shelter',         state:'GSMNP', type:'lean-to', lat:35.738,  lng:-83.198,  mile:222.4,elev:4700, cap:12, url:'shelter-cosby-knob.html',         water:'Spring nearby' },
+  { name:'Davenport Gap Shelter',      state:'GSMNP', type:'lean-to', lat:35.762,  lng:-83.145,  mile:227.3,elev:1975, cap:12, url:'shelter-davenport-gap.html',      water:'Spring on side trail', parkExit:true },
 ];
 
 // ── AT trail polyline ─────────────────────────────────────────────────────────
@@ -223,10 +238,19 @@ const trail = [
   [35.240,-83.568],[35.270,-83.568],[35.300,-83.571],[35.334,-83.579],
   [35.355,-83.630],[35.373,-83.655],[35.393,-83.685],[35.410,-83.710],
   [35.422,-83.741],[35.435,-83.769],[35.447,-83.803],
+  // Great Smoky Mountains National Park
+  [35.462,-83.810],[35.485,-83.823],[35.512,-83.836],
+  [35.530,-83.828],[35.547,-83.820],[35.562,-83.800],
+  [35.572,-83.775],[35.578,-83.748],[35.581,-83.715],
+  [35.577,-83.677],[35.572,-83.652],[35.566,-83.613],
+  [35.564,-83.558],[35.562,-83.498],[35.590,-83.455],
+  [35.611,-83.425],[35.623,-83.405],[35.645,-83.378],
+  [35.667,-83.348],[35.687,-83.315],[35.712,-83.265],
+  [35.738,-83.198],[35.762,-83.145],
 ];
 
 // ── Map ───────────────────────────────────────────────────────────────────────
-const map = L.map('map', { zoomControl: true }).setView([35.05, -83.87], 8);
+const map = L.map('map', { zoomControl: true }).setView([35.25, -83.55], 8);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
@@ -251,8 +275,10 @@ function makeIcon(shelter) {
   const isCabin = shelter.type === 'stone-cabin';
   const isHilton = shelter.hilton;
   const isNC = shelter.state === 'NC';
-  let bg = isCabin ? '#5a6e7e' : (isNC ? '#2b6cb0' : '#8B4513');
+  const isSmokies = shelter.state === 'GSMNP';
+  let bg = isCabin ? '#5a6e7e' : (isSmokies ? '#065f46' : (isNC ? '#2b6cb0' : '#8B4513'));
   if (isHilton) bg = '#6b21a8';
+  if (shelter.parkExit) bg = '#92400e';
   const svg = isCabin
     ? `<svg width="14" height="14" viewBox="0 0 14 14"><rect x="2" y="6" width="10" height="7" fill="white"/><polygon points="7,0 14,6 0,6" fill="white"/></svg>`
     : `<svg width="14" height="12" viewBox="0 0 14 12"><polygon points="7,0 14,12 0,12" fill="white"/></svg>`;
@@ -273,9 +299,13 @@ shelters.forEach(s => {
   let extra = '';
   if (s.hilton) extra = `<div style="background:#f3e8ff;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#6b21a8;margin-bottom:0.5rem;">&#11088; The Hilton of the AT</div>`;
   if (s.noc) extra = `<a class="noc-link" href="noc-nantahala.html">&#9972; View NOC Guide &rarr;</a>`;
+  if (s.clingmans) extra = `<div style="background:#d1fae5;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#065f46;margin-bottom:0.5rem;">&#9968; Clingmans Dome 0.5 mi (6,643 ft — highest AT point)</div>`;
+  if (s.parkExit) extra = `<div style="background:#fef3c7;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#92400e;margin-bottom:0.5rem;">&#127937; Park Exit &rarr; Hot Springs, NC section</div>`;
+  const stateClass = s.state === 'GSMNP' ? 'state-gsmnp' : `state-${s.state.toLowerCase()}`;
+  const stateLabel = s.state === 'GSMNP' ? 'Smokies' : s.state;
   m.bindPopup(`
     <div class="sp">
-      <span class="state-tag state-${s.state.toLowerCase()}">${s.state}</span>
+      <span class="state-tag ${stateClass}">${stateLabel}</span>
       <h3>${s.name}</h3>
       <div class="pm">Mile ${s.mile} (NOBO) &bull; ${s.elev.toLocaleString()} ft &bull; ${typeLabel}<br>Sleeps ~${s.cap} &bull; <strong>Water:</strong> ${s.water}</div>
       ${extra}
@@ -303,6 +333,7 @@ legend.onAdd = () => {
     <div class="leg-row"><div style="background:#5a6e7e;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,0.8);flex-shrink:0;"></div><span>Stone Cabin</span></div>
     <div class="leg-row"><div style="background:#2b6cb0;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,0.8);flex-shrink:0;"></div><span>NC Lean-to</span></div>
     <div class="leg-row"><div style="background:#6b21a8;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,0.8);flex-shrink:0;"></div><span>Fontana Hilton</span></div>
+    <div class="leg-row"><div style="background:#065f46;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,0.8);flex-shrink:0;"></div><span>GSMNP Lean-to</span></div>
     <div class="leg-row" style="margin-top:0.3rem;"><div style="width:22px;height:3px;background:white;border:1px solid #3a1e00;flex-shrink:0;"></div><span>AT Route</span></div>
   `;
   return div;
@@ -355,6 +386,9 @@ const crossings = [
   { name:'Nantahala River\n(NOC)',     lat:35.335, lng:-83.579 },
   { name:'Stecoah Gap\n(NC-143)',      lat:35.390, lng:-83.680 },
   { name:'Fontana Dam',                lat:35.447, lng:-83.803 },
+  { name:'Clingmans Dome\n6,643 ft',  lat:35.562, lng:-83.498 },
+  { name:'Newfound Gap\n(US-441)',     lat:35.611, lng:-83.425 },
+  { name:'Davenport Gap\n(TN-32)',     lat:35.762, lng:-83.145 },
 ];
 crossings.forEach(c => {
   L.marker([c.lat, c.lng], {
@@ -383,7 +417,9 @@ function togglePanel() {
       hdr.className = 'state-header';
       hdr.textContent = s.state === 'GA'
         ? '&#9968; Georgia — 11 Shelters (Springer Mountain → Plumorchard Gap)'
-        : '&#9968; North Carolina — 13 Shelters (Muskrat Creek → Fontana Dam)';
+        : s.state === 'NC'
+          ? '&#9968; North Carolina — 13 Shelters (Muskrat Creek → Fontana Dam)'
+          : '&#9968; Great Smoky Mountains — 13 Shelters (Birch Spring Gap → Davenport Gap)';
       hdr.innerHTML = hdr.innerHTML; // parse entities
       inner.appendChild(hdr);
       listDiv = document.createElement('div');

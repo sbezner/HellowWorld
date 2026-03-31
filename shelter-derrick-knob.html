@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Derrick Knob Shelter — AT Shelter Guide</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin:0; padding:1.5rem; background:#f0f4f8; font-family:sans-serif; color:#2d3748; }
+    h1 { font-size:1.7rem; margin-bottom:0.2rem; }
+    .subtitle { color:#718096; font-size:0.88rem; margin-bottom:1.25rem; }
+    .breadcrumb { font-size:0.78rem; color:#718096; margin-bottom:0.75rem; }
+    .breadcrumb a { color:#3182ce; text-decoration:none; }
+    .breadcrumb a:hover { text-decoration:underline; }
+    .section { background:white; border-radius:8px; padding:1.25rem; margin-bottom:1.25rem; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+    .section h2 { margin:0 0 1rem; font-size:1.1rem; color:#065f46; border-bottom:1px solid #d1fae5; padding-bottom:0.5rem; }
+    .stat-grid { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem; }
+    .stat { background:#ecfdf5; border-radius:6px; padding:0.4rem 0.75rem; font-size:0.85rem; }
+    .stat span { font-weight:bold; color:#065f46; }
+    .badge { font-size:0.75rem; padding:0.2rem 0.6rem; border-radius:12px; font-weight:bold; white-space:nowrap; display:inline-block; }
+    .badge-free { background:#c6f6d5; color:#276749; }
+    .badge-paid { background:#bee3f8; color:#2b6cb0; }
+    .gsmnp-banner { background:linear-gradient(135deg, #065f46, #047857); color:white; border-radius:10px; padding:1rem 1.25rem; margin-bottom:1.25rem; font-size:0.88rem; line-height:1.6; }
+    .gsmnp-banner strong { display:block; font-size:1rem; margin-bottom:0.3rem; }
+    .warning { background:#fff5f5; border-left:4px solid #e53e3e; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#742a2a; margin-bottom:0.75rem; }
+    .tip { background:#fffbeb; border-left:4px solid #f6ad55; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#744210; margin-top:0.75rem; }
+    .route-grid { display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .route-card { flex:1 1 220px; border-radius:8px; padding:1rem; border:2px solid transparent; }
+    .route-card.recommended { background:#f0fff4; border-color:#38a169; }
+    .route-card.alternate { background:#ebf8ff; border-color:#90cdf4; }
+    .route-card h3 { margin:0 0 0.3rem; font-size:1rem; }
+    .route-card.recommended h3 { color:#276749; }
+    .route-card.alternate h3 { color:#2b6cb0; }
+    .route-badge { display:inline-block; font-size:0.72rem; font-weight:bold; padding:0.15rem 0.5rem; border-radius:10px; margin-bottom:0.5rem; }
+    .badge-rec { background:#c6f6d5; color:#276749; }
+    .badge-alt { background:#bee3f8; color:#2b6cb0; }
+    .route-card p { margin:0; font-size:0.88rem; line-height:1.6; }
+    .lodging-card { border:1px solid #e2e8f0; border-radius:8px; padding:1rem; margin-bottom:0.75rem; }
+    .lodging-card:last-child { margin-bottom:0; }
+    .lodging-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.3rem; }
+    .lodging-name { font-weight:bold; font-size:1rem; color:#1a365d; }
+    .lodging-meta { font-size:0.8rem; color:#718096; margin-bottom:0.5rem; }
+    .lodging-desc { font-size:0.88rem; line-height:1.5; color:#4a5568; margin-bottom:0.75rem; }
+    .pros-cons { display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .pros, .cons { flex:1 1 160px; font-size:0.83rem; line-height:1.7; }
+    .pros { background:#f0fff4; border-radius:6px; padding:0.6rem 0.75rem; }
+    .cons { background:#fff5f5; border-radius:6px; padding:0.6rem 0.75rem; }
+    .pros strong { color:#276749; display:block; margin-bottom:0.2rem; }
+    .cons strong { color:#c53030; display:block; margin-bottom:0.2rem; }
+    .pros ul, .cons ul { margin:0; padding-left:1.2rem; }
+    .nav-strip { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-top:1.5rem; }
+    .nav-btn { display:inline-block; padding:0.5rem 1rem; border-radius:6px; font-size:0.88rem; text-decoration:none; background:white; color:#065f46; border:1px solid #a7f3d0; }
+    .nav-btn:hover { background:#ecfdf5; }
+    a.back { display:inline-block; margin-top:1rem; color:#3182ce; text-decoration:none; font-size:0.95rem; }
+    a.back:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> &rsaquo;
+    <a href="at-map.html">AT Map</a> &rsaquo;
+    Derrick Knob Shelter
+  </div>
+
+  <h1>Derrick Knob Shelter</h1>
+  <div class="subtitle">Great Smoky Mountains National Park &mdash; NC/TN Border &mdash; AT Mile ~186.6</div>
+
+  <div class="gsmnp-banner">
+    <strong>Great Smoky Mountains NP &mdash; Permit Required</strong>
+    All AT shelters in GSMNP require a reservation through <strong>recreation.gov</strong>. Cost: <strong>$40 reservation fee + $8 per person per night</strong>. Purchase your permit before entering the park &mdash; you cannot buy one on the trail. All shelters have <strong>chain-link bear enclosures</strong>: you must sleep inside the enclosure and the gate must remain latched at all times. No dispersed camping is permitted anywhere in the park. You must stay at the shelter listed on your permit &mdash; to change shelters, call <strong>(865) 436-1231</strong>.
+  </div>
+
+  <div class="section">
+    <h2>Shelter Overview</h2>
+    <div class="stat-grid">
+      <div class="stat">AT Mile <span>~186.6</span></div>
+      <div class="stat">Elevation <span>~4,880 ft</span></div>
+      <div class="stat">Capacity <span>14</span></div>
+      <div class="stat">State <span>NC/TN Border</span></div>
+      <div class="stat">Water <span>Spring on side trail</span></div>
+      <div class="stat">Privy <span>Yes</span></div>
+    </div>
+    <p style="font-size:0.88rem; line-height:1.6; color:#4a5568; margin:0 0 0.75rem;">
+      Derrick Knob Shelter occupies a strategic position roughly at the geographic midpoint of the Smokies AT traverse. It sees relatively moderate traffic compared to the more dramatic bald shelters at Spence Field and Silers Bald on either side, making it a reliable and sometimes less crowded option. The shelter is a standard Smokies structure with the mandatory chain-link bear enclosure and an on-site privy.
+    </p>
+    <p style="font-size:0.88rem; line-height:1.6; color:#4a5568; margin:0;">
+      The surrounding forest at Derrick Knob is ecologically transitional &mdash; the cove hardwood species (tulip poplar, basswood, black cherry) of the lower elevations give way here to yellow birch, beech, and the beginnings of the high-elevation spruce-fir ecosystem that dominates above 5,000 feet. Look for the distinctive peeling copper-gold bark of yellow birch and the smooth gray skin of American beech along the ridgeline. From Derrick Knob north, the terrain becomes increasingly dramatic as the trail climbs toward the 5,000-foot ridge that defines the rest of the Smokies traverse.
+    </p>
+    <div class="tip">
+      <strong>Forest transition zone:</strong> Derrick Knob sits right at the ecological boundary between two distinct forest types. The transition from cove hardwood to high-elevation spruce-fir happens gradually as you gain elevation &mdash; pay attention to the tree species changing around you as you hike north from here.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>GSMNP Rules at a Glance</h2>
+    <div class="warning">
+      <strong>Permit required before entering:</strong> Book at recreation.gov ($40 + $8/person/night). You cannot legally camp here without a valid permit for this specific shelter.
+    </div>
+    <ul style="font-size:0.88rem; line-height:1.9; color:#4a5568; margin:0; padding-left:1.3rem;">
+      <li>Sleep inside the chain-link bear enclosure &mdash; no exceptions.</li>
+      <li>Keep the enclosure gate latched at all times, even while entering or exiting.</li>
+      <li>No dispersed camping anywhere in Great Smoky Mountains NP.</li>
+      <li>Stay only at the shelter listed on your permit. To change shelters, call <strong>(865) 436-1231</strong>.</li>
+      <li>Campfires only in established fire rings where permitted &mdash; check current conditions for fire bans.</li>
+      <li>Pack out all trash; leave no trace standards apply throughout the park.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Getting Supplies</h2>
+    <p style="font-size:0.88rem; color:#4a5568; margin:0 0 0.75rem;">
+      Derrick Knob is at mile ~186.6, roughly the midpoint of the Smokies traverse. There is no resupply inside the park. You are approximately 13+ trail miles from Newfound Gap and the Gatlinburg hitch northbound.
+    </p>
+    <div class="route-grid">
+      <div class="route-card recommended">
+        <h3>Gatlinburg, TN</h3>
+        <div class="route-badge badge-rec">Recommended &mdash; Northbound Exit</div>
+        <p>Your next resupply is Gatlinburg, accessed via a hitch from Newfound Gap (US-441, ~15 road miles west). From Derrick Knob, Newfound Gap is roughly 13+ trail miles north. Plan at least 2&ndash;3 days of food to cover that stretch. Gatlinburg has full grocery (Food City, Walmart), outfitters, and hiker lodging including Hostel in the Hollow (~$30/night bunks).</p>
+      </div>
+      <div class="route-card alternate">
+        <h3>Fontana Village, NC</h3>
+        <div class="route-badge badge-alt">Alternate &mdash; Southbound / Pre-Entry</div>
+        <p>Fontana Village is roughly 17 trail miles south &mdash; the last resupply before the park from the south. Not practical to return mid-traverse. If you are southbound or started at Newfound Gap, Fontana is where you will exit. Either way, build your full food carry before entering the park.</p>
+      </div>
+    </div>
+    <div class="tip">
+      <strong>Midpoint check:</strong> At Derrick Knob you are roughly halfway through the Smokies traverse. This is a good moment to audit your food supply. If you are running short, the best option is to push to Newfound Gap and hitch to Gatlinburg.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Where to Sleep Nearby</h2>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Derrick Knob Shelter</div>
+        <span class="badge badge-free">Permit Required</span>
+      </div>
+      <div class="lodging-meta">AT Mile ~186.6 &bull; Capacity: 14 &bull; Chain-link bear enclosure &bull; Privy on-site &bull; Spring on side trail</div>
+      <div class="lodging-desc">
+        A reliable mid-traverse Smokies shelter that sees moderate traffic compared to the more celebrated bald locations nearby. The 14-person capacity gives it a bit more breathing room. The forest setting is quiet and the transition ecology makes for interesting observation. The spring is accessible via a short side trail from the shelter.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>On-trail &mdash; no extra miles</li>
+            <li>14-person capacity (more space)</li>
+            <li>Moderate traffic levels</li>
+            <li>Privy on-site</li>
+            <li>Good midpoint staging camp</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>Must sleep in bear enclosure</li>
+            <li>$40 + $8/person permit cost</li>
+            <li>No dramatic views from camp</li>
+            <li>Spring requires side trail</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Gatlinburg, TN &mdash; Various Options</div>
+        <span class="badge badge-paid">Paid &bull; ~13 mi north + hitch</span>
+      </div>
+      <div class="lodging-meta">Gatlinburg, TN &bull; ~13 trail miles to Newfound Gap + ~15 road miles west on US-441</div>
+      <div class="lodging-desc">
+        Gatlinburg is the primary town stop for mid-to-north Smokies hikers. From Newfound Gap, hitchhiking the 15 road miles west on US-441 into Gatlinburg is the standard approach. Options range from budget bunks at Hostel in the Hollow (~$30/night) to motels and inns at $80&ndash;150/night. For a serious splurge, LeConte Lodge sits on the summit of Mount LeConte and requires advance reservations.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Full resupply (Food City, Walmart)</li>
+            <li>Outfitters for gear repair</li>
+            <li>Range of lodging budgets</li>
+            <li>Hot food and restaurants</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>~13 more trail miles + hitch</li>
+            <li>Touristy town environment</li>
+            <li>Hitch from Newfound Gap not guaranteed</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="nav-strip">
+    <a class="nav-btn" href="shelter-spence-field.html">&larr; Spence Field</a>
+    <a class="nav-btn" href="at-map.html">AT Map</a>
+    <a class="nav-btn" href="shelter-silers-bald.html">Silers Bald &rarr;</a>
+  </div>
+
+  <a class="back" href="at-map.html">&larr; Back to AT Map</a>
+
+</body>
+</html>

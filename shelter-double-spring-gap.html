@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Double Spring Gap Shelter — AT Shelter Guide</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin:0; padding:1.5rem; background:#f0f4f8; font-family:sans-serif; color:#2d3748; }
+    h1 { font-size:1.7rem; margin-bottom:0.2rem; }
+    .subtitle { color:#718096; font-size:0.88rem; margin-bottom:1.25rem; }
+    .breadcrumb { font-size:0.78rem; color:#718096; margin-bottom:0.75rem; }
+    .breadcrumb a { color:#3182ce; text-decoration:none; }
+    .breadcrumb a:hover { text-decoration:underline; }
+    .section { background:white; border-radius:8px; padding:1.25rem; margin-bottom:1.25rem; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+    .section h2 { margin:0 0 1rem; font-size:1.1rem; color:#065f46; border-bottom:1px solid #d1fae5; padding-bottom:0.5rem; }
+    .stat-grid { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem; }
+    .stat { background:#ecfdf5; border-radius:6px; padding:0.4rem 0.75rem; font-size:0.85rem; }
+    .stat span { font-weight:bold; color:#065f46; }
+    .badge { font-size:0.75rem; padding:0.2rem 0.6rem; border-radius:12px; font-weight:bold; white-space:nowrap; display:inline-block; }
+    .badge-free { background:#c6f6d5; color:#276749; }
+    .badge-paid { background:#bee3f8; color:#2b6cb0; }
+    .gsmnp-banner { background:linear-gradient(135deg, #065f46, #047857); color:white; border-radius:10px; padding:1rem 1.25rem; margin-bottom:1.25rem; font-size:0.88rem; line-height:1.6; }
+    .gsmnp-banner strong { display:block; font-size:1rem; margin-bottom:0.3rem; }
+    .alert { background:#f0fff4; border-left:4px solid #38a169; padding:0.75rem 1rem; border-radius:0 6px 6px 0; font-size:0.9rem; color:#276749; margin-bottom:1.25rem; }
+    .alert strong { display:block; margin-bottom:0.2rem; }
+    .warning { background:#fff5f5; border-left:4px solid #e53e3e; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#742a2a; margin-bottom:0.75rem; }
+    .tip { background:#fffbeb; border-left:4px solid #f6ad55; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#744210; margin-top:0.75rem; }
+    .route-grid { display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .route-card { flex:1 1 220px; border-radius:8px; padding:1rem; border:2px solid transparent; }
+    .route-card.recommended { background:#f0fff4; border-color:#38a169; }
+    .route-card.alternate { background:#ebf8ff; border-color:#90cdf4; }
+    .route-card h3 { margin:0 0 0.3rem; font-size:1rem; }
+    .route-card.recommended h3 { color:#276749; }
+    .route-card.alternate h3 { color:#2b6cb0; }
+    .route-badge { display:inline-block; font-size:0.72rem; font-weight:bold; padding:0.15rem 0.5rem; border-radius:10px; margin-bottom:0.5rem; }
+    .badge-rec { background:#c6f6d5; color:#276749; }
+    .badge-alt { background:#bee3f8; color:#2b6cb0; }
+    .route-card p { margin:0; font-size:0.88rem; line-height:1.6; }
+    .lodging-card { border:1px solid #e2e8f0; border-radius:8px; padding:1rem; margin-bottom:0.75rem; }
+    .lodging-card:last-child { margin-bottom:0; }
+    .lodging-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.3rem; }
+    .lodging-name { font-weight:bold; font-size:1rem; color:#1a365d; }
+    .lodging-meta { font-size:0.8rem; color:#718096; margin-bottom:0.5rem; }
+    .lodging-desc { font-size:0.88rem; line-height:1.5; color:#4a5568; margin-bottom:0.75rem; }
+    .pros-cons { display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .pros, .cons { flex:1 1 160px; font-size:0.83rem; line-height:1.7; }
+    .pros { background:#f0fff4; border-radius:6px; padding:0.6rem 0.75rem; }
+    .cons { background:#fff5f5; border-radius:6px; padding:0.6rem 0.75rem; }
+    .pros strong { color:#276749; display:block; margin-bottom:0.2rem; }
+    .cons strong { color:#c53030; display:block; margin-bottom:0.2rem; }
+    .pros ul, .cons ul { margin:0; padding-left:1.2rem; }
+    .nav-strip { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-top:1.5rem; }
+    .nav-btn { display:inline-block; padding:0.5rem 1rem; border-radius:6px; font-size:0.88rem; text-decoration:none; background:white; color:#065f46; border:1px solid #a7f3d0; }
+    .nav-btn:hover { background:#ecfdf5; }
+    a.back { display:inline-block; margin-top:1rem; color:#3182ce; text-decoration:none; font-size:0.95rem; }
+    a.back:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> &rsaquo;
+    <a href="at-map.html">AT Map</a> &rsaquo;
+    Double Spring Gap Shelter
+  </div>
+
+  <h1>Double Spring Gap Shelter</h1>
+  <div class="subtitle">Great Smoky Mountains National Park &mdash; NC/TN Border &mdash; AT Mile ~195.3</div>
+
+  <div class="gsmnp-banner">
+    <strong>Great Smoky Mountains NP &mdash; Permit Required</strong>
+    All AT shelters in GSMNP require a reservation through <strong>recreation.gov</strong>. Cost: <strong>$40 reservation fee + $8 per person per night</strong>. Purchase your permit before entering the park &mdash; you cannot buy one on the trail. All shelters have <strong>chain-link bear enclosures</strong>: you must sleep inside the enclosure and the gate must remain latched at all times. No dispersed camping is permitted anywhere in the park. To change shelters, call <strong>(865) 436-1231</strong>.
+  </div>
+
+  <div class="alert">
+    <strong>Gateway to Clingmans Dome</strong>
+    Double Spring Gap is the last shelter before Clingmans Dome — the highest point on the entire Appalachian Trail at 6,643 ft. The dome summit and its iconic observation tower are approximately 3 trail miles north and 1,100 feet above this shelter. Most hikers push through to Mount Collins Shelter (the other Clingmans-area shelter) but Double Spring Gap is an excellent staging point for a sunrise summit attempt.
+  </div>
+
+  <div class="section">
+    <h2>Shelter Overview</h2>
+    <div class="stat-grid">
+      <div class="stat">AT Mile <span>~195.3</span></div>
+      <div class="stat">Elevation <span>~5,510 ft</span></div>
+      <div class="stat">Capacity <span>14</span></div>
+      <div class="stat">State <span>NC/TN Border</span></div>
+      <div class="stat">Water <span>Two springs (namesake)</span></div>
+      <div class="stat">Privy <span>Yes</span></div>
+    </div>
+    <p style="font-size:0.88rem; line-height:1.6; color:#4a5568; margin:0 0 0.75rem;">
+      Double Spring Gap Shelter earns its distinctive name from the two separate springs that converge near the shelter site — an unusual and reliable dual water source that rarely fails even in dry years. At 5,510 feet on the main Smokies ridge, the shelter sits in a classic high-elevation spruce-fir forest: dense, fragrant, and distinctly northern in character. The Fraser fir and red spruce canopy creates a cathedral-like atmosphere that feels nothing like the Georgia hardwoods that started this journey.
+    </p>
+    <p style="font-size:0.88rem; line-height:1.6; color:#4a5568; margin:0 0 0.75rem;">
+      The shelter itself is a 14-person log structure enclosed in the standard GSMNP chain-link bear cage. Capacity 14 makes it one of the larger shelters in this section, which means it's more likely to have space even on busy weekends. The privy is well-maintained. The twin springs are located steps from the shelter — fill bottles before retiring for the evening.
+    </p>
+    <p style="font-size:0.88rem; line-height:1.6; color:#4a5568; margin:0;">
+      Strategically, Double Spring Gap is one of the most important overnight stops in the Smokies traverse. Positioned 3 miles south of Clingmans Dome, it's the natural staging point for hikers who want to reach the summit at dawn or dusk — the two best times to visit. The dome summit is enclosed in spruce-fir forest until the final paved walkway, making sunrise and sunset the prime viewing windows before clouds and day-hikers arrive.
+    </p>
+    <div class="tip">
+      <strong>Clingmans Dome at Dawn:</strong> Hikers staying at Double Spring Gap have a genuine tactical advantage — the summit is 3 miles and 1,100 feet above, reachable before the parking lot fills with day-trippers. Depart the shelter by 5:30 AM for a dawn summit. The observation tower (0.5 mi paved spur from AT) provides 360-degree views across seven states on clear mornings.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>GSMNP Rules at a Glance</h2>
+    <div class="warning">
+      <strong>Permit required before entering:</strong> Book at recreation.gov ($40 + $8/person/night). You cannot legally camp here without a valid permit listing this specific shelter.
+    </div>
+    <ul style="font-size:0.88rem; line-height:1.9; color:#4a5568; margin:0; padding-left:1.3rem;">
+      <li>Sleep inside the chain-link bear enclosure &mdash; no exceptions.</li>
+      <li>Keep the enclosure gate latched at all times, even while entering or exiting.</li>
+      <li>No dispersed camping anywhere in Great Smoky Mountains NP.</li>
+      <li>Stay only at the shelter listed on your permit. To change shelters, call <strong>(865) 436-1231</strong>.</li>
+      <li>Campfires only in established fire rings where permitted &mdash; check current fire conditions.</li>
+      <li>Clingmans Dome Road (closed in winter) accesses the dome parking lot 0.5 mi from the AT summit junction. Day-hikers begin arriving at the summit around 9 AM in peak season.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Getting Supplies</h2>
+    <p style="font-size:0.88rem; color:#4a5568; margin:0 0 0.75rem;">
+      Double Spring Gap sits at mile ~195.3 — roughly equidistant between the Fontana Dam entry point (30.6 miles south) and Davenport Gap (32 miles north). Gatlinburg via Newfound Gap is the only practical resupply option, approximately 7.7 trail miles north.
+    </p>
+    <div class="route-grid">
+      <div class="route-card recommended">
+        <span class="route-badge badge-rec">RECOMMENDED</span>
+        <h3>Gatlinburg, TN via Newfound Gap</h3>
+        <p><strong>~7.7 trail miles north to Newfound Gap (US-441), then ~15 road miles west into Gatlinburg.</strong> Newfound Gap is the only road crossing in the western Smokies with reliable hitchhiking access. US-441 runs directly to Gatlinburg. Gatlinburg has Food City supermarket, Walmart, outfitters, and full lodging. Average hitch wait: 20–40 minutes at the gap. Budget option: Hostel in the Hollow (~$30/bunk). Mid-range motels: $80–150/night.</p>
+      </div>
+      <div class="route-card alternate">
+        <span class="route-badge badge-alt">ALTERNATE</span>
+        <h3>Fontana Village (South)</h3>
+        <p><strong>~30.6 trail miles south — not practical mid-traverse.</strong> If you entered the park at Fontana Dam and are running critically low on food, Fontana Village is behind you. This is not a realistic mid-hike resupply option unless you are bailing out of the traverse entirely. Load up before entering the park and carry enough food for the full Smokies crossing.</p>
+      </div>
+    </div>
+    <div class="tip">
+      <strong>Food Planning:</strong> The Smokies require 5–6 days of food from Fontana Dam to Davenport Gap (plus buffer). Most hikers resupply in Gatlinburg mid-traverse via Newfound Gap and then carry 3–4 days north to Hot Springs, NC. Don't underpack — there is no resupply inside the park.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Where to Sleep Nearby</h2>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Double Spring Gap Shelter</div>
+        <span class="badge badge-free">Permit Required</span>
+      </div>
+      <div class="lodging-meta">AT Mile ~195.3 &bull; Capacity: 14 &bull; Chain-link bear enclosure &bull; Privy on-site &bull; Two springs steps away</div>
+      <div class="lodging-desc">
+        14-person log shelter enclosed in chain-link bear cage. The namesake twin springs are an exceptional water source — steps away, flowing reliably year-round. Privy on-site. Larger capacity than most Smokies shelters means it's less likely to turn away late arrivals. The high-elevation spruce-fir forest setting is beautiful and aromatic. Positioned ideally for a Clingmans Dome dawn or dusk summit.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Exceptional twin spring water steps away</li>
+            <li>Larger capacity (14) — more availability</li>
+            <li>Strategic Clingmans Dome staging point</li>
+            <li>Beautiful spruce-fir forest</li>
+            <li>Privy on-site</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>Must sleep in bear enclosure</li>
+            <li>$40 + $8/person permit cost</li>
+            <li>Clingmans summit 3 mi and 1,100 ft above</li>
+            <li>Very cold at 5,510 ft — prepare for frost even in summer</li>
+            <li>No cell service</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Gatlinburg, TN &mdash; Various Options</div>
+        <span class="badge badge-paid">~$30–150/night &bull; 7.7 mi north + hitch</span>
+      </div>
+      <div class="lodging-meta">Gatlinburg, TN &bull; ~7.7 trail miles north to Newfound Gap + ~15 road miles west on US-441</div>
+      <div class="lodging-desc">
+        Gatlinburg is the standard mid-Smokies resupply and rest stop. Options: <strong>Hostel in the Hollow</strong> (~$30/bunk, hiker-friendly, kitchen access), motels from $80–150/night along the main strip, and the legendary <strong>LeConte Lodge</strong> on Mount LeConte summit (reservation required, expensive, truly unforgettable). Full grocery at Food City and Walmart. Outfitters on the main strip. Laundry available.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Full resupply — grocery, outfitter</li>
+            <li>Budget to luxury lodging options</li>
+            <li>Hot food, restaurants, laundry</li>
+            <li>Only 7.7 trail miles away</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>Very touristy — crowded in peak season</li>
+            <li>Hitch from Newfound Gap not guaranteed</li>
+            <li>Expensive during peak tourist weeks</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="nav-strip">
+    <a class="nav-btn" href="shelter-silers-bald.html">&larr; Silers Bald</a>
+    <a class="nav-btn" href="at-map.html">&#9968; AT Map</a>
+    <a class="nav-btn" href="shelter-mount-collins.html">Mount Collins &rarr;</a>
+  </div>
+
+  <a class="back" href="at-map.html">&larr; Back to AT Map</a>
+
+</body>
+</html>

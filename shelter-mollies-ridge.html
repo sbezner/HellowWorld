@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mollies Ridge Shelter — AT Shelter Guide</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin:0; padding:1.5rem; background:#f0f4f8; font-family:sans-serif; color:#2d3748; }
+    h1 { font-size:1.7rem; margin-bottom:0.2rem; }
+    .subtitle { color:#718096; font-size:0.88rem; margin-bottom:1.25rem; }
+    .breadcrumb { font-size:0.78rem; color:#718096; margin-bottom:0.75rem; }
+    .breadcrumb a { color:#3182ce; text-decoration:none; }
+    .breadcrumb a:hover { text-decoration:underline; }
+    .section { background:white; border-radius:8px; padding:1.25rem; margin-bottom:1.25rem; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+    .section h2 { margin:0 0 1rem; font-size:1.1rem; color:#065f46; border-bottom:1px solid #d1fae5; padding-bottom:0.5rem; }
+    .stat-grid { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem; }
+    .stat { background:#ecfdf5; border-radius:6px; padding:0.4rem 0.75rem; font-size:0.85rem; }
+    .stat span { font-weight:bold; color:#065f46; }
+    .badge { font-size:0.75rem; padding:0.2rem 0.6rem; border-radius:12px; font-weight:bold; white-space:nowrap; display:inline-block; }
+    .badge-free { background:#c6f6d5; color:#276749; }
+    .badge-paid { background:#bee3f8; color:#2b6cb0; }
+    .gsmnp-banner { background:linear-gradient(135deg, #065f46, #047857); color:white; border-radius:10px; padding:1rem 1.25rem; margin-bottom:1.25rem; font-size:0.88rem; line-height:1.6; }
+    .gsmnp-banner strong { display:block; font-size:1rem; margin-bottom:0.3rem; }
+    .warning { background:#fff5f5; border-left:4px solid #e53e3e; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#742a2a; margin-bottom:0.75rem; }
+    .tip { background:#fffbeb; border-left:4px solid #f6ad55; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#744210; margin-top:0.75rem; }
+    .route-grid { display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .route-card { flex:1 1 220px; border-radius:8px; padding:1rem; border:2px solid transparent; }
+    .route-card.recommended { background:#f0fff4; border-color:#38a169; }
+    .route-card.alternate { background:#ebf8ff; border-color:#90cdf4; }
+    .route-card h3 { margin:0 0 0.3rem; font-size:1rem; }
+    .route-card.recommended h3 { color:#276749; }
+    .route-card.alternate h3 { color:#2b6cb0; }
+    .route-badge { display:inline-block; font-size:0.72rem; font-weight:bold; padding:0.15rem 0.5rem; border-radius:10px; margin-bottom:0.5rem; }
+    .badge-rec { background:#c6f6d5; color:#276749; }
+    .badge-alt { background:#bee3f8; color:#2b6cb0; }
+    .route-card p { margin:0; font-size:0.88rem; line-height:1.6; }
+    .lodging-card { border:1px solid #e2e8f0; border-radius:8px; padding:1rem; margin-bottom:0.75rem; }
+    .lodging-card:last-child { margin-bottom:0; }
+    .lodging-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.3rem; }
+    .lodging-name { font-weight:bold; font-size:1rem; color:#1a365d; }
+    .lodging-meta { font-size:0.8rem; color:#718096; margin-bottom:0.5rem; }
+    .lodging-desc { font-size:0.88rem; line-height:1.5; color:#4a5568; margin-bottom:0.75rem; }
+    .pros-cons { display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .pros, .cons { flex:1 1 160px; font-size:0.83rem; line-height:1.7; }
+    .pros { background:#f0fff4; border-radius:6px; padding:0.6rem 0.75rem; }
+    .cons { background:#fff5f5; border-radius:6px; padding:0.6rem 0.75rem; }
+    .pros strong { color:#276749; display:block; margin-bottom:0.2rem; }
+    .cons strong { color:#c53030; display:block; margin-bottom:0.2rem; }
+    .pros ul, .cons ul { margin:0; padding-left:1.2rem; }
+    .nav-strip { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-top:1.5rem; }
+    .nav-btn { display:inline-block; padding:0.5rem 1rem; border-radius:6px; font-size:0.88rem; text-decoration:none; background:white; color:#065f46; border:1px solid #a7f3d0; }
+    .nav-btn:hover { background:#ecfdf5; }
+    a.back { display:inline-block; margin-top:1rem; color:#3182ce; text-decoration:none; font-size:0.95rem; }
+    a.back:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> &rsaquo;
+    <a href="at-map.html">AT Map</a> &rsaquo;
+    Mollies Ridge Shelter
+  </div>
+
+  <h1>Mollies Ridge Shelter</h1>
+  <div class="subtitle">Great Smoky Mountains National Park &mdash; NC/TN Border &mdash; AT Mile ~177.8</div>
+
+  <div class="gsmnp-banner">
+    <strong>Great Smoky Mountains NP &mdash; Permit Required</strong>
+    All AT shelters in GSMNP require a reservation through <strong>recreation.gov</strong>. Cost: <strong>$40 reservation fee + $8 per person per night</strong>. Purchase your permit before entering the park &mdash; you cannot buy one on the trail. All shelters have <strong>chain-link bear enclosures</strong>: you must sleep inside the enclosure and the gate must remain latched at all times. No dispersed camping is permitted anywhere in the park. You must stay at the shelter listed on your permit &mdash; to change shelters, call <strong>(865) 436-1231</strong>.
+  </div>
+
+  <div class="section">
+    <h2>Shelter Overview</h2>
+    <div class="stat-grid">
+      <div class="stat">AT Mile <span>~177.8</span></div>
+      <div class="stat">Elevation <span>~4,570 ft</span></div>
+      <div class="stat">Capacity <span>12</span></div>
+      <div class="stat">State <span>NC/TN Border</span></div>
+      <div class="stat">Water <span>Spring nearby</span></div>
+      <div class="stat">Privy <span>Yes</span></div>
+    </div>
+    <p style="font-size:0.88rem; line-height:1.6; color:#4a5568; margin:0 0 0.75rem;">
+      Mollies Ridge is a classic Smokies ridge camp, positioned on the long spine of the main divide between Russell Field and the bald country at Spence Field. The shelter sits in a forested setting with partial views through the trees &mdash; quieter and more intimate than the open bald shelters on either side of it. It sees moderate traffic and is a reliable mid-section stop.
+    </p>
+    <p style="font-size:0.88rem; line-height:1.6; color:#4a5568; margin:0;">
+      The shelter is named for Mollie Price, a Cherokee woman whose family lived in this area before the park was established in 1934. The creation of Great Smoky Mountains National Park displaced over 6,000 people from their homes &mdash; many of them Cherokee and Appalachian farm families who had lived here for generations. That history is woven into the names and landscape of the ridge you walk.
+    </p>
+    <div class="tip">
+      <strong>Historical context:</strong> Mollies Ridge is one of several features in the Smokies named for people who lived here before the park displaced them. As you walk this ridge, you are crossing land that was farmed, hunted, and inhabited long before it became a national park. The Cherokee called these mountains Shaconage &mdash; "land of blue smoke."
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>GSMNP Rules at a Glance</h2>
+    <div class="warning">
+      <strong>Permit required before entering:</strong> Book at recreation.gov ($40 + $8/person/night). You cannot legally camp here without a valid permit for this specific shelter.
+    </div>
+    <ul style="font-size:0.88rem; line-height:1.9; color:#4a5568; margin:0; padding-left:1.3rem;">
+      <li>Sleep inside the chain-link bear enclosure &mdash; no exceptions.</li>
+      <li>Keep the enclosure gate latched at all times, even while entering or exiting.</li>
+      <li>No dispersed camping anywhere in Great Smoky Mountains NP.</li>
+      <li>Stay only at the shelter listed on your permit. To change shelters, call <strong>(865) 436-1231</strong>.</li>
+      <li>Campfires only in established fire rings where permitted &mdash; check current conditions for fire bans.</li>
+      <li>Pack out all trash; leave no trace standards apply throughout the park.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Getting Supplies</h2>
+    <p style="font-size:0.88rem; color:#4a5568; margin:0 0 0.75rem;">
+      Mollies Ridge is at mile ~177.8, well within the Smokies corridor with no in-park resupply available. You are roughly 22+ trail miles from Newfound Gap and a Gatlinburg hitch northbound.
+    </p>
+    <div class="route-grid">
+      <div class="route-card recommended">
+        <h3>Fontana Village, NC</h3>
+        <div class="route-badge badge-rec">Recommended &mdash; Pre-Entry Resupply</div>
+        <p>The primary resupply point before entering the park from the south. Fontana Village has a camp store, restaurant, and laundry. Most northbound hikers stock up here for the full Smokies carry. From Mollies Ridge, Fontana is roughly 8 trail miles back south &mdash; not practical mid-hike, but essential pre-entry planning.</p>
+      </div>
+      <div class="route-card alternate">
+        <h3>Gatlinburg, TN</h3>
+        <div class="route-badge badge-alt">Alternate &mdash; Northbound Exit</div>
+        <p>Gatlinburg is the next major resupply northbound, via a hitch from Newfound Gap (US-441, ~15 road miles west). From Mollies Ridge you are approximately 22+ trail miles from Newfound Gap. Plan at least 4 days of food ahead. Gatlinburg has Food City, Walmart, outfitters, and hiker-friendly lodging options.</p>
+      </div>
+    </div>
+    <div class="tip">
+      <strong>No resupply inside the park.</strong> There are zero stores, vending machines, or resupply options between Fontana Dam and Newfound Gap. Build your food carry before entering.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Where to Sleep Nearby</h2>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Mollies Ridge Shelter</div>
+        <span class="badge badge-free">Permit Required</span>
+      </div>
+      <div class="lodging-meta">AT Mile ~177.8 &bull; Capacity: 12 &bull; Chain-link bear enclosure &bull; Privy on-site &bull; Spring nearby</div>
+      <div class="lodging-desc">
+        A quiet, forested Smokies shelter on the main ridge between Russell Field and Spence Field. The chain-link bear enclosure is mandatory for sleeping. The spring is nearby and reliable. The site has a more intimate, wooded feel than the open bald shelters &mdash; better for those who prefer a sheltered, quieter camp over panoramic exposure.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>On-trail &mdash; no extra miles</li>
+            <li>Reliable spring nearby</li>
+            <li>Privy on-site</li>
+            <li>Quieter, forested feel</li>
+            <li>Good staging for Spence Field</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>Must sleep in bear enclosure</li>
+            <li>$40 + $8/person permit cost</li>
+            <li>Only 12-person capacity</li>
+            <li>Limited views compared to balds</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Fontana Village Resort</div>
+        <span class="badge badge-paid">Paid &bull; ~8 mi south</span>
+      </div>
+      <div class="lodging-meta">Fontana Dam, NC &bull; ~8 trail miles south of Mollies Ridge &bull; Cabins, hotel, hostel bunks</div>
+      <div class="lodging-desc">
+        Fontana Village is the nearest off-trail lodging option, located just outside the southern park boundary. Full amenities include cabins, a hotel, restaurant, camp store, laundry, and showers. From Mollies Ridge, backtracking south is roughly 8 miles &mdash; only practical if you need to exit the park for an emergency or are doing a supported slackpack.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Full resort amenities</li>
+            <li>Showers and laundry</li>
+            <li>Restaurant on-site</li>
+            <li>Camp store for resupply</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>~8 miles south (backtracking)</li>
+            <li>Loses northbound progress</li>
+            <li>Requires exiting the park</li>
+            <li>Resort pricing</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="nav-strip">
+    <a class="nav-btn" href="shelter-russell-field.html">&larr; Russell Field</a>
+    <a class="nav-btn" href="at-map.html">AT Map</a>
+    <a class="nav-btn" href="shelter-spence-field.html">Spence Field &rarr;</a>
+  </div>
+
+  <a class="back" href="at-map.html">&larr; Back to AT Map</a>
+
+</body>
+</html>

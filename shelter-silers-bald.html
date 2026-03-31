@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Silers Bald Shelter — AT Shelter Guide</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin:0; padding:1.5rem; background:#f0f4f8; font-family:sans-serif; color:#2d3748; }
+    h1 { font-size:1.7rem; margin-bottom:0.2rem; }
+    .subtitle { color:#718096; font-size:0.88rem; margin-bottom:1.25rem; }
+    .breadcrumb { font-size:0.78rem; color:#718096; margin-bottom:0.75rem; }
+    .breadcrumb a { color:#3182ce; text-decoration:none; }
+    .breadcrumb a:hover { text-decoration:underline; }
+    .section { background:white; border-radius:8px; padding:1.25rem; margin-bottom:1.25rem; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+    .section h2 { margin:0 0 1rem; font-size:1.1rem; color:#065f46; border-bottom:1px solid #d1fae5; padding-bottom:0.5rem; }
+    .stat-grid { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem; }
+    .stat { background:#ecfdf5; border-radius:6px; padding:0.4rem 0.75rem; font-size:0.85rem; }
+    .stat span { font-weight:bold; color:#065f46; }
+    .badge { font-size:0.75rem; padding:0.2rem 0.6rem; border-radius:12px; font-weight:bold; white-space:nowrap; display:inline-block; }
+    .badge-free { background:#c6f6d5; color:#276749; }
+    .badge-paid { background:#bee3f8; color:#2b6cb0; }
+    .gsmnp-banner { background:linear-gradient(135deg, #065f46, #047857); color:white; border-radius:10px; padding:1rem 1.25rem; margin-bottom:1.25rem; font-size:0.88rem; line-height:1.6; }
+    .gsmnp-banner strong { display:block; font-size:1rem; margin-bottom:0.3rem; }
+    .warning { background:#fff5f5; border-left:4px solid #e53e3e; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#742a2a; margin-bottom:0.75rem; }
+    .tip { background:#fffbeb; border-left:4px solid #f6ad55; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#744210; margin-top:0.75rem; }
+    .route-grid { display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .route-card { flex:1 1 220px; border-radius:8px; padding:1rem; border:2px solid transparent; }
+    .route-card.recommended { background:#f0fff4; border-color:#38a169; }
+    .route-card.alternate { background:#ebf8ff; border-color:#90cdf4; }
+    .route-card h3 { margin:0 0 0.3rem; font-size:1rem; }
+    .route-card.recommended h3 { color:#276749; }
+    .route-card.alternate h3 { color:#2b6cb0; }
+    .route-badge { display:inline-block; font-size:0.72rem; font-weight:bold; padding:0.15rem 0.5rem; border-radius:10px; margin-bottom:0.5rem; }
+    .badge-rec { background:#c6f6d5; color:#276749; }
+    .badge-alt { background:#bee3f8; color:#2b6cb0; }
+    .route-card p { margin:0; font-size:0.88rem; line-height:1.6; }
+    .lodging-card { border:1px solid #e2e8f0; border-radius:8px; padding:1rem; margin-bottom:0.75rem; }
+    .lodging-card:last-child { margin-bottom:0; }
+    .lodging-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.3rem; }
+    .lodging-name { font-weight:bold; font-size:1rem; color:#1a365d; }
+    .lodging-meta { font-size:0.8rem; color:#718096; margin-bottom:0.5rem; }
+    .lodging-desc { font-size:0.88rem; line-height:1.5; color:#4a5568; margin-bottom:0.75rem; }
+    .pros-cons { display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .pros, .cons { flex:1 1 160px; font-size:0.83rem; line-height:1.7; }
+    .pros { background:#f0fff4; border-radius:6px; padding:0.6rem 0.75rem; }
+    .cons { background:#fff5f5; border-radius:6px; padding:0.6rem 0.75rem; }
+    .pros strong { color:#276749; display:block; margin-bottom:0.2rem; }
+    .cons strong { color:#c53030; display:block; margin-bottom:0.2rem; }
+    .pros ul, .cons ul { margin:0; padding-left:1.2rem; }
+    .nav-strip { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-top:1.5rem; }
+    .nav-btn { display:inline-block; padding:0.5rem 1rem; border-radius:6px; font-size:0.88rem; text-decoration:none; background:white; color:#065f46; border:1px solid #a7f3d0; }
+    .nav-btn:hover { background:#ecfdf5; }
+    a.back { display:inline-block; margin-top:1rem; color:#3182ce; text-decoration:none; font-size:0.95rem; }
+    a.back:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> &rsaquo;
+    <a href="at-map.html">AT Map</a> &rsaquo;
+    Silers Bald Shelter
+  </div>
+
+  <h1>Silers Bald Shelter</h1>
+  <div class="subtitle">Great Smoky Mountains National Park &mdash; NC/TN Border &mdash; AT Mile ~192.0</div>
+
+  <div class="gsmnp-banner">
+    <strong>Great Smoky Mountains NP &mdash; Permit Required</strong>
+    All AT shelters in GSMNP require a reservation through <strong>recreation.gov</strong>. Cost: <strong>$40 reservation fee + $8 per person per night</strong>. Purchase your permit before entering the park &mdash; you cannot buy one on the trail. All shelters have <strong>chain-link bear enclosures</strong>: you must sleep inside the enclosure and the gate must remain latched at all times. No dispersed camping is permitted anywhere in the park. You must stay at the shelter listed on your permit &mdash; to change shelters, call <strong>(865) 436-1231</strong>.
+  </div>
+
+  <div class="section">
+    <h2>Shelter Overview</h2>
+    <div class="stat-grid">
+      <div class="stat">AT Mile <span>~192.0</span></div>
+      <div class="stat">Elevation <span>~5,460 ft</span></div>
+      <div class="stat">Capacity <span>12</span></div>
+      <div class="stat">State <span>NC/TN Border</span></div>
+      <div class="stat">Water <span>Spring 0.15 mi south</span></div>
+      <div class="stat">Privy <span>Yes</span></div>
+    </div>
+    <p style="font-size:0.88rem; line-height:1.6; color:#4a5568; margin:0 0 0.75rem;">
+      Silers Bald Shelter is one of the most celebrated camp spots in the Great Smoky Mountains, positioned just below one of the finest open balds in the park. Silers Bald itself (5,607 ft) sits 0.15 miles north of the shelter on the AT and features a large open summit meadow with 360-degree views &mdash; on a clear day encompassing Mount LeConte, Clingmans Dome, and the full sweep of the Smokies main ridge in both directions.
+    </p>
+    <p style="font-size:0.88rem; line-height:1.6; color:#4a5568; margin:0;">
+      Sunsets from Silers Bald are frequently described as among the most extraordinary on the entire Appalachian Trail. The combination of the high open summit, proximity to Clingmans Dome (the AT high point at 6,643 ft), and the unobstructed western horizon creates exceptional light. The shelter itself sits in light forest cover just below the bald, offering some wind protection.
+    </p>
+    <div class="warning">
+      <strong>Name confusion:</strong> Do not confuse Silers Bald (inside GSMNP, ~5,607 ft) with Siler Bald in NC south of Franklin (~5,216 ft). They are different mountains on different sections of the AT, roughly 90 trail miles apart. This page covers the Smokies version &mdash; higher, more dramatic, and with much more extensive views.
+    </div>
+    <div class="tip">
+      <strong>Bald summit access:</strong> The AT passes directly over Silers Bald summit, 0.15 miles north of the shelter. Walk up before dinner for sunset or before dawn for sunrise &mdash; both are extraordinary at this elevation with unobstructed views.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>GSMNP Rules at a Glance</h2>
+    <div class="warning">
+      <strong>Permit required before entering:</strong> Book at recreation.gov ($40 + $8/person/night). You cannot legally camp here without a valid permit for this specific shelter.
+    </div>
+    <ul style="font-size:0.88rem; line-height:1.9; color:#4a5568; margin:0; padding-left:1.3rem;">
+      <li>Sleep inside the chain-link bear enclosure &mdash; no exceptions.</li>
+      <li>Keep the enclosure gate latched at all times, even while entering or exiting.</li>
+      <li>No dispersed camping anywhere in Great Smoky Mountains NP.</li>
+      <li>Stay only at the shelter listed on your permit. To change shelters, call <strong>(865) 436-1231</strong>.</li>
+      <li>Campfires only in established fire rings where permitted &mdash; check current conditions for fire bans.</li>
+      <li>The bald meadow vegetation is fragile &mdash; stay on the AT and designated paths across the summit.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Getting Supplies</h2>
+    <p style="font-size:0.88rem; color:#4a5568; margin:0 0 0.75rem;">
+      Silers Bald is at mile ~192.0, approximately 8 trail miles from Newfound Gap and a Gatlinburg hitch northbound. You are in the final stretch of the Smokies traverse &mdash; ensure you have enough food to reach Newfound Gap.
+    </p>
+    <div class="route-grid">
+      <div class="route-card recommended">
+        <h3>Gatlinburg, TN</h3>
+        <div class="route-badge badge-rec">Recommended &mdash; Northbound Exit</div>
+        <p>Gatlinburg is now the closest resupply &mdash; roughly 8 trail miles to Newfound Gap, then a hitch on US-441 (~15 road miles west into town). Gatlinburg has full grocery (Food City, Walmart), gear outfitters, and lodging. Budget option: Hostel in the Hollow (~$30/night bunks). Mid-range: various motels at $80&ndash;150/night. Splurge: LeConte Lodge (reservation required, expensive).</p>
+      </div>
+      <div class="route-card alternate">
+        <h3>Fontana Village, NC</h3>
+        <div class="route-badge badge-alt">Alternate &mdash; Southbound / Pre-Entry</div>
+        <p>Fontana Village is roughly 23 trail miles south &mdash; not practical to return mid-traverse. If you are southbound or started from Newfound Gap, Fontana Village is where you will exit the park. Either way, carry sufficient food from your last town stop before entering.</p>
+      </div>
+    </div>
+    <div class="tip">
+      <strong>Nearly through the Smokies:</strong> From Silers Bald, you are about 8 miles from Newfound Gap and Clingmans Dome. Most hikers push hard through this stretch to reach Gatlinburg for resupply. If you are running low on food, this is manageable &mdash; but do not linger unnecessarily.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Where to Sleep Nearby</h2>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Silers Bald Shelter</div>
+        <span class="badge badge-free">Permit Required</span>
+      </div>
+      <div class="lodging-meta">AT Mile ~192.0 &bull; Capacity: 12 &bull; Chain-link bear enclosure &bull; Privy on-site &bull; Spring 0.15 mi south</div>
+      <div class="lodging-desc">
+        One of the most spectacular shelter locations in the Smokies, positioned just below the Silers Bald summit meadow. The chain-link bear enclosure is mandatory. The spring is 0.15 miles south on a side trail &mdash; fill up before settling in. The open bald 0.15 miles north on the AT provides 360-degree views and extraordinary sunsets. This is a highly sought permit location.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>360-degree views from bald</li>
+            <li>Extraordinary sunsets</li>
+            <li>On-trail &mdash; no extra miles</li>
+            <li>Privy on-site</li>
+            <li>Close to Newfound Gap exit</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>Must sleep in bear enclosure</li>
+            <li>$40 + $8/person permit cost</li>
+            <li>Spring 0.15 mi away</li>
+            <li>Only 12 spots &mdash; books up fast</li>
+            <li>Exposed elevation; weather moves in fast</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Gatlinburg, TN &mdash; Various Options</div>
+        <span class="badge badge-paid">Paid &bull; ~8 mi north + hitch</span>
+      </div>
+      <div class="lodging-meta">Gatlinburg, TN &bull; ~8 trail miles to Newfound Gap + ~15 road miles west on US-441</div>
+      <div class="lodging-desc">
+        Gatlinburg is tantalizingly close from Silers Bald &mdash; just 8 trail miles to Newfound Gap, then a hitch into town. Options include Hostel in the Hollow (budget bunks ~$30), multiple motels and inns ($80&ndash;150/night), and the iconic LeConte Lodge on the summit of Mount LeConte (reservation-only, expensive, unforgettable). Full grocery, restaurants, laundry, and outfitters in town.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Full resupply (Food City, Walmart)</li>
+            <li>Outfitters for gear and supplies</li>
+            <li>Range of lodging budgets</li>
+            <li>Hot food and town amenities</li>
+            <li>Close &mdash; only 8 more trail miles</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>Requires 8 more miles + hitch</li>
+            <li>Very touristy environment</li>
+            <li>Hitch from Newfound Gap not guaranteed</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="nav-strip">
+    <a class="nav-btn" href="shelter-derrick-knob.html">&larr; Derrick Knob</a>
+    <a class="nav-btn" href="at-map.html">AT Map</a>
+    <a class="nav-btn" href="shelter-double-spring-gap.html">Double Spring Gap &rarr;</a>
+  </div>
+
+  <a class="back" href="at-map.html">&larr; Back to AT Map</a>
+
+</body>
+</html>
