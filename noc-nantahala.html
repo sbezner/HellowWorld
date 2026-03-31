@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nantahala Outdoor Center (NOC) — AT North Carolina</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin:0; padding:1.5rem; background:#f0f4f8; font-family:sans-serif; color:#2d3748; }
+    h1 { font-size:1.7rem; margin-bottom:0.2rem; }
+    .subtitle { color:#718096; font-size:0.88rem; margin-bottom:1.25rem; }
+    .breadcrumb { font-size:0.78rem; color:#718096; margin-bottom:0.75rem; }
+    .breadcrumb a { color:#3182ce; text-decoration:none; }
+    .breadcrumb a:hover { text-decoration:underline; }
+    .section { background:white; border-radius:8px; padding:1.25rem; margin-bottom:1.25rem; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+    .section h2 { margin:0 0 1rem; font-size:1.1rem; color:#2b6cb0; border-bottom:1px solid #e2e8f0; padding-bottom:0.5rem; }
+    .stat-grid { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem; }
+    .stat { background:#ebf8ff; border-radius:6px; padding:0.4rem 0.75rem; font-size:0.85rem; }
+    .stat span { font-weight:bold; color:#2b6cb0; }
+    .badge { font-size:0.75rem; padding:0.2rem 0.6rem; border-radius:12px; font-weight:bold; white-space:nowrap; display:inline-block; }
+    .badge-paid { background:#bee3f8; color:#2b6cb0; }
+    .badge-free { background:#c6f6d5; color:#276749; }
+    .badge-donation { background:#fefcbf; color:#744210; }
+    .badge-seasonal { background:#fed7d7; color:#742a2a; }
+    .alert { background:#f0fff4; border-left:4px solid #38a169; padding:0.75rem 1rem; border-radius:0 6px 6px 0; font-size:0.9rem; color:#276749; margin-bottom:1.25rem; }
+    .alert strong { display:block; margin-bottom:0.2rem; }
+    .warning { background:#fff5f5; border-left:4px solid #e53e3e; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#742a2a; margin-bottom:0.6rem; }
+    .tip { background:#fffbeb; border-left:4px solid #f6ad55; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#744210; margin-top:0.75rem; }
+
+    .amenity-grid { display:flex; flex-wrap:wrap; gap:0.6rem; margin-bottom:0.75rem; }
+    .amenity { background:#f0fff4; border:1px solid #c6f6d5; border-radius:6px; padding:0.4rem 0.75rem; font-size:0.85rem; color:#276749; }
+
+    .lodging-card { border:1px solid #e2e8f0; border-radius:8px; padding:1rem; margin-bottom:0.75rem; }
+    .lodging-card:last-child { margin-bottom:0; }
+    .lodging-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.3rem; }
+    .lodging-name { font-weight:bold; font-size:1rem; color:#1a365d; }
+    .lodging-meta { font-size:0.8rem; color:#718096; margin-bottom:0.5rem; }
+    .lodging-desc { font-size:0.88rem; line-height:1.5; color:#4a5568; margin-bottom:0.75rem; }
+    .pros-cons { display:flex; flex-wrap:wrap; gap:0.75rem; }
+    .pros, .cons { flex:1 1 160px; font-size:0.83rem; line-height:1.7; }
+    .pros { background:#f0fff4; border-radius:6px; padding:0.6rem 0.75rem; }
+    .cons { background:#fff5f5; border-radius:6px; padding:0.6rem 0.75rem; }
+    .pros strong { color:#276749; display:block; margin-bottom:0.2rem; }
+    .cons strong { color:#c53030; display:block; margin-bottom:0.2rem; }
+    .pros ul, .cons ul { margin:0; padding-left:1.2rem; }
+    .contact-row { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.75rem; }
+    .call-btn { display:inline-block; background:#2b6cb0; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; font-weight:bold; }
+    .call-btn:hover { background:#2c5282; }
+    .web-btn { display:inline-block; background:#718096; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; }
+    .web-btn:hover { background:#4a5568; }
+    .text-btn { display:inline-block; background:#38a169; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; font-weight:bold; }
+    .text-btn:hover { background:#276749; }
+
+    .price-table { width:100%; border-collapse:collapse; font-size:0.85rem; margin-bottom:0.75rem; }
+    .price-table th { background:#ebf8ff; color:#2b6cb0; padding:0.4rem 0.75rem; text-align:left; border-bottom:2px solid #bee3f8; }
+    .price-table td { padding:0.4rem 0.75rem; border-bottom:1px solid #e2e8f0; }
+    .price-table tr:last-child td { border-bottom:none; }
+
+    .shuttle-card { border:1px solid #e2e8f0; border-radius:8px; padding:1rem; margin-bottom:0.75rem; }
+    .shuttle-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.5rem; }
+    .shuttle-name { font-weight:bold; font-size:1rem; color:#1a365d; }
+    .shuttle-desc { font-size:0.88rem; line-height:1.5; color:#4a5568; margin-bottom:0.75rem; }
+
+    .nearby-shelters { display:flex; flex-wrap:wrap; gap:0.5rem; }
+    .shelter-link { display:inline-block; background:white; border:1px solid #bee3f8; border-radius:6px; padding:0.4rem 0.75rem; text-decoration:none; color:#2b6cb0; font-size:0.85rem; }
+    .shelter-link:hover { background:#ebf8ff; }
+
+    a.back { display:inline-block; margin-top:1rem; color:#3182ce; text-decoration:none; font-size:0.95rem; }
+    a.back:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> &rsaquo;
+    <a href="at-map.html">AT Map</a> &rsaquo;
+    Nantahala Outdoor Center
+  </div>
+
+  <h1>Nantahala Outdoor Center (NOC)</h1>
+  <p class="subtitle">Appalachian Trail, North Carolina &mdash; AT Mile ~137 (NOBO) &bull; Nantahala River Gorge &bull; The Mountain Crossings of North Carolina</p>
+
+  <div class="alert">
+    <strong>The NOC is right on the Appalachian Trail at the Nantahala River crossing.</strong>
+    Restaurant, outfitter, gear store, lodging, laundry, and showers — all without leaving the trail corridor. One of the most beloved stops on the entire southern AT.
+  </div>
+
+  <!-- Overview -->
+  <div class="section">
+    <h2>What Is the NOC?</h2>
+    <div class="stat-grid">
+      <div class="stat">AT Mile: <span>~137 (NOBO)</span></div>
+      <div class="stat">Elevation: <span>~1,700 ft (river gorge)</span></div>
+      <div class="stat">River: <span>Nantahala River</span></div>
+      <div class="stat">County: <span>Swain County, NC</span></div>
+      <div class="stat">Nearest Town: <span>Bryson City, ~12 mi</span></div>
+    </div>
+    <p style="font-size:0.88rem; line-height:1.6; margin:0 0 0.75rem;">
+      The Nantahala Outdoor Center is a full-service adventure resort built into a dramatic river gorge in the Nantahala Mountains of western North Carolina. The AT descends from the ridgeline to cross the Nantahala River right through the heart of the NOC campus — you literally walk past the restaurant, gear store, and lodging on your way from the southbound <a href="shelter-rufus-morgan.html" style="color:#2b6cb0;">A. Rufus Morgan Shelter</a> to the northbound climb.
+    </p>
+    <p style="font-size:0.88rem; line-height:1.6; margin:0 0 0.75rem;">
+      Founded in 1972, the NOC has grown into one of the premier outdoor adventure centers in the Southeast. For AT hikers, it functions as a mini-town: you can resupply, get a hot meal, do laundry, charge your devices, repair gear, and get a real bed — all in one place, without a road shuttle. During NOBO season (March–May), the River's End Restaurant fills daily with thru-hikers fueling up on burgers and breakfast platters before the long climb out of the gorge.
+    </p>
+    <p style="font-size:0.88rem; line-height:1.6; margin:0;">
+      The gorge setting is spectacular. The Nantahala River runs cold and clear — it's dam-released water from Nantahala Lake and stays around 45°F year-round, making it one of the premier whitewater rafting destinations in the East. Expect to see kayakers, rafters, and adventure tourists alongside AT hikers, especially on summer weekends.
+    </p>
+    <div class="tip">
+      <strong>Closest AT shelter:</strong> <a href="shelter-rufus-morgan.html" style="color:#744210;">A. Rufus Morgan Shelter</a> is ~0.5 miles south on the AT (just before the NOC northbound). Named for a legendary AT trail maintainer who worked on the trail into his 90s.
+    </div>
+  </div>
+
+  <!-- Amenities -->
+  <div class="section">
+    <h2>On-Site Amenities</h2>
+    <div class="amenity-grid">
+      <div class="amenity">&#127869; River's End Restaurant</div>
+      <div class="amenity">&#127976; Wesser Store (basic resupply)</div>
+      <div class="amenity">&#127938; NOC Outfitter (full gear shop)</div>
+      <div class="amenity">&#128703; Lodging (dorms + private rooms)</div>
+      <div class="amenity">&#128704; Laundry (coin-op)</div>
+      <div class="amenity">&#128703; Hot showers</div>
+      <div class="amenity">&#128267; Phone charging</div>
+      <div class="amenity">&#128246; WiFi</div>
+      <div class="amenity">&#9973; Whitewater rafting / kayaking</div>
+      <div class="amenity">&#128204; Mail drops accepted</div>
+      <div class="amenity">&#128663; Shuttle service</div>
+      <div class="amenity">&#128248; Gear repair</div>
+    </div>
+
+    <h3 style="font-size:0.95rem; color:#2d3748; margin:0.75rem 0 0.5rem;">River's End Restaurant</h3>
+    <p style="font-size:0.88rem; line-height:1.5; margin:0 0 0.75rem; color:#4a5568;">
+      The most popular restaurant on the southern AT. Serves breakfast, lunch, and dinner with a hiker-friendly menu — enormous portions of burgers, sandwiches, wraps, breakfast burritos, and daily specials. The "Hiker Hunger" is real and River's End delivers. Hours vary by season; typically open 7 AM–9 PM during peak AT season. <strong>Cash and cards accepted.</strong>
+    </p>
+
+    <h3 style="font-size:0.95rem; color:#2d3748; margin:0.75rem 0 0.5rem;">Wesser Store (Resupply)</h3>
+    <p style="font-size:0.88rem; line-height:1.5; margin:0 0 0.75rem; color:#4a5568;">
+      The Wesser Store stocks hiker food (Clif bars, ramen, instant oatmeal, Knorr sides, candy), fuel canisters, basic first aid, and limited gear items. Selection is sufficient for a resupply if you're tight on food but not as comprehensive as a full outfitter like Mountain Crossings. <strong>Mail drops accepted</strong> — send to: Wesser Store / NOC, 13077 US-19 W, Bryson City NC 28713. Include your name and ETA.
+    </p>
+
+    <h3 style="font-size:0.95rem; color:#2d3748; margin:0.75rem 0 0.5rem;">NOC Outfitter</h3>
+    <p style="font-size:0.88rem; line-height:1.5; margin:0; color:#4a5568;">
+      Full gear shop with hiking equipment, clothing, maps, water filters, trekking poles, footwear, and more. Staff are experienced outdoor professionals. Good for gear repairs and replacements — especially footwear, which takes a beating by mile 134.
+    </p>
+  </div>
+
+  <!-- Lodging -->
+  <div class="section">
+    <h2>Where to Sleep at the NOC</h2>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">NOC Basecamp — Dorm Bunks</div>
+        <span class="badge badge-paid">~$35–45/night</span>
+      </div>
+      <div class="lodging-meta">Nantahala Outdoor Center, 13077 US-19 W, Bryson City NC 28713 &mdash; right on the AT</div>
+      <div class="lodging-desc">
+        The hiker-oriented dormitory lodging at the NOC. Bunk beds in shared rooms, hot showers, laundry access, and proximity to River's End Restaurant. The go-to option for thru-hikers who want a real bed without leaving the trail campus. Fills up fast on weekends and during peak NOBO season — call ahead or book online.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Right on the AT — no road travel</li>
+            <li>Cheapest lodging option at NOC</li>
+            <li>Hot shower and laundry on-site</li>
+            <li>Walking distance to restaurant</li>
+            <li>Hiker community atmosphere</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>Shared dormitory — limited privacy</li>
+            <li>Can be noisy (non-hikers/rafters too)</li>
+            <li>Fills up — must reserve ahead</li>
+          </ul>
+        </div>
+      </div>
+      <div class="contact-row">
+        <a class="call-btn" href="tel:8887623982">Call 888-662-1662</a>
+        <a class="web-btn" href="https://www.noc.com/lodging" target="_blank">noc.com/lodging</a>
+      </div>
+    </div>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">NOC Basecamp — Private Rooms</div>
+        <span class="badge badge-paid">~$90–150/night</span>
+      </div>
+      <div class="lodging-meta">Nantahala Outdoor Center &mdash; right on the AT</div>
+      <div class="lodging-desc">
+        Private rooms and cabins at the NOC provide a real rest stop — actual privacy, a queen bed, and the ability to sleep without earplugs. Good option for couples, solo hikers who need genuine recovery time, or anyone treating themselves after 134 hard miles from Springer. Same amenity access as dorm guests.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Private room — real rest</li>
+            <li>Still right on the AT</li>
+            <li>Full amenity access</li>
+            <li>Good for zero days</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>Significantly more expensive than dorm</li>
+            <li>Books out weeks ahead in peak season</li>
+            <li>Prices can spike on weekends</li>
+          </ul>
+        </div>
+      </div>
+      <div class="contact-row">
+        <a class="call-btn" href="tel:8887623982">Call 888-662-1662</a>
+        <a class="web-btn" href="https://www.noc.com/lodging" target="_blank">Book Online</a>
+      </div>
+    </div>
+
+    <div class="lodging-card">
+      <div class="lodging-header">
+        <div class="lodging-name">Hotels in Bryson City, NC</div>
+        <span class="badge badge-paid">~$80–160/night</span>
+      </div>
+      <div class="lodging-meta">Bryson City, NC &mdash; ~12 miles from NOC by road on US-19</div>
+      <div class="lodging-desc">
+        Bryson City is the nearest full-service town to the NOC. Several hotels and B&amp;Bs including Everett Hotel (boutique, downtown, ~$120-160), various chain motels, and hiker-friendly options. Full grocery (Ingles), restaurants including Nantahala Brewing Co., pharmacy, post office, and outfitter (Slow Roll Cyclery doubles as gear shop for hikers). NOC shuttle to/from town available.
+      </div>
+      <div class="pros-cons">
+        <div class="pros">
+          <strong>Pros</strong>
+          <ul>
+            <li>Full grocery (Ingles) for resupply</li>
+            <li>Wider restaurant selection</li>
+            <li>Post office for mail drops</li>
+            <li>Better pharmacy access</li>
+            <li>Quieter than busy NOC campus</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <strong>Cons</strong>
+          <ul>
+            <li>12 miles by road from trail</li>
+            <li>Requires shuttle — adds cost</li>
+            <li>More detached from hiker community</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Getting There / Shuttles -->
+  <div class="section">
+    <h2>Getting to Town from the NOC</h2>
+
+    <div class="shuttle-card">
+      <div class="shuttle-header">
+        <div class="shuttle-name">NOC Shuttle Service</div>
+        <span class="badge badge-paid">PAID — varies</span>
+      </div>
+      <div class="shuttle-desc">
+        The NOC runs shuttles to Bryson City and surrounding areas. Rates and schedules vary by season. Call the NOC front desk to arrange — they also do longer shuttles to Fontana Dam, Gatlinburg, and other AT access points. <strong>Best source for current shuttle info.</strong>
+      </div>
+      <div class="contact-row">
+        <a class="call-btn" href="tel:8887623982">Call NOC: 888-662-1662</a>
+        <a class="web-btn" href="https://www.noc.com" target="_blank">noc.com</a>
+      </div>
+    </div>
+
+    <div class="shuttle-card">
+      <div class="shuttle-header">
+        <div class="shuttle-name">Bryson City Outdoors / Local Shuttles</div>
+        <span class="badge badge-paid">PAID</span>
+      </div>
+      <div class="shuttle-desc">
+        Multiple local shuttle operators serve the NOC–Bryson City corridor. Ask at the NOC outfitter for the current recommended driver list — they keep a live update of who's operating. Hitchhiking US-19 from the NOC is possible but the road is winding and traffic is moderate.
+      </div>
+    </div>
+
+    <div class="tip">
+      <strong>Hitchhiking from NOC:</strong> US-19 runs along the Nantahala River and is a two-lane mountain highway. Traffic is moderate — rafting tourists and locals. Stand at the NOC entrance on US-19. West goes to Bryson City (~12 miles); east goes back toward Franklin (~25 miles). Average wait: 20–40 minutes. Weekends are much easier.
+    </div>
+  </div>
+
+  <!-- Resupply -->
+  <div class="section">
+    <h2>Resupply Options</h2>
+
+    <table class="price-table">
+      <thead>
+        <tr><th>Option</th><th>Distance</th><th>Best For</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Wesser Store (on-trail)</strong></td><td>Right on AT</td><td>Quick top-up, fuel, snacks</td></tr>
+        <tr><td><strong>Ingles Supermarket, Bryson City</strong></td><td>~12 mi by road</td><td>Full resupply, best selection</td></tr>
+        <tr><td><strong>Bryson City Post Office</strong></td><td>~12 mi by road</td><td>Mail drop pickup</td></tr>
+        <tr><td><strong>NOC Mail Drop</strong></td><td>Right on AT</td><td>Pre-staged resupply box</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:0.82rem; color:#4a5568; margin:0;"><strong>NOC mail drop address:</strong> Your Name / Hold for AT Hiker / Wesser Store – NOC / 13077 US-19 W / Bryson City, NC 28713. Include your approximate arrival date.</p>
+  </div>
+
+  <!-- Nearby shelters -->
+  <div class="section">
+    <h2>Nearby AT Shelters</h2>
+    <div class="nearby-shelters">
+      <a class="shelter-link" href="shelter-wayah-bald.html">&larr; Wayah Bald Shelter (Mile 115.4)</a>
+      <a class="shelter-link" href="shelter-rufus-morgan.html">A. Rufus Morgan Shelter (Mile 134.0) &mdash; 0.5 mi south on AT</a>
+      <a class="shelter-link" href="shelter-sassafras-gap-nc.html">Sassafras Gap Shelter (Mile 138.5) &rarr;</a>
+    </div>
+  </div>
+
+  <a class="back" href="index.html">&larr; Back to Home</a>
+
+</body>
+</html>

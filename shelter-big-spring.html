@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Big Spring Shelter – Appalachian Trail NC</title>
+<style>
+* { box-sizing: border-box; }
+body { margin:0; padding:1.5rem; background:#f0f4f8; font-family:sans-serif; color:#2d3748; }
+h1 { font-size:1.7rem; margin-bottom:0.2rem; }
+.subtitle { color:#718096; font-size:0.88rem; margin-bottom:1.25rem; }
+.breadcrumb { font-size:0.78rem; color:#718096; margin-bottom:0.75rem; }
+.breadcrumb a { color:#3182ce; text-decoration:none; }
+.breadcrumb a:hover { text-decoration:underline; }
+.section { background:white; border-radius:8px; padding:1.25rem; margin-bottom:1.25rem; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+.section h2 { margin:0 0 1rem; font-size:1.1rem; color:#2b6cb0; border-bottom:1px solid #e2e8f0; padding-bottom:0.5rem; }
+.stat-grid { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem; }
+.stat { background:#ebf8ff; border-radius:6px; padding:0.4rem 0.75rem; font-size:0.85rem; }
+.stat span { font-weight:bold; color:#2b6cb0; }
+.badge { font-size:0.75rem; padding:0.2rem 0.6rem; border-radius:12px; font-weight:bold; white-space:nowrap; display:inline-block; }
+.badge-paid { background:#bee3f8; color:#2b6cb0; }
+.badge-free { background:#c6f6d5; color:#276749; }
+.tip { background:#fffbeb; border-left:4px solid #f6ad55; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#744210; margin-top:0.75rem; }
+.route-grid { display:flex; flex-wrap:wrap; gap:0.75rem; }
+.route-card { flex:1 1 220px; border-radius:8px; padding:1rem; border:2px solid transparent; }
+.route-card.recommended { background:#f0fff4; border-color:#38a169; }
+.route-card.alternate { background:#ebf8ff; border-color:#90cdf4; }
+.route-card h3 { margin:0 0 0.3rem; font-size:1rem; }
+.route-card.recommended h3 { color:#276749; }
+.route-card.alternate h3 { color:#2b6cb0; }
+.route-badge { display:inline-block; font-size:0.72rem; font-weight:bold; padding:0.15rem 0.5rem; border-radius:10px; margin-bottom:0.5rem; }
+.badge-rec { background:#c6f6d5; color:#276749; }
+.badge-alt { background:#bee3f8; color:#2b6cb0; }
+.route-card p { margin:0; font-size:0.88rem; line-height:1.6; }
+.lodging-card { border:1px solid #e2e8f0; border-radius:8px; padding:1rem; margin-bottom:0.75rem; }
+.lodging-card:last-child { margin-bottom:0; }
+.lodging-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.3rem; }
+.lodging-name { font-weight:bold; font-size:1rem; color:#1a365d; }
+.lodging-meta { font-size:0.8rem; color:#718096; margin-bottom:0.5rem; }
+.lodging-desc { font-size:0.88rem; line-height:1.5; color:#4a5568; margin-bottom:0.75rem; }
+.pros-cons { display:flex; flex-wrap:wrap; gap:0.75rem; }
+.pros, .cons { flex:1 1 160px; font-size:0.83rem; line-height:1.7; }
+.pros { background:#f0fff4; border-radius:6px; padding:0.6rem 0.75rem; }
+.cons { background:#fff5f5; border-radius:6px; padding:0.6rem 0.75rem; }
+.pros strong { color:#276749; display:block; margin-bottom:0.2rem; }
+.cons strong { color:#c53030; display:block; margin-bottom:0.2rem; }
+.pros ul, .cons ul { margin:0; padding-left:1.2rem; }
+.nav-strip { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-top:1.5rem; }
+.nav-btn { display:inline-block; padding:0.5rem 1rem; border-radius:6px; font-size:0.88rem; text-decoration:none; background:white; color:#2b6cb0; border:1px solid #bee3f8; }
+.nav-btn:hover { background:#ebf8ff; }
+a.back { display:inline-block; margin-top:1rem; color:#3182ce; text-decoration:none; font-size:0.95rem; }
+a.back:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+
+<div class="breadcrumb">
+  <a href="index.html">Home</a> &rsaquo;
+  <a href="at-map.html">AT Map</a> &rsaquo;
+  Big Spring Shelter
+</div>
+
+<h1>Big Spring Shelter</h1>
+<p class="subtitle">North Carolina &nbsp;&middot;&nbsp; AT Mile ~96.8 &nbsp;&middot;&nbsp; Lean-to &nbsp;&middot;&nbsp; Elev. ~4,750 ft</p>
+
+<div class="section">
+  <h2>Shelter Overview</h2>
+  <div class="stat-grid">
+    <div class="stat">AT Mile <span>~96.8</span></div>
+    <div class="stat">Elevation <span>~4,750 ft</span></div>
+    <div class="stat">Capacity <span>6</span></div>
+    <div class="stat">Type <span>Lean-to</span></div>
+    <div class="stat">County <span>Macon, NC</span></div>
+    <div class="stat">Water <span>Big Spring (reliable, steps away)</span></div>
+    <div class="stat">Privy <span>Yes</span></div>
+    <div class="stat">Fee <span class="badge badge-free">Free</span></div>
+  </div>
+
+  <p>Big Spring Shelter earns its name — the water source here is one of the most reliable and voluminous on the southern AT. A true spring emerges just steps from the shelter, running cold and clear year-round. This makes Big Spring an appealing water carry stop even for day hikers and section backpackers who aren't staying overnight. The lean-to itself is compact (6 capacity), so tent pads nearby are frequently used when the shelter fills.</p>
+
+  <p>At nearly 4,800 feet, the shelter sits in a high-elevation mixed hardwood and red spruce zone. The forest here feels distinctly northern compared to Georgia's oaks and rhododendron — on cold, wet days it can feel almost boreal. Spring arrives late at this elevation; snow is possible through April and even into early May in cold years.</p>
+
+  <p>Big Spring sits roughly 4.7 miles north of Carter Gap and about 4.5 miles south of Rock Gap (Winding Stair Gap) — putting it squarely in the middle of the Franklin approach. Many hikers use it as a quick lunch or water stop rather than overnight, but it's a solid shelter option if you arrive late. The proximity to both Carter Gap and Rock Gap means this stretch sees steady traffic from both thru-hikers and weekenders from Franklin.</p>
+
+  <div class="tip">
+    <strong>Water Note:</strong> The spring at Big Spring is exceptional — one of the most reliable sources in this section. Fill up here even if you're just passing through, especially before the climb to Siler Bald.
+  </div>
+</div>
+
+<div class="section">
+  <h2>Getting Supplies</h2>
+
+  <div class="route-grid">
+    <div class="route-card recommended">
+      <span class="route-badge badge-rec">RECOMMENDED</span>
+      <h3>Franklin, NC via Rock Gap / Winding Stair Gap (US-64)</h3>
+      <p><strong>~4.5 trail miles north to gap, then ~10 road miles west.</strong> Rock Gap (also called Winding Stair Gap) is a very short hike north from Big Spring. From the gap, US-64 heads west ~10 miles to Franklin. Hitchhiking is reliable here. Budget Inn offers a free shuttle from the gap — call ahead. Franklin has Ingles Supermarket, Outdoor 76 outfitter, multiple restaurants, and laundry facilities.</p>
+    </div>
+  </div>
+
+  <div class="tip">
+    <strong>Mail Drop:</strong> Outdoor 76, 74 E Main St, Franklin, NC 28734. No hold fee for thru-hikers. One of the best outfitter resupply options in the southern AT.
+  </div>
+</div>
+
+<div class="section">
+  <h2>Where to Sleep Nearby</h2>
+
+  <div class="lodging-card">
+    <div class="lodging-header">
+      <span class="lodging-name">Big Spring Shelter (AT Lean-to)</span>
+      <span class="badge badge-free">Free</span>
+    </div>
+    <div class="lodging-meta">On trail · AT Mile ~96.8 · Open year-round · Capacity 6 + tenting</div>
+    <div class="lodging-desc">Compact lean-to with one of the best water sources on the southern AT steps away. Privy on site. Bear cables or box present — use them. At 4,750 ft, temperatures drop significantly at night even in summer. The shelter fills quickly when it does fill; tent pads are a comfortable backup. Mice are present as at nearly all AT shelters.</div>
+    <div class="pros-cons">
+      <div class="pros"><strong>Pros</strong>
+        <ul>
+          <li>Exceptional spring water steps away</li>
+          <li>Free, no reservation</li>
+          <li>Privy on site</li>
+          <li>Quiet, high-elevation setting</li>
+        </ul>
+      </div>
+      <div class="cons"><strong>Cons</strong>
+        <ul>
+          <li>Small capacity (6)</li>
+          <li>Very cold at night in any season</li>
+          <li>No cell service</li>
+          <li>Mice in shelter</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="lodging-card">
+    <div class="lodging-header">
+      <span class="lodging-name">Budget Inn — Franklin, NC</span>
+      <span class="badge badge-paid">~$55–80/night</span>
+    </div>
+    <div class="lodging-meta">~4.5 trail miles north + 10 road miles west · Year-round</div>
+    <div class="lodging-desc">Franklin's premier hiker motel. Free shuttle from Winding Stair Gap (call ahead), on-site laundry, walking distance to Ingles Supermarket. A short push from Big Spring gets you to the gap and within hitching distance of a real bed and a hot shower.</div>
+    <div class="pros-cons">
+      <div class="pros"><strong>Pros</strong>
+        <ul>
+          <li>Very close to trail — just 4.5 miles north</li>
+          <li>Free shuttle from Winding Stair Gap</li>
+          <li>Laundry on site</li>
+          <li>Near grocery and outfitter</li>
+        </ul>
+      </div>
+      <div class="cons"><strong>Cons</strong>
+        <ul>
+          <li>Still requires a hitch from the gap</li>
+          <li>Fills on busy weekends</li>
+          <li>Basic motel amenities</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="lodging-card">
+    <div class="lodging-header">
+      <span class="lodging-name">The Gooder Grove Hostel — Franklin, NC</span>
+      <span class="badge badge-paid">~$35/bunk</span>
+    </div>
+    <div class="lodging-meta">~4.5 trail miles north + 10 road miles west · Year-round (call ahead)</div>
+    <div class="lodging-desc">Budget hiker hostel in Franklin with bunks, kitchen, gear drying space, and shuttle availability. Popular with thru-hikers. Call ahead to guarantee a bunk.</div>
+    <div class="pros-cons">
+      <div class="pros"><strong>Pros</strong>
+        <ul>
+          <li>Cheapest Franklin option</li>
+          <li>Good hiker community</li>
+          <li>Shuttle available</li>
+        </ul>
+      </div>
+      <div class="cons"><strong>Cons</strong>
+        <ul>
+          <li>Shared dorm / bathrooms</li>
+          <li>Call ahead required</li>
+          <li>10-mile hitch from gap</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="nav-strip">
+  <a href="shelter-carter-gap.html" class="nav-btn">&larr; Carter Gap</a>
+  <a href="at-map.html" class="nav-btn">&#9968; Back to Map</a>
+  <a href="shelter-rock-gap.html" class="nav-btn">Rock Gap &rarr;</a>
+</div>
+
+<a href="index.html" class="back">&larr; Back to Home</a>
+
+</body>
+</html>
