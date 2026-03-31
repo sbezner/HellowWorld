@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muskrat Creek Shelter – Appalachian Trail NC</title>
+<style>
+* { box-sizing: border-box; }
+body { margin:0; padding:1.5rem; background:#f0f4f8; font-family:sans-serif; color:#2d3748; }
+h1 { font-size:1.7rem; margin-bottom:0.2rem; }
+.subtitle { color:#718096; font-size:0.88rem; margin-bottom:1.25rem; }
+.breadcrumb { font-size:0.78rem; color:#718096; margin-bottom:0.75rem; }
+.breadcrumb a { color:#3182ce; text-decoration:none; }
+.breadcrumb a:hover { text-decoration:underline; }
+.section { background:white; border-radius:8px; padding:1.25rem; margin-bottom:1.25rem; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+.section h2 { margin:0 0 1rem; font-size:1.1rem; color:#2b6cb0; border-bottom:1px solid #e2e8f0; padding-bottom:0.5rem; }
+.stat-grid { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem; }
+.stat { background:#ebf8ff; border-radius:6px; padding:0.4rem 0.75rem; font-size:0.85rem; }
+.stat span { font-weight:bold; color:#2b6cb0; }
+.badge { font-size:0.75rem; padding:0.2rem 0.6rem; border-radius:12px; font-weight:bold; white-space:nowrap; display:inline-block; }
+.badge-paid { background:#bee3f8; color:#2b6cb0; }
+.badge-free { background:#c6f6d5; color:#276749; }
+.badge-donation { background:#fefcbf; color:#744210; }
+.badge-seasonal { background:#fed7d7; color:#742a2a; }
+.alert { background:#f0fff4; border-left:4px solid #38a169; padding:0.75rem 1rem; border-radius:0 6px 6px 0; font-size:0.9rem; color:#276749; margin-bottom:1.25rem; }
+.alert strong { display:block; margin-bottom:0.2rem; }
+.warning { background:#fff5f5; border-left:4px solid #e53e3e; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#742a2a; margin-bottom:0.6rem; }
+.tip { background:#fffbeb; border-left:4px solid #f6ad55; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#744210; margin-top:0.75rem; }
+.route-grid { display:flex; flex-wrap:wrap; gap:0.75rem; }
+.route-card { flex:1 1 220px; border-radius:8px; padding:1rem; border:2px solid transparent; }
+.route-card.recommended { background:#f0fff4; border-color:#38a169; }
+.route-card.alternate { background:#ebf8ff; border-color:#90cdf4; }
+.route-card.far { background:#f7fafc; border-color:#cbd5e0; }
+.route-card h3 { margin:0 0 0.3rem; font-size:1rem; }
+.route-card.recommended h3 { color:#276749; }
+.route-card.alternate h3 { color:#2b6cb0; }
+.route-card.far h3 { color:#4a5568; }
+.route-badge { display:inline-block; font-size:0.72rem; font-weight:bold; padding:0.15rem 0.5rem; border-radius:10px; margin-bottom:0.5rem; }
+.badge-rec { background:#c6f6d5; color:#276749; }
+.badge-alt { background:#bee3f8; color:#2b6cb0; }
+.badge-far { background:#e2e8f0; color:#4a5568; }
+.route-card p { margin:0; font-size:0.88rem; line-height:1.6; }
+.lodging-card { border:1px solid #e2e8f0; border-radius:8px; padding:1rem; margin-bottom:0.75rem; }
+.lodging-card:last-child { margin-bottom:0; }
+.lodging-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.3rem; }
+.lodging-name { font-weight:bold; font-size:1rem; color:#1a365d; }
+.lodging-meta { font-size:0.8rem; color:#718096; margin-bottom:0.5rem; }
+.lodging-desc { font-size:0.88rem; line-height:1.5; color:#4a5568; margin-bottom:0.75rem; }
+.pros-cons { display:flex; flex-wrap:wrap; gap:0.75rem; }
+.pros, .cons { flex:1 1 160px; font-size:0.83rem; line-height:1.7; }
+.pros { background:#f0fff4; border-radius:6px; padding:0.6rem 0.75rem; }
+.cons { background:#fff5f5; border-radius:6px; padding:0.6rem 0.75rem; }
+.pros strong { color:#276749; display:block; margin-bottom:0.2rem; }
+.cons strong { color:#c53030; display:block; margin-bottom:0.2rem; }
+.pros ul, .cons ul { margin:0; padding-left:1.2rem; }
+.contact-row { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.75rem; }
+.call-btn { display:inline-block; background:#2b6cb0; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; font-weight:bold; }
+.call-btn:hover { background:#2c5282; }
+.text-btn { display:inline-block; background:#38a169; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; font-weight:bold; }
+.text-btn:hover { background:#276749; }
+.web-btn { display:inline-block; background:#718096; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; }
+.web-btn:hover { background:#4a5568; }
+.nav-strip { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-top:1.5rem; }
+.nav-btn { display:inline-block; padding:0.5rem 1rem; border-radius:6px; font-size:0.88rem; text-decoration:none; background:white; color:#2b6cb0; border:1px solid #bee3f8; }
+.nav-btn:hover { background:#ebf8ff; }
+a.back { display:inline-block; margin-top:1rem; color:#3182ce; text-decoration:none; font-size:0.95rem; }
+a.back:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+
+<div class="breadcrumb">
+  <a href="index.html">Home</a> &rsaquo;
+  <a href="at-map.html">AT Map</a> &rsaquo;
+  Muskrat Creek Shelter
+</div>
+
+<h1>Muskrat Creek Shelter</h1>
+<p class="subtitle">North Carolina &nbsp;&middot;&nbsp; AT Mile ~80.7 &nbsp;&middot;&nbsp; Lean-to &nbsp;&middot;&nbsp; Elev. ~4,600 ft</p>
+
+<div class="warning">
+  <strong>Remote Location — Plan Carefully:</strong> Muskrat Creek is one of the most isolated shelters on the southern AT. There is no convenient road access nearby and no cell service. The nearest practical resupply point is Franklin, NC, roughly 20+ trail miles north via Rock Gap. Carry adequate food before you arrive here.
+</div>
+
+<div class="section">
+  <h2>Shelter Overview</h2>
+  <div class="stat-grid">
+    <div class="stat">AT Mile <span>~80.7</span></div>
+    <div class="stat">Elevation <span>~4,600 ft</span></div>
+    <div class="stat">Capacity <span>8</span></div>
+    <div class="stat">Type <span>Lean-to</span></div>
+    <div class="stat">County <span>Macon, NC</span></div>
+    <div class="stat">Water <span>Muskrat Creek (reliable)</span></div>
+    <div class="stat">Privy <span>Yes</span></div>
+    <div class="stat">Fee <span class="badge badge-free">Free</span></div>
+  </div>
+
+  <p>Muskrat Creek Shelter is the <strong>first shelter in North Carolina</strong> on a northbound thru-hike, located just 1.2 miles past Bly Gap — the official Georgia/North Carolina state line. This milestone carries real emotional weight for NOBO hikers who have spent days climbing through Georgia's relentless ridges. The lean-to sleeps 8 and is maintained by the Nantahala Hiking Club, which keeps the site in solid condition year-round.</p>
+
+  <p>The shelter occupies a dense cove hardwood forest at approximately 4,600 feet, tucked into the high terrain of the Nantahala Wilderness. Yellow birch, American beech, and scattered Fraser fir dominate the canopy. The namesake Muskrat Creek runs just below the shelter and is one of the most reliable water sources on this stretch — cold, clear, and flowing even in dry seasons. Always filter or treat before drinking. Flat tent pads accommodate overflow campers when the lean-to fills, which can happen on spring and fall weekends.</p>
+
+  <p>Despite its milestone status, Muskrat Creek sees far less foot traffic than shelters near road crossings. The isolation is genuine — there are no roads, no cell towers, and no amenities within easy reach in any direction. This section of the Nantahala Wilderness is rugged, with steep unnamed ridgelines and dense forest. The remoteness is part of the appeal, but it demands that hikers arrive self-sufficient. Do not count on being able to call for help or bail out quickly.</p>
+
+  <div class="tip">
+    <strong>State Line Milestone:</strong> Bly Gap, 1.2 miles south, is the Georgia/NC border. Many thru-hikers photograph the weathered state line marker there. If you make it to Muskrat Creek on your first day in NC, you are well-positioned to reach Standing Indian area the following day and Rock Gap / Franklin within two more days.
+  </div>
+</div>
+
+<div class="section">
+  <h2>Getting Supplies</h2>
+  <p style="font-size:0.88rem; color:#4a5568; margin-bottom:1rem;">No supply run is practical from Muskrat Creek itself. The strategy for nearly every thru-hiker is to carry enough food from the last Georgia resupply (Hiawassee or Neel Gap area) through to Franklin, NC. The options below describe routes forward.</p>
+
+  <div class="route-grid">
+    <div class="route-card recommended">
+      <span class="route-badge badge-rec">RECOMMENDED</span>
+      <h3>Franklin, NC via Rock Gap (Winding Stair Gap)</h3>
+      <p><strong>~20.8 trail miles to road, then ~10 road miles to town.</strong> Continue north on the AT through Standing Indian, Carter Gap, Big Spring, and Rock Gap shelters to reach Winding Stair Gap (US-64). From the gap, hitchhike west ~10 miles into Franklin. Hitchhiking US-64 is reliable — average wait 20–30 minutes, especially on weekends. Franklin has a full grocery (Ingles), outfitter (Outdoor 76), multiple hostels, and restaurants. Most hikers split the approach into 2 days, camping at Standing Indian or Carter Gap en route.</p>
+    </div>
+    <div class="route-card alternate">
+      <span class="route-badge badge-alt">ALTERNATE</span>
+      <h3>Standing Indian Campground Store</h3>
+      <p><strong>~7 trail miles north, then 0.5 mi blue-blaze side trail.</strong> The USFS Standing Indian Campground has a small seasonal camp store with limited stock — snacks, some freeze-dried meals, basic supplies. Useful for topping off in a pinch, but stock is unreliable and the store is only open spring through fall. Do not plan your resupply around this option. It is best treated as an emergency supplement rather than a primary resupply.</p>
+    </div>
+    <div class="route-card far">
+      <span class="route-badge badge-far">EMERGENCY ONLY</span>
+      <h3>Wallace Gap (Old US-64)</h3>
+      <p><strong>~7 trail miles north.</strong> Wallace Gap provides road access via Old US-64, but this is a remote rural forest road with minimal traffic. There are no services at the gap. Hitchhiking here is very difficult — rides to Franklin can take hours or may not come at all. Only use this route if you have a genuine emergency requiring quick trail exit, and even then, a pre-arranged pickup is strongly advised.</p>
+    </div>
+  </div>
+
+  <div class="tip">
+    <strong>Mail Drop Tip:</strong> Send a resupply box to Outdoor 76, 74 E Main St, Franklin, NC 28734 before your hike. They hold packages for thru-hikers at no charge. Having a box waiting in Franklin removes all resupply pressure between Georgia and this point.
+  </div>
+</div>
+
+<div class="section">
+  <h2>Where to Sleep Nearby</h2>
+  <p style="font-size:0.88rem; color:#4a5568; margin-bottom:1rem;">There is no paid lodging within practical reach of Muskrat Creek. Your realistic options are the shelter itself tonight, then the Standing Indian Campground the following night, and Franklin-area lodging after that.</p>
+
+  <div class="lodging-card">
+    <div class="lodging-header">
+      <span class="lodging-name">Muskrat Creek Shelter (AT Lean-to)</span>
+      <span class="badge badge-free">Free</span>
+    </div>
+    <div class="lodging-meta">On trail · AT Mile ~80.7 · Open year-round · Capacity 8 + tenting</div>
+    <div class="lodging-desc">The lean-to sleeps 8 on a wooden sleeping platform with a roof and three walls. Tent pads nearby handle overflow. A privy is maintained on site. Bear activity is common throughout the Nantahala Wilderness — use the bear box or hang your food properly. Mice are present in the shelter, as at virtually all AT shelters; hang your food bag even inside the lean-to.</div>
+    <div class="pros-cons">
+      <div class="pros"><strong>Pros</strong>
+        <ul>
+          <li>No cost</li>
+          <li>Reliable cold water nearby</li>
+          <li>Privy on site</li>
+          <li>Peaceful, remote setting</li>
+          <li>Bear box or cables present</li>
+        </ul>
+      </div>
+      <div class="cons"><strong>Cons</strong>
+        <ul>
+          <li>No cell service</li>
+          <li>No emergency road access</li>
+          <li>Cold at 4,600 ft even in summer</li>
+          <li>Mice in shelter common</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="lodging-card">
+    <div class="lodging-header">
+      <span class="lodging-name">Budget Inn — Franklin, NC</span>
+      <span class="badge badge-paid">~$55–80/night</span>
+    </div>
+    <div class="lodging-meta">~20.8 trail miles north + 10 road miles west · Year-round</div>
+    <div class="lodging-desc">Franklin's most hiker-friendly motel. The Budget Inn offers a free shuttle from Winding Stair Gap (call ahead), on-site laundry, and staff who are thoroughly accustomed to thru-hikers. Basic rooms, but clean. Walking distance to Ingles Supermarket and several restaurants. This is your reward after the 2-day push from Muskrat Creek — budget for a zero day here.</div>
+    <div class="pros-cons">
+      <div class="pros"><strong>Pros</strong>
+        <ul>
+          <li>Free shuttle from Winding Stair Gap</li>
+          <li>Hiker-friendly staff</li>
+          <li>Laundry on site</li>
+          <li>Near Ingles grocery</li>
+        </ul>
+      </div>
+      <div class="cons"><strong>Cons</strong>
+        <ul>
+          <li>20+ trail miles away</li>
+          <li>Fills up on weekends in season</li>
+          <li>Basic room quality</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="lodging-card">
+    <div class="lodging-header">
+      <span class="lodging-name">The Gooder Grove Hostel — Franklin, NC</span>
+      <span class="badge badge-paid">~$35/bunk</span>
+    </div>
+    <div class="lodging-meta">~20.8 trail miles north + 10 road miles west · Year-round (call ahead)</div>
+    <div class="lodging-desc">A hiker hostel in Franklin with a communal atmosphere popular among thru-hikers. Bunk accommodations, shared kitchen, outdoor space for gear drying, and shuttle pickup from the trail available on request. Lower price point than the motels. Great spot to meet other hikers and share stories from Georgia. Call ahead to confirm availability and current policies.</div>
+    <div class="pros-cons">
+      <div class="pros"><strong>Pros</strong>
+        <ul>
+          <li>Budget bunk rate (~$35)</li>
+          <li>Hiker community atmosphere</li>
+          <li>Kitchen access</li>
+          <li>Shuttle available</li>
+        </ul>
+      </div>
+      <div class="cons"><strong>Cons</strong>
+        <ul>
+          <li>20+ trail miles away</li>
+          <li>Shared bathrooms and dorm</li>
+          <li>Limited beds — call ahead</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="nav-strip">
+  <a href="shelter-plumorchard-gap.html" class="nav-btn">&larr; Plum Orchard Gap (GA)</a>
+  <a href="at-map.html" class="nav-btn">&#9968; Back to Map</a>
+  <a href="shelter-standing-indian.html" class="nav-btn">Standing Indian &rarr;</a>
+</div>
+
+<a href="index.html" class="back">&larr; Back to Home</a>
+
+</body>
+</html>

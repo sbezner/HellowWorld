@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Appalachian Trail Map — Georgia &amp; North Carolina</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: sans-serif; height: 100vh; display: flex; flex-direction: column; overflow: hidden; background: #1a1a1a; color: #2d3748; }
+
+    #header {
+      background: #2d5a27;
+      color: white;
+      padding: 0.65rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      flex-shrink: 0;
+    }
+    #header h1 { font-size: 1.05rem; font-weight: bold; }
+    #header .sub { font-size: 0.75rem; opacity: 0.82; margin-bottom: 0.1rem; }
+    .offline-badge {
+      background: rgba(0,0,0,0.3);
+      border-radius: 12px;
+      padding: 0.25rem 0.65rem;
+      font-size: 0.7rem;
+      white-space: nowrap;
+    }
+
+    #map-wrap { flex: 1; position: relative; overflow: hidden; }
+    #map { height: 100%; width: 100%; }
+
+    #panel {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: white;
+      border-top: 3px solid #2d5a27;
+      max-height: 260px;
+      overflow-y: auto;
+      z-index: 1000;
+      transform: translateY(calc(100% - 42px));
+      transition: transform 0.3s ease;
+    }
+    #panel.open { transform: translateY(0); }
+
+    #panel-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.6rem 1rem;
+      background: #2d5a27;
+      color: white;
+      cursor: pointer;
+      font-size: 0.83rem;
+      font-weight: bold;
+      user-select: none;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      height: 42px;
+    }
+    .arrow { transition: transform 0.3s; display: inline-block; }
+    #panel.open .arrow { transform: rotate(180deg); }
+
+    .state-header {
+      padding: 0.35rem 0.75rem;
+      font-size: 0.72rem;
+      font-weight: bold;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: #f0f4f8;
+      color: #4a5568;
+      border-bottom: 1px solid #e2e8f0;
+      position: sticky;
+      top: 42px;
+    }
+
+    .shelter-list { padding: 0.4rem 0.5rem; }
+    .shelter-item {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.45rem 0.6rem;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      color: #2d3748;
+    }
+    .shelter-item:hover { background: #f0f4f8; }
+    .s-icon { font-size: 1rem; flex-shrink: 0; }
+    .s-name { font-weight: bold; font-size: 0.85rem; flex: 1; min-width: 0; }
+    .s-meta { font-size: 0.73rem; color: #718096; white-space: nowrap; }
+
+    .sp h3 { font-size: 0.95rem; margin-bottom: 0.3rem; color: #2d5a27; line-height: 1.3; }
+    .sp .pm { font-size: 0.8rem; color: #718096; margin-bottom: 0.4rem; line-height: 1.5; }
+    .sp .state-tag { display:inline-block; font-size:0.7rem; font-weight:bold; padding:0.1rem 0.45rem; border-radius:10px; margin-bottom:0.5rem; }
+    .sp .state-ga { background:#c6f6d5; color:#276749; }
+    .sp .state-nc { background:#bee3f8; color:#2b6cb0; }
+    .sp a {
+      display: block;
+      background: #2d5a27;
+      color: white;
+      text-align: center;
+      padding: 0.4rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.83rem;
+      font-weight: bold;
+    }
+    .sp a:hover { background: #1a3a15; }
+    .sp .noc-link {
+      display: block;
+      background: #2b6cb0;
+      color: white;
+      text-align: center;
+      padding: 0.35rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.78rem;
+      margin-top: 0.35rem;
+    }
+
+    .legend {
+      background: white;
+      border-radius: 8px;
+      padding: 0.55rem 0.75rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      font-size: 0.76rem;
+      line-height: 1.8;
+    }
+    .leg-title { font-weight: bold; margin-bottom: 0.2rem; color: #2d3748; font-size: 0.78rem; }
+    .leg-row { display: flex; align-items: center; gap: 0.4rem; }
+
+    .back-btn {
+      position: absolute;
+      top: 10px; left: 10px;
+      z-index: 1000;
+      background: white;
+      border-radius: 6px;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
+      text-decoration: none;
+      color: #2d3748;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+      font-weight: bold;
+    }
+    .back-btn:hover { background: #f0f4f8; }
+  </style>
+</head>
+<body>
+
+<div id="header">
+  <div>
+    <div class="sub">Appalachian Trail &mdash; Georgia &amp; North Carolina &bull; Springer Mountain to Fontana Dam</div>
+    <h1>&#9968; Appalachian Trail Map &mdash; 24 Shelters</h1>
+  </div>
+  <span class="offline-badge">&#9888; Map tiles require internet &bull; All shelter pages work offline</span>
+</div>
+
+<div id="map-wrap">
+  <a href="index.html" class="back-btn">&larr; Home</a>
+  <div id="map"></div>
+
+  <div id="panel">
+    <div id="panel-toggle" onclick="togglePanel()">
+      <span>&#9968; All Shelters &mdash; Click to expand list &bull; GA (11) + NC (13)</span>
+      <span class="arrow">&#9650;</span>
+    </div>
+    <div id="shelter-list-wrap"></div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// ── Shelter data ──────────────────────────────────────────────────────────────
+const shelters = [
+  // ── Georgia ──
+  { name:'Springer Mountain Shelter',  state:'GA', type:'lean-to',     lat:34.6279, lng:-84.1934, mile:0,    elev:3782, cap:8,  url:'shelter-springer-mountain.html', water:'Spring 0.2 mi south' },
+  { name:'Stover Creek Shelter',       state:'GA', type:'lean-to',     lat:34.659,  lng:-84.202,  mile:2.6,  elev:2900, cap:8,  url:'shelter-stover-creek.html',       water:'Stover Creek, year-round' },
+  { name:'Hawk Mountain Shelter',      state:'GA', type:'lean-to',     lat:34.693,  lng:-84.198,  mile:8.1,  elev:3200, cap:8,  url:'shelter-hawk-mountain.html',      water:'Spring 100 yds from shelter' },
+  { name:'Gooch Mountain Shelter',     state:'GA', type:'lean-to',     lat:34.738,  lng:-84.182,  mile:15.8, elev:2784, cap:8,  url:'shelter-gooch-mountain.html',     water:'Spring east of shelter' },
+  { name:'Blood Mountain Shelter',     state:'GA', type:'stone-cabin', lat:34.797,  lng:-83.939,  mile:31.7, elev:4340, cap:8,  url:'shelter-blood-mountain.html',     water:'NO WATER on site &mdash; 0.5 mi south' },
+  { name:'Whitley Gap Shelter',        state:'GA', type:'lean-to',     lat:34.833,  lng:-83.882,  mile:36.5, elev:3500, cap:6,  url:'shelter-whitley-gap.html',        water:'Spring via blue-blazed trail' },
+  { name:'Low Gap Shelter',            state:'GA', type:'lean-to',     lat:34.859,  lng:-83.813,  mile:43.3, elev:2966, cap:6,  url:'low-gap-resupply.html',           water:'30&ndash;40 yards in front of shelter' },
+  { name:'Blue Mountain Shelter',      state:'GA', type:'lean-to',     lat:34.884,  lng:-83.759,  mile:50.7, elev:3889, cap:7,  url:'shelter-blue-mountain.html',      water:'Spring nearby, bear cables' },
+  { name:'Tray Mountain Shelter',      state:'GA', type:'lean-to',     lat:34.901,  lng:-83.703,  mile:56.8, elev:4200, cap:8,  url:'shelter-tray-mountain.html',      water:'Spring 200 yds north on AT' },
+  { name:'Deep Gap Shelter',           state:'GA', type:'lean-to',     lat:34.927,  lng:-83.637,  mile:63.3, elev:3550, cap:8,  url:'shelter-deep-gap.html',           water:'Spring nearby' },
+  { name:'Plumorchard Gap Shelter',    state:'GA', type:'lean-to',     lat:34.953,  lng:-83.572,  mile:68.4, elev:4080, cap:8,  url:'shelter-plumorchard-gap.html',    water:'Spring on blue-blazed trail' },
+  // ── North Carolina ──
+  { name:'Muskrat Creek Shelter',      state:'NC', type:'lean-to',     lat:35.003,  lng:-83.530,  mile:80.7, elev:4600, cap:8,  url:'shelter-muskrat-creek.html',      water:'Spring nearby' },
+  { name:'Standing Indian Shelter',    state:'NC', type:'lean-to',     lat:35.043,  lng:-83.566,  mile:87.7, elev:4980, cap:8,  url:'shelter-standing-indian.html',    water:'Spring 100 yds south' },
+  { name:'Carter Gap Shelter',         state:'NC', type:'lean-to',     lat:35.070,  lng:-83.596,  mile:91.7, elev:4540, cap:8,  url:'shelter-carter-gap.html',         water:'Spring nearby' },
+  { name:'Big Spring Shelter',         state:'NC', type:'lean-to',     lat:35.097,  lng:-83.589,  mile:96.8, elev:4750, cap:8,  url:'shelter-big-spring.html',         water:'Big Spring, reliable year-round' },
+  { name:'Rock Gap Shelter',           state:'NC', type:'lean-to',     lat:35.137,  lng:-83.579,  mile:101.5,elev:3750, cap:8,  url:'shelter-rock-gap.html',           water:'Spring nearby' },
+  { name:'Siler Bald Shelter',         state:'NC', type:'lean-to',     lat:35.164,  lng:-83.548,  mile:107.7,elev:5240, cap:8,  url:'shelter-siler-bald.html',         water:'Spring 0.1 mi south' },
+  { name:'Cold Spring Shelter',        state:'NC', type:'lean-to',     lat:35.185,  lng:-83.537,  mile:113.0,elev:4940, cap:6,  url:'shelter-cold-spring.html',        water:'Cold Spring, reliable' },
+  { name:'Wayah Bald Shelter',         state:'NC', type:'lean-to',     lat:35.187,  lng:-83.551,  mile:115.4,elev:5100, cap:6,  url:'shelter-wayah-bald.html',         water:'Spring nearby' },
+  { name:'A. Rufus Morgan Shelter',    state:'NC', type:'lean-to',     lat:35.334,  lng:-83.579,  mile:134.0,elev:1700, cap:8,  url:'shelter-rufus-morgan.html',       water:'Nantahala River nearby; spring at shelter', noc:true },
+  { name:'Sassafras Gap Shelter',      state:'NC', type:'lean-to',     lat:35.355,  lng:-83.630,  mile:138.5,elev:3440, cap:8,  url:'shelter-sassafras-gap-nc.html',   water:'Spring nearby' },
+  { name:'Brown Fork Gap Shelter',     state:'NC', type:'lean-to',     lat:35.393,  lng:-83.685,  mile:143.8,elev:3740, cap:8,  url:'shelter-brown-fork-gap.html',     water:'Spring 100 yds on blue-blazed trail' },
+  { name:'Cable Gap Shelter',          state:'NC', type:'lean-to',     lat:35.422,  lng:-83.741,  mile:150.8,elev:2900, cap:8,  url:'shelter-cable-gap.html',          water:'Spring 50 yds from shelter' },
+  { name:'Fontana Dam Shelter',        state:'NC', type:'lean-to',     lat:35.447,  lng:-83.803,  mile:164.7,elev:1680, cap:24, url:'shelter-fontana-dam.html',        water:'Running water on site (piped)', hilton:true },
+];
+
+// ── AT trail polyline ─────────────────────────────────────────────────────────
+const trail = [
+  // Georgia
+  [34.6279,-84.1934],[34.645,-84.206],[34.659,-84.202],[34.675,-84.195],
+  [34.693,-84.198],[34.710,-84.180],[34.725,-84.170],[34.738,-84.182],
+  [34.752,-84.120],[34.758,-84.096],[34.778,-84.020],[34.797,-83.939],
+  [34.790,-83.928],[34.812,-83.900],[34.833,-83.882],[34.851,-83.830],
+  [34.859,-83.813],[34.873,-83.810],[34.876,-83.769],[34.884,-83.759],
+  [34.901,-83.703],[34.918,-83.660],[34.927,-83.637],[34.946,-83.596],
+  [34.959,-83.590],[34.953,-83.572],[34.980,-83.527],
+  // North Carolina
+  [35.003,-83.530],[35.025,-83.540],[35.043,-83.566],[35.060,-83.582],
+  [35.070,-83.596],[35.085,-83.591],[35.097,-83.589],[35.115,-83.582],
+  [35.137,-83.579],[35.150,-83.563],[35.164,-83.548],[35.175,-83.540],
+  [35.185,-83.537],[35.187,-83.551],[35.195,-83.558],[35.210,-83.563],
+  [35.240,-83.568],[35.270,-83.568],[35.300,-83.571],[35.334,-83.579],
+  [35.355,-83.630],[35.373,-83.655],[35.393,-83.685],[35.410,-83.710],
+  [35.422,-83.741],[35.435,-83.769],[35.447,-83.803],
+];
+
+// ── Map ───────────────────────────────────────────────────────────────────────
+const map = L.map('map', { zoomControl: true }).setView([35.05, -83.87], 8);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  maxZoom: 18,
+}).addTo(map);
+
+// Trail lines
+L.polyline(trail, { color: '#3a1e00', weight: 6, opacity: 0.6 }).addTo(map);
+L.polyline(trail, { color: '#ffffff', weight: 3, opacity: 1.0 }).addTo(map);
+
+// State border marker
+L.marker([34.980, -83.527], {
+  icon: L.divIcon({
+    className:'',
+    html:`<div style="background:rgba(255,255,255,0.9);border:1px solid #aaa;border-radius:4px;padding:2px 5px;font-size:9px;color:#333;white-space:nowrap;text-align:center;">GA/NC Border<br>Bly Gap</div>`,
+    iconSize:null, iconAnchor:[0,0]
+  })
+}).addTo(map);
+
+// ── Icon factory ──────────────────────────────────────────────────────────────
+function makeIcon(shelter) {
+  const isCabin = shelter.type === 'stone-cabin';
+  const isHilton = shelter.hilton;
+  const isNC = shelter.state === 'NC';
+  let bg = isCabin ? '#5a6e7e' : (isNC ? '#2b6cb0' : '#8B4513');
+  if (isHilton) bg = '#6b21a8';
+  const svg = isCabin
+    ? `<svg width="14" height="14" viewBox="0 0 14 14"><rect x="2" y="6" width="10" height="7" fill="white"/><polygon points="7,0 14,6 0,6" fill="white"/></svg>`
+    : `<svg width="14" height="12" viewBox="0 0 14 12"><polygon points="7,0 14,12 0,12" fill="white"/></svg>`;
+  const size = isHilton ? 34 : 30;
+  return L.divIcon({
+    className: '',
+    html: `<div style="background:${bg};width:${size}px;height:${size}px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2.5px solid rgba(255,255,255,0.9);box-shadow:0 2px 6px rgba(0,0,0,0.5);">${svg}</div>`,
+    iconSize: [size,size],
+    iconAnchor: [size/2,size/2],
+    popupAnchor: [0,-size/2-4],
+  });
+}
+
+// ── Markers ───────────────────────────────────────────────────────────────────
+shelters.forEach(s => {
+  const m = L.marker([s.lat, s.lng], { icon: makeIcon(s) }).addTo(map);
+  const typeLabel = s.type === 'stone-cabin' ? 'Historic Stone Cabin' : 'Lean-to';
+  let extra = '';
+  if (s.hilton) extra = `<div style="background:#f3e8ff;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#6b21a8;margin-bottom:0.5rem;">&#11088; The Hilton of the AT</div>`;
+  if (s.noc) extra = `<a class="noc-link" href="noc-nantahala.html">&#9972; View NOC Guide &rarr;</a>`;
+  m.bindPopup(`
+    <div class="sp">
+      <span class="state-tag state-${s.state.toLowerCase()}">${s.state}</span>
+      <h3>${s.name}</h3>
+      <div class="pm">Mile ${s.mile} (NOBO) &bull; ${s.elev.toLocaleString()} ft &bull; ${typeLabel}<br>Sleeps ~${s.cap} &bull; <strong>Water:</strong> ${s.water}</div>
+      ${extra}
+      <a href="${s.url}">View Shelter Details &rarr;</a>
+    </div>
+  `, { maxWidth: 240, minWidth: 200 });
+});
+
+// ── NOC marker (special) ──────────────────────────────────────────────────────
+L.marker([35.335, -83.579], {
+  icon: L.divIcon({
+    className:'',
+    html:`<div style="background:#2b6cb0;color:white;border-radius:6px;padding:3px 7px;font-size:10px;font-weight:bold;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,0.4);">NOC</div>`,
+    iconSize:null, iconAnchor:[18,-20]
+  })
+}).bindPopup(`<div class="sp"><h3>Nantahala Outdoor Center</h3><div class="pm">Mile ~137 &bull; Restaurant, Outfitter, Rafting, Lodging &bull; Right on the AT</div><a href="noc-nantahala.html">View NOC Guide &rarr;</a></div>`, {maxWidth:220}).addTo(map);
+
+// ── Legend ────────────────────────────────────────────────────────────────────
+const legend = L.control({ position: 'bottomright' });
+legend.onAdd = () => {
+  const div = L.DomUtil.create('div','legend');
+  div.innerHTML = `
+    <div class="leg-title">Shelter Types</div>
+    <div class="leg-row"><div style="background:#8B4513;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,0.8);flex-shrink:0;"></div><span>GA Lean-to</span></div>
+    <div class="leg-row"><div style="background:#5a6e7e;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,0.8);flex-shrink:0;"></div><span>Stone Cabin</span></div>
+    <div class="leg-row"><div style="background:#2b6cb0;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,0.8);flex-shrink:0;"></div><span>NC Lean-to</span></div>
+    <div class="leg-row"><div style="background:#6b21a8;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,0.8);flex-shrink:0;"></div><span>Fontana Hilton</span></div>
+    <div class="leg-row" style="margin-top:0.3rem;"><div style="width:22px;height:3px;background:white;border:1px solid #3a1e00;flex-shrink:0;"></div><span>AT Route</span></div>
+  `;
+  return div;
+};
+legend.addTo(map);
+
+// ── Shelter list panel ────────────────────────────────────────────────────────
+const wrap = document.getElementById('shelter-list-wrap');
+let currentState = null;
+shelters.forEach(s => {
+  if (s.state !== currentState) {
+    currentState = s.state;
+    const hdr = document.createElement('div');
+    hdr.className = 'state-header';
+    hdr.textContent = s.state === 'GA' ? 'Georgia — 11 Shelters' : 'North Carolina — 13 Shelters';
+    wrap.appendChild(hdr);
+  }
+  const list = wrap.querySelector('.shelter-list-inner') || (() => {
+    const d = document.createElement('div');
+    d.className = 'shelter-list';
+    wrap.appendChild(d);
+    return d;
+  })();
+  // create new list div per state section
+  const listEl = (() => {
+    const lists = wrap.querySelectorAll('.shelter-list');
+    return lists[lists.length - 1];
+  })();
+  const a = document.createElement('a');
+  a.className = 'shelter-item';
+  a.href = s.url;
+  const icon = s.type === 'stone-cabin' ? '🏛' : (s.hilton ? '⭐' : '⛺');
+  a.innerHTML = `
+    <span class="s-icon">${icon}</span>
+    <span class="s-name">${s.name}</span>
+    <span class="s-meta">Mile ${s.mile} &bull; ${s.elev.toLocaleString()} ft</span>
+  `;
+  a.addEventListener('mouseenter', () => map.setView([s.lat, s.lng], 13, { animate: true }));
+  listEl.appendChild(a);
+});
+
+// Road crossings
+const crossings = [
+  { name:'Woody Gap\n(GA-60)',         lat:34.758, lng:-84.096 },
+  { name:'Neel Gap\n(US-19)',          lat:34.790, lng:-83.928 },
+  { name:'Unicoi Gap\n(GA-75)',        lat:34.876, lng:-83.769 },
+  { name:"Dick's Creek\n(US-76)",      lat:34.959, lng:-83.590 },
+  { name:'Winding Stair\n(US-64)',     lat:35.137, lng:-83.579 },
+  { name:'Wayah Road\n(NC-1310)',      lat:35.187, lng:-83.551 },
+  { name:'Nantahala River\n(NOC)',     lat:35.335, lng:-83.579 },
+  { name:'Stecoah Gap\n(NC-143)',      lat:35.390, lng:-83.680 },
+  { name:'Fontana Dam',                lat:35.447, lng:-83.803 },
+];
+crossings.forEach(c => {
+  L.marker([c.lat, c.lng], {
+    icon: L.divIcon({
+      className:'',
+      html:`<div style="background:rgba(255,255,255,0.85);border:1px solid #aaa;border-radius:4px;padding:2px 5px;font-size:9px;color:#333;white-space:nowrap;line-height:1.3;text-align:center;">${c.name.replace('\n','<br>')}</div>`,
+      iconSize:null, iconAnchor:[0,0]
+    })
+  }).addTo(map);
+});
+
+function togglePanel() {
+  document.getElementById('panel').classList.toggle('open');
+}
+
+// Build shelter-list divs properly (one per state)
+(function fixList() {
+  const inner = document.getElementById('shelter-list-wrap');
+  inner.innerHTML = '';
+  let lastState = null;
+  let listDiv = null;
+  shelters.forEach(s => {
+    if (s.state !== lastState) {
+      lastState = s.state;
+      const hdr = document.createElement('div');
+      hdr.className = 'state-header';
+      hdr.textContent = s.state === 'GA'
+        ? '&#9968; Georgia — 11 Shelters (Springer Mountain → Plumorchard Gap)'
+        : '&#9968; North Carolina — 13 Shelters (Muskrat Creek → Fontana Dam)';
+      hdr.innerHTML = hdr.innerHTML; // parse entities
+      inner.appendChild(hdr);
+      listDiv = document.createElement('div');
+      listDiv.className = 'shelter-list';
+      inner.appendChild(listDiv);
+    }
+    const a = document.createElement('a');
+    a.className = 'shelter-item';
+    a.href = s.url;
+    const icon = s.type === 'stone-cabin' ? '🏛' : (s.hilton ? '⭐' : '⛺');
+    a.innerHTML = `<span class="s-icon">${icon}</span><span class="s-name">${s.name}</span><span class="s-meta">Mile ${s.mile} &bull; ${s.elev.toLocaleString()} ft</span>`;
+    a.addEventListener('mouseenter', () => map.setView([s.lat, s.lng], 13, { animate: true }));
+    listDiv.appendChild(a);
+    // NOC link after Rufus Morgan
+    if (s.noc) {
+      const noc = document.createElement('a');
+      noc.className = 'shelter-item';
+      noc.href = 'noc-nantahala.html';
+      noc.style.background = '#ebf8ff';
+      noc.innerHTML = `<span class="s-icon">&#9972;</span><span class="s-name" style="color:#2b6cb0;">Nantahala Outdoor Center (NOC)</span><span class="s-meta">Mile ~137 &bull; On-trail</span>`;
+      listDiv.appendChild(noc);
+    }
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fontana Dam Shelter – "The Hilton of the AT"</title>
+<style>
+* { box-sizing: border-box; }
+body { margin:0; padding:1.5rem; background:#f0f4f8; font-family:sans-serif; color:#2d3748; }
+h1 { font-size:1.7rem; margin-bottom:0.2rem; }
+.subtitle { color:#718096; font-size:0.88rem; margin-bottom:1.25rem; }
+.breadcrumb { font-size:0.78rem; color:#718096; margin-bottom:0.75rem; }
+.breadcrumb a { color:#3182ce; text-decoration:none; }
+.breadcrumb a:hover { text-decoration:underline; }
+.section { background:white; border-radius:8px; padding:1.25rem; margin-bottom:1.25rem; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+.section h2 { margin:0 0 1rem; font-size:1.1rem; color:#6b21a8; border-bottom:1px solid #e9d5ff; padding-bottom:0.5rem; }
+.stat-grid { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem; }
+.stat { background:#faf5ff; border-radius:6px; padding:0.4rem 0.75rem; font-size:0.85rem; }
+.stat span { font-weight:bold; color:#6b21a8; }
+.badge { font-size:0.75rem; padding:0.2rem 0.6rem; border-radius:12px; font-weight:bold; white-space:nowrap; display:inline-block; }
+.badge-paid { background:#bee3f8; color:#2b6cb0; }
+.badge-free { background:#c6f6d5; color:#276749; }
+.badge-hilton { background:#e9d5ff; color:#6b21a8; }
+.hilton-banner { background:linear-gradient(135deg, #6b21a8, #9333ea); color:white; border-radius:10px; padding:1.25rem 1.5rem; margin-bottom:1.5rem; }
+.hilton-banner h2 { color:white; margin:0 0 0.5rem; font-size:1.3rem; border:none; padding:0; }
+.hilton-banner p { margin:0; font-size:0.92rem; line-height:1.6; opacity:0.92; }
+.amenity-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap:0.6rem; margin:1rem 0; }
+.amenity { background:#faf5ff; border:1px solid #e9d5ff; border-radius:8px; padding:0.6rem 0.75rem; font-size:0.83rem; text-align:center; }
+.amenity .icon { font-size:1.3rem; display:block; margin-bottom:0.2rem; }
+.amenity .label { color:#4a5568; }
+.alert { background:#f0fff4; border-left:4px solid #38a169; padding:0.75rem 1rem; border-radius:0 6px 6px 0; font-size:0.9rem; color:#276749; margin-bottom:1.25rem; }
+.alert strong { display:block; margin-bottom:0.2rem; }
+.warning { background:#fff5f5; border-left:4px solid #e53e3e; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#742a2a; margin-bottom:0.75rem; }
+.tip { background:#fffbeb; border-left:4px solid #f6ad55; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#744210; margin-top:0.75rem; }
+.smokies-box { background:#faf5ff; border:2px solid #9333ea; border-radius:10px; padding:1.25rem; margin-bottom:1.25rem; }
+.smokies-box h3 { margin:0 0 0.75rem; color:#6b21a8; font-size:1.05rem; }
+.smokies-box p { margin:0 0 0.75rem; font-size:0.88rem; line-height:1.6; }
+.smokies-box ul { margin:0.5rem 0; padding-left:1.4rem; font-size:0.88rem; line-height:1.8; }
+.route-grid { display:flex; flex-wrap:wrap; gap:0.75rem; }
+.route-card { flex:1 1 220px; border-radius:8px; padding:1rem; border:2px solid transparent; }
+.route-card.recommended { background:#f0fff4; border-color:#38a169; }
+.route-card.alternate { background:#ebf8ff; border-color:#90cdf4; }
+.route-card h3 { margin:0 0 0.3rem; font-size:1rem; }
+.route-card.recommended h3 { color:#276749; }
+.route-card.alternate h3 { color:#2b6cb0; }
+.route-badge { display:inline-block; font-size:0.72rem; font-weight:bold; padding:0.15rem 0.5rem; border-radius:10px; margin-bottom:0.5rem; }
+.badge-rec { background:#c6f6d5; color:#276749; }
+.badge-alt { background:#bee3f8; color:#2b6cb0; }
+.route-card p { margin:0; font-size:0.88rem; line-height:1.6; }
+.lodging-card { border:1px solid #e2e8f0; border-radius:8px; padding:1rem; margin-bottom:0.75rem; }
+.lodging-card.hilton { border-color:#9333ea; background:#faf5ff; }
+.lodging-card:last-child { margin-bottom:0; }
+.lodging-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.3rem; }
+.lodging-name { font-weight:bold; font-size:1rem; color:#1a365d; }
+.lodging-meta { font-size:0.8rem; color:#718096; margin-bottom:0.5rem; }
+.lodging-desc { font-size:0.88rem; line-height:1.5; color:#4a5568; margin-bottom:0.75rem; }
+.pros-cons { display:flex; flex-wrap:wrap; gap:0.75rem; }
+.pros, .cons { flex:1 1 160px; font-size:0.83rem; line-height:1.7; }
+.pros { background:#f0fff4; border-radius:6px; padding:0.6rem 0.75rem; }
+.cons { background:#fff5f5; border-radius:6px; padding:0.6rem 0.75rem; }
+.pros strong { color:#276749; display:block; margin-bottom:0.2rem; }
+.cons strong { color:#c53030; display:block; margin-bottom:0.2rem; }
+.pros ul, .cons ul { margin:0; padding-left:1.2rem; }
+.contact-row { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.75rem; }
+.call-btn { display:inline-block; background:#6b21a8; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; font-weight:bold; }
+.call-btn:hover { background:#581c87; }
+.nav-strip { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-top:1.5rem; }
+.nav-btn { display:inline-block; padding:0.5rem 1rem; border-radius:6px; font-size:0.88rem; text-decoration:none; background:white; color:#6b21a8; border:1px solid #e9d5ff; }
+.nav-btn:hover { background:#faf5ff; }
+a.back { display:inline-block; margin-top:1rem; color:#3182ce; text-decoration:none; font-size:0.95rem; }
+a.back:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+
+<div class="breadcrumb">
+  <a href="index.html">Home</a> &rsaquo;
+  <a href="at-map.html">AT Map</a> &rsaquo;
+  Fontana Dam Shelter
+</div>
+
+<h1>Fontana Dam Shelter</h1>
+<p class="subtitle">North Carolina &nbsp;&middot;&nbsp; AT Mile ~164.7 &nbsp;&middot;&nbsp; Lean-to &nbsp;&middot;&nbsp; Elev. ~1,680 ft &nbsp;&middot;&nbsp; Capacity 24</p>
+
+<div class="hilton-banner">
+  <h2>&#127970; The Hilton of the AT</h2>
+  <p>Fontana Dam Shelter has earned its legendary nickname through amenities no other shelter on the Appalachian Trail can match: flush toilets, hot showers, electrical outlets for charging devices, piped running water, and capacity for 24 hikers. After weeks of backcountry living, arriving at the Fontana Dam Shelter is a genuine luxury experience — and it's completely free.</p>
+</div>
+
+<div class="section">
+  <h2>Shelter Overview</h2>
+  <div class="stat-grid">
+    <div class="stat">AT Mile <span>~164.7</span></div>
+    <div class="stat">Elevation <span>~1,680 ft</span></div>
+    <div class="stat">Capacity <span>24</span></div>
+    <div class="stat">Type <span>Lean-to Complex</span></div>
+    <div class="stat">County <span>Graham, NC</span></div>
+    <div class="stat">Water <span>Piped running water on-site</span></div>
+    <div class="stat">Privy <span>Flush toilets</span></div>
+    <div class="stat">Fee <span class="badge badge-free">Free</span></div>
+  </div>
+
+  <p>Fontana Dam Shelter isn't just a shelter — it's an experience. Built and maintained by the Tennessee Valley Authority (TVA) near the base of the massive Fontana Dam, this complex is purpose-built for AT hikers as part of an arrangement between the TVA and the Appalachian Trail Conservancy. The result is the most amenity-rich shelter on the entire 2,194-mile trail.</p>
+
+  <p>The shelter complex includes a large covered sleeping area with capacity for 24 hikers, attached bathhouse with flush toilets and hot showers, piped running water at multiple spigots, and electrical outlets for charging phones, battery packs, and other devices. A picnic pavilion and tables provide gathering space. The shelter sits on a bluff overlooking Fontana Lake — the reservoir created by Fontana Dam — with beautiful views of the Cheoah Mountains you've just crossed and the Great Smoky Mountains rising to the north.</p>
+
+  <p>Arriving at Fontana Dam Shelter for NOBO thru-hikers represents a profound milestone: you are standing at the southern entrance to Great Smoky Mountains National Park. The iconic Fontana Dam itself — at 480 feet, the tallest dam east of the Rockies — is visible from the shelter bluff. The Smokies begin directly across the lake, and the AT crosses the dam the following morning to enter the park.</p>
+
+  <div class="amenity-grid">
+    <div class="amenity"><span class="icon">&#128705;</span><span class="label">Flush Toilets</span></div>
+    <div class="amenity"><span class="icon">&#128703;</span><span class="label">Hot Showers</span></div>
+    <div class="amenity"><span class="icon">&#9889;</span><span class="label">Electrical Outlets</span></div>
+    <div class="amenity"><span class="icon">&#128167;</span><span class="label">Piped Water</span></div>
+    <div class="amenity"><span class="icon">&#127977;</span><span class="label">Covered Shelter</span></div>
+    <div class="amenity"><span class="icon">&#128101;</span><span class="label">Capacity 24</span></div>
+    <div class="amenity"><span class="icon">&#127958;</span><span class="label">Fontana Lake Views</span></div>
+    <div class="amenity"><span class="icon">&#127751;</span><span class="label">Free — No Fee</span></div>
+  </div>
+
+  <div class="tip">
+    <strong>Charge Everything:</strong> The electrical outlets at Fontana Dam Shelter are a godsend. Arrive with dead batteries and leave fully charged. Charge your phone, battery pack, headlamp, and any other USB devices. The next reliable charging opportunity inside the Smokies is at Newfound Gap, 31+ miles north.
+  </div>
+</div>
+
+<div class="section">
+  <h2>Fontana Dam — The Dam Itself</h2>
+  <p>Fontana Dam, completed in 1944 by the TVA, is an engineering marvel: a 480-foot-tall concrete arch-gravity dam spanning the Little Tennessee River, creating the 29-mile Fontana Lake reservoir. Construction employed over 5,000 workers during World War II, and the project displaced entire mountain communities including the small town of Fontana. The power generated helped fuel the war effort at the Oak Ridge Manhattan Project facility in Tennessee.</p>
+
+  <p>The AT crosses the dam on a public road across its crest — one of the most dramatic trail crossings anywhere on the route. Walking the dam crest provides views both upstream into the Smokies and downstream into the gorge cut by the Little Tennessee. The crossing takes roughly 15–20 minutes at a walking pace. Interpretive displays on the dam crest explain the dam's construction history and the communities that were displaced.</p>
+
+  <p>The dam's visitor overlook and museum are typically accessible from the south side during daylight hours. If you have time before pushing into the Smokies, the overlook is worth a visit to understand the scale of what you're crossing.</p>
+</div>
+
+<div class="smokies-box">
+  <h3>&#127956; Gateway to the Great Smoky Mountains</h3>
+  <p>The Appalachian Trail enters Great Smoky Mountains National Park the morning after Fontana Dam Shelter, crossing the dam crest and ascending Shuckstack Ridge. The Smokies section is one of the most celebrated and demanding in the AT's entirety — approximately 70 miles from Fontana Dam to Davenport Gap on the northeastern boundary of the park.</p>
+  <p><strong>Critical planning requirements for the Smokies:</strong></p>
+  <ul>
+    <li>AT thru-hikers must have a valid GSMNP backcountry permit. As of 2024, this costs $40/permit plus $8/person/night. Purchase online before entering the park. Permits are enforced.</li>
+    <li>Hikers must stay at designated shelters inside the Smokies — no dispersed camping. Shelters fill quickly during peak season (March–May, October). Reserve your shelter nights when you purchase your permit.</li>
+    <li>The Smokies have essentially no resupply options inside the park. Carry 5–6 days of food from Fontana Village or the NOC. Many hikers carry a mail drop to Gatlinburg, TN (accessible via a hitchhike from Newfound Gap at trail mile ~195).</li>
+    <li>Bears in the Smokies are habituated to human presence. Bear cables are mandatory at all shelters; there are no bear boxes. Never leave food unattended even for a minute.</li>
+  </ul>
+  <div class="tip" style="margin-top:0.75rem;">
+    <strong>Get Your Permit Before Arriving at Fontana:</strong> The GSMNP permit system requires online advance registration. Do not plan to walk into the Smokies without a permit — rangers check, and fines are significant. Purchase at recreation.gov.
+  </div>
+</div>
+
+<div class="section">
+  <h2>Getting Supplies Near Fontana Dam</h2>
+
+  <div class="route-grid">
+    <div class="route-card recommended">
+      <span class="route-badge badge-rec">RECOMMENDED</span>
+      <h3>Fontana Village Resort Store</h3>
+      <p><strong>~2 road miles south of Fontana Dam Shelter via Fontana Dam Road.</strong> Fontana Village (300 Woods Rd, Fontana Dam, NC 28733) has a camp store and marina store with basic resupply options — snacks, freeze-dried meals, some camp fuel, and limited gear. Open hours vary by season; call ahead: (800) 849-2258. The restaurant at Fontana Village serves hot meals. The selection is limited compared to the NOC, so supplement with a pre-mailed food package if possible.</p>
+    </div>
+    <div class="route-card alternate">
+      <span class="route-badge badge-alt">ALTERNATE</span>
+      <h3>Robbinsville, NC</h3>
+      <p><strong>~20 road miles south via NC-143 / Cherohala Skyway.</strong> The nearest true grocery store is in Robbinsville, NC — a Ingles Supermarket. Requires a hitch or shuttle from Fontana Village or the dam area. Not practical without a vehicle or pre-arranged shuttle. Only worth the effort if Fontana Village's store doesn't have what you need for the Smokies.</p>
+    </div>
+  </div>
+
+  <div class="tip">
+    <strong>Smokies Mail Drop Option:</strong> Many thru-hikers mail a resupply box to Gatlinburg, TN (accessible from Newfound Gap, ~31 trail miles into the Smokies). Address to: General Delivery, Gatlinburg, TN 37738. This covers the back half of the Smokies and into Hot Springs, NC after exiting the park.
+  </div>
+</div>
+
+<div class="section">
+  <h2>Where to Sleep at Fontana</h2>
+
+  <div class="lodging-card hilton">
+    <div class="lodging-header">
+      <span class="lodging-name">Fontana Dam Shelter — "The Hilton of the AT"</span>
+      <span class="badge badge-hilton">Free &#127970;</span>
+    </div>
+    <div class="lodging-meta">On trail · AT Mile ~164.7 · Open year-round · Capacity 24</div>
+    <div class="lodging-desc">The most luxurious free shelter on the entire Appalachian Trail. Flush toilets. Hot showers. Electrical outlets. Piped running water. Covered sleeping platform for 24 hikers. Overlooking Fontana Lake with Smoky Mountain views. This is the shelter that other shelters aspire to be. After weeks of pit privies and hand-pumped water, the Fontana Dam Shelter is a genuine reward for making it through Georgia, the Nantahala, and the brutal Cheoah Mountains.</div>
+    <div class="pros-cons">
+      <div class="pros"><strong>Pros</strong>
+        <ul>
+          <li>Flush toilets — real toilets</li>
+          <li>Hot showers (free)</li>
+          <li>Electrical outlets — charge everything</li>
+          <li>Piped running water</li>
+          <li>Huge capacity (24) — rarely turns hikers away</li>
+          <li>Stunning Fontana Lake views</li>
+          <li>Gateway to the Great Smoky Mountains</li>
+        </ul>
+      </div>
+      <div class="cons"><strong>Cons</strong>
+        <ul>
+          <li>Can fill completely during peak NOBO season</li>
+          <li>Social atmosphere can be loud (lots of milestone celebrating)</li>
+          <li>Limited privacy in large shelter</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="lodging-card">
+    <div class="lodging-header">
+      <span class="lodging-name">Fontana Village Resort</span>
+      <span class="badge badge-paid">~$80–140/night</span>
+    </div>
+    <div class="lodging-meta">~2 road miles south of shelter · Seasonal — call ahead</div>
+    <div class="lodging-desc">The resort village at Fontana Dam offers lodge rooms, cabins, and cottages at a range of price points. Indoor dining at the Wildwood Grill, full laundry facilities, and a camp store. Good option if the shelter is full or you want a private room before entering the Smokies. The resort setting on Fontana Lake is scenic and peaceful. Always call ahead to check availability: (800) 849-2258.</div>
+    <div class="pros-cons">
+      <div class="pros"><strong>Pros</strong>
+        <ul>
+          <li>Private rooms and cabins available</li>
+          <li>Full restaurant on-site</li>
+          <li>Laundry facilities</li>
+          <li>Beautiful lake setting</li>
+          <li>Better Smokies resupply options</li>
+        </ul>
+      </div>
+      <div class="cons"><strong>Cons</strong>
+        <ul>
+          <li>~$80–140/night (significant cost)</li>
+          <li>2 miles off-trail via road</li>
+          <li>Limited services off-season</li>
+          <li>Need to call ahead — may be booked</li>
+        </ul>
+      </div>
+    </div>
+    <div class="contact-row">
+      <a href="tel:+18008492258" class="call-btn">&#128222; (800) 849-2258</a>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>From Fontana: What Comes Next</h2>
+  <p>Fontana Dam Shelter marks the end of this guide's coverage — you've walked from Springer Mountain, Georgia through 164+ trail miles of Georgia and North Carolina to reach the Smokies. What follows is one of the greatest wilderness walks in North America.</p>
+  <p>The morning after Fontana, the AT crosses the massive dam crest and begins the long climb up Shuckstack Ridge into Great Smoky Mountains National Park. The first Smokies shelter, Birch Spring Gap, is approximately 5 miles ahead. From there, the trail passes through some of the most biodiverse temperate forest on earth — old-growth spruce-fir, hardwood coves that were logged but have recovered magnificently, and ridgeline balds with sweeping views into Tennessee and NC.</p>
+  <p>Key GSMNP shelters ahead: Birch Spring Gap, Russell Field, Mollies Ridge, Spence Field, Derrick Knob, Silers Bald, Double Spring Gap, Mount Collins, Icewater Spring (near Charlies Bunion), Pecks Corner, Tricorner Knob, Cosby Knob, Davenport Gap. Total: ~70 miles through the park.</p>
+  <div class="tip">
+    <strong>Permit Required:</strong> You need a GSMNP backcountry permit before stepping on the dam. Purchase at recreation.gov. Cost: $40 base fee + $8/person/night. Shelters fill — book early for March–May dates.
+  </div>
+</div>
+
+<div class="nav-strip">
+  <a href="shelter-cable-gap.html" class="nav-btn">&larr; Cable Gap</a>
+  <a href="at-map.html" class="nav-btn">&#9968; Back to Map</a>
+  <span style="padding:0.5rem 1rem; font-size:0.88rem; color:#718096;">Smokies ahead &#8594;</span>
+</div>
+
+<a href="index.html" class="back">&larr; Back to Home</a>
+
+</body>
+</html>
