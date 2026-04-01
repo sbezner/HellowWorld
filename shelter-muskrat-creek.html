@@ -82,6 +82,79 @@ a.back:hover { text-decoration:underline; }
   <strong>Remote Location — Plan Carefully:</strong> Muskrat Creek is one of the most isolated shelters on the southern AT. There is no convenient road access nearby and no cell service. The nearest practical resupply point is Franklin, NC, roughly 20+ trail miles north via Rock Gap. Carry adequate food before you arrive here.
 </div>
 
+
+<!-- WEATHER WIDGET -->
+<div style="background:white;border-radius:8px;padding:1.25rem;margin-bottom:1.25rem;box-shadow:0 2px 6px rgba(0,0,0,0.08);">
+  <h2 style="margin:0 0 1rem;font-size:1.1rem;color:#2b6cb0;border-bottom:1px solid #e2e8f0;padding-bottom:0.5rem;">&#127783; Current Weather at Shelter</h2>
+  <div id="wx-loading" style="color:#718096;font-size:0.88rem;padding:0.5rem 0;">Loading weather&#8230;</div>
+  <div id="wx-data" style="display:none;">
+    <div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:center;margin-bottom:1rem;">
+      <div id="wx-icon" style="font-size:3rem;line-height:1;"></div>
+      <div>
+        <div id="wx-temp" style="font-size:2rem;font-weight:bold;color:#2d3748;"></div>
+        <div id="wx-desc" style="color:#718096;font-size:0.88rem;margin-top:0.2rem;"></div>
+      </div>
+      <div style="margin-left:auto;text-align:right;">
+        <div id="wx-wind"   style="font-size:0.83rem;color:#4a5568;"></div>
+        <div id="wx-precip" style="font-size:0.83rem;color:#4a5568;"></div>
+        <div id="wx-hilo"   style="font-size:0.83rem;color:#4a5568;"></div>
+      </div>
+    </div>
+    <div id="wx-forecast" style="display:flex;gap:0.5rem;flex-wrap:wrap;"></div>
+  </div>
+  <div id="wx-err" style="display:none;background:#fff5f5;border-left:4px solid #e53e3e;padding:0.65rem 1rem;border-radius:0 6px 6px 0;font-size:0.88rem;color:#742a2a;">
+    Weather unavailable &mdash; no internet connection. All shelter information is still accessible offline.
+  </div>
+</div>
+<script>
+(function(){
+  var LAT=35.003,LNG=-83.53;
+  var url='https://api.open-meteo.com/v1/forecast?latitude='+LAT+'&longitude='+LNG
+    +'&current=temperature_2m,apparent_temperature,precipitation,weathercode,windspeed_10m,winddirection_10m'
+    +'&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_sum'
+    +'&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch'
+    +'&timezone=America%2FNew_York&forecast_days=3';
+  function icon(c){
+    if(c===0)return'&#9728;&#65039;';if(c<=2)return'&#127780;&#65039;';if(c===3)return'&#9925;';
+    if(c<=48)return'&#127787;&#65039;';if(c<=55)return'&#127746;';if(c<=67)return'&#127783;';
+    if(c<=77)return'&#127784;';if(c<=82)return'&#127746;';if(c<=86)return'&#127784;';return'&#9928;&#65039;';
+  }
+  function desc(c){
+    if(c===0)return'Clear sky';if(c===1)return'Mainly clear';if(c===2)return'Partly cloudy';
+    if(c===3)return'Overcast';if(c<=48)return'Foggy';if(c<=55)return'Drizzle';
+    if(c<=67)return'Rain';if(c<=77)return'Snow';if(c<=82)return'Showers';
+    if(c<=86)return'Snow showers';return'Thunderstorm';
+  }
+  function wdir(d){return['N','NE','E','SE','S','SW','W','NW'][Math.round(d/45)%8];}
+  function dname(s){return['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][new Date(s+'T12:00:00').getDay()];}
+  fetch(url).then(function(r){return r.json();}).then(function(d){
+    var c=d.current;
+    document.getElementById('wx-loading').style.display='none';
+    document.getElementById('wx-data').style.display='block';
+    document.getElementById('wx-icon').innerHTML=icon(c.weathercode);
+    document.getElementById('wx-temp').textContent=Math.round(c.temperature_2m)+'°F';
+    document.getElementById('wx-desc').textContent=desc(c.weathercode)+' · Feels like '+Math.round(c.apparent_temperature)+'°F';
+    document.getElementById('wx-wind').textContent='Wind: '+Math.round(c.windspeed_10m)+' mph '+wdir(c.winddirection_10m);
+    document.getElementById('wx-precip').textContent='Precip: '+c.precipitation+'"';
+    document.getElementById('wx-hilo').textContent='Hi/Lo: '+Math.round(d.daily.temperature_2m_max[0])+'° / '+Math.round(d.daily.temperature_2m_min[0])+'°';
+    var fc=document.getElementById('wx-forecast');
+    for(var i=0;i<3;i++){
+      var el=document.createElement('div');
+      el.style.cssText='flex:1;min-width:80px;background:#f0f4f8;border-radius:6px;padding:0.5rem;text-align:center;font-size:0.82rem;';
+      el.innerHTML='<div style="font-weight:bold;color:#4a5568;">'+dname(d.daily.time[i])+'</div>'
+        +'<div style="font-size:1.5rem;line-height:1.4;">'+icon(d.daily.weathercode[i])+'</div>'
+        +'<div style="color:#2d3748;">'+Math.round(d.daily.temperature_2m_max[i])+'° / '+Math.round(d.daily.temperature_2m_min[i])+'°</div>'
+        +'<div style="color:#718096;">'+d.daily.precipitation_sum[i]+'"</div>';
+      fc.appendChild(el);
+    }
+  }).catch(function(){
+    document.getElementById('wx-loading').style.display='none';
+    document.getElementById('wx-err').style.display='block';
+  });
+})();
+</script>
+<!-- END WEATHER WIDGET -->
+
 <div class="section">
   <h2>Shelter Overview</h2>
   <div class="stat-grid">
