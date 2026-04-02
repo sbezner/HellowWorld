@@ -142,8 +142,8 @@ Every page should include a back link. Shelter pages use prev/next navigation li
 | File | Purpose | Notes |
 |---|---|---|
 | `index.html` | Entry point; lists all guides | Start here |
-| `at-map.html` | Leaflet map, 38 shelters, AT polyline | Uses CDN JS/CSS |
-| `resupply-planner.html` | Interactive planner with JS sliders | Most complex JS |
+| `at-map.html` | Leaflet map, 38 shelters, AT polyline | Uses CDN JS/CSS; most complex page |
+| `resupply-planner.html` | Interactive planner with JS sliders | Total distance: 227.3 mi |
 | `shelter-blood-mountain.html` | Good shelter page example | Stone cabin type |
 | `shelter-fontana-dam.html` | "Hilton of the AT" — detailed shelter | Capacity 24 |
 | `sumner-parts.html` | Parts reference table | Non-AT content |
@@ -180,6 +180,31 @@ When adding a new shelter page, follow an existing page as a template and update
 
 ---
 
+## at-map.html Architecture
+
+This is the most complex page. Key components:
+
+**Header** — dark green bar with title, `ⓘ Legend` button (opens modal), and offline warning badge.
+
+**Map controls (top-right)** — `Resupply` button links to `resupply-planner.html`; `Locate Me` button triggers GPS and zooms to user position with a pulsing dot marker and nearest-shelter popup.
+
+**All Shelters panel** — fixed bar at the bottom of the viewport. Tapping expands a scrollable shelter list grouped by state. Panel position is managed via `window.visualViewport` resize/scroll events to stay above the browser toolbar on all mobile browsers (Safari, Chrome, Edge iOS). The list uses `display:none/block` toggle — no translateY math.
+
+**Legend modal** — opened by the `ⓘ Legend` header button. `position: fixed`, centered overlay. Clicking outside or the Close button dismisses it.
+
+**Shelter data array** — `const shelters = [...]` at the top of the `<script>` block. Each entry: `{ name, state, type, lat, lng, mile, elev, cap, url, water }`.
+
+**Marker colors by type:**
+- `lean-to` GA → `#8B4513` (brown)
+- `stone-cabin` → `#5a6e7e` (slate)
+- `lean-to` NC → `#2b6cb0` (blue)
+- `fontana` → `#6b21a8` (purple)
+- `lean-to` GSMNP → `#065f46` (dark green)
+
+**Road crossing markers** — separate array `roadCrossings`, rendered as grey triangles (no popup link).
+
+---
+
 ## What NOT to Do
 
 - Do not introduce npm or any build tooling unless explicitly requested
@@ -188,3 +213,5 @@ When adding a new shelter page, follow an existing page as a template and update
 - Do not split CSS into separate `.css` files — keep styles embedded per page
 - Do not add a backend or server-side logic — this is a static site
 - Do not add new CDN dependencies without good reason — Leaflet and Open-Meteo are the only current external dependencies
+- Do not use `translateY` hacks for panel positioning — use `window.visualViewport` instead
+- Do not hard-code pixel offsets for mobile browser toolbars — toolbar height varies by browser and scroll state
