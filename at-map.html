@@ -32,7 +32,8 @@
     }
 
     #map-wrap { flex: 1; position: relative; overflow: hidden; }
-    .leaflet-bottom { padding-bottom: max(env(safe-area-inset-bottom), 8px); }
+    .leaflet-bottom { padding-bottom: max(env(safe-area-inset-bottom, 0px), 12px); }
+    .leaflet-bottom .leaflet-control { margin-bottom: 0 !important; }
     #map { height: 100%; width: 100%; }
 
     #panel {
@@ -150,7 +151,7 @@
     }
     .leg-arrow { font-size: 0.65rem; transition: transform 0.25s; }
     .legend.open .leg-arrow { transform: rotate(180deg); }
-    .leg-items { display: none; margin-top: 0.25rem; }
+    .leg-items { display: none; margin-top: 0.25rem; max-height: 35dvh; max-height: 35vh; overflow-y: auto; }
     .legend.open .leg-items { display: block; }
     .leg-row { display: flex; align-items: center; gap: 0.4rem; }
 
