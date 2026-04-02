@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Calculate distance and elevation change between any two AT shelters from Springer Mountain to Erwin.">
+  <meta name="description" content="Calculate distance and elevation change between any two AT shelters from Springer Mountain to Damascus.">
   <title>AT Distance Calculator — Shelter to Shelter</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -156,7 +156,7 @@
 <div class="container">
   <div class="breadcrumb"><a href="index.html">&larr; Home</a> &bull; <a href="at-map.html">Map</a></div>
   <h1>&#128207; AT Distance Calculator</h1>
-  <p class="subtitle">Calculate mileage and elevation between any two shelters &mdash; Springer Mountain to Erwin</p>
+  <p class="subtitle">Calculate mileage and elevation between any two shelters &mdash; Springer Mountain to Damascus</p>
 
   <div class="card">
     <h2>Select Shelters</h2>
@@ -244,6 +244,19 @@ const shelters = [
   { name:'Bald Mountain Shelter',     state:'NC',    lat:36.000,  lng:-82.478,  mile:327.7, elev:5100, url:'shelter-bald-mountain.html',      water:'Spring 200 ft on blue-blazed trail (reliable)' },
   { name:'No Business Knob Shelter',  state:'NC',    lat:36.067,  lng:-82.434,  mile:338.3, elev:3180, url:'shelter-no-business-knob.html',   water:'Spring 200-400 yards south on AT' },
   { name:'Curley Maple Gap Shelter',  state:'NC',    lat:36.104,  lng:-82.397,  mile:348.8, elev:3070, url:'shelter-curley-maple-gap.html',   water:'Spring 100 ft south on AT' },
+  // Erwin, TN to Damascus, VA
+  { name:'Cherry Gap Shelter',        state:'NC',    lat:36.129,  lng:-82.264,  mile:361.7, elev:3900, url:'shelter-cherry-gap.html',         water:'Spring 250 ft SW on blue-blazed trail (can be unreliable in dry seasons)' },
+  { name:'Clyde Smith Shelter',       state:'NC',    lat:36.149,  lng:-82.161,  mile:370.8, elev:4400, url:'shelter-clyde-smith.html',        water:'Spring 205 yards W, steep downhill (buried drum with pipe)' },
+  { name:'Roan High Knob Shelter',    state:'NC',    lat:36.105,  lng:-82.122,  mile:379.3, elev:6275, url:'shelter-roan-high-knob.html',     water:'Spring ~100 yards opposite shelter on blue blaze' },
+  { name:'Stan Murray Shelter',       state:'NC',    lat:36.112,  lng:-82.066,  mile:384.5, elev:5050, url:'shelter-stan-murray.html',        water:'Spring ~100 yards on blue blaze (unreliable, steep descent)' },
+  { name:'Overmountain Shelter',      state:'NC',    lat:36.123,  lng:-82.054,  mile:386.4, elev:4550, url:'shelter-overmountain.html',       water:'Spring on blue-blazed trail between shelter and AT' },
+  { name:'Mountaineer Falls Shelter', state:'NC',    lat:36.220,  lng:-81.986,  mile:404.4, elev:3200, url:'shelter-mountaineer-falls.html',  water:'Mountaineer Falls branch, few hundred yards on blue blaze' },
+  { name:'Moreland Gap Shelter',      state:'NC',    lat:36.220,  lng:-82.088,  mile:414.0, elev:3815, url:'shelter-moreland-gap.html',       water:'Spring 0.2 mi down hollow across from shelter' },
+  { name:'Laurel Fork Shelter',       state:'NC',    lat:36.279,  lng:-82.136,  mile:422.2, elev:2445, url:'shelter-laurel-fork.html',        water:'Cascading stream 150 ft on blue blaze behind shelter' },
+  { name:'Vandeventer Shelter',       state:'NC',    lat:36.367,  lng:-82.059,  mile:438.0, elev:3620, url:'shelter-vandeventer.html',        water:'No reliable water at shelter — carry water from Watauga Lake' },
+  { name:'Iron Mountain Shelter',     state:'NC',    lat:36.435,  lng:-81.991,  mile:444.8, elev:4125, url:'shelter-iron-mountain.html',      water:'Spring 0.2 mi S on AT (crosses trail)' },
+  { name:'Double Springs Shelter',    state:'NC',    lat:36.509,  lng:-81.986,  mile:452.5, elev:4080, url:'shelter-double-springs.html',     water:'Spring 100 yards downhill W of shelter' },
+  { name:'Abingdon Gap Shelter',      state:'NC',    lat:36.581,  lng:-81.902,  mile:460.8, elev:3785, url:'shelter-abingdon-gap.html',       water:'Spring 275 yards downhill S on steep blue blaze' },
 ];
 
 // ── Sunrise/Sunset calculator (NOAA algorithm) ─────────────────────────────

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Interactive Appalachian Trail map covering all 50 shelters from Springer Mountain to Erwin — Georgia, North Carolina, Great Smoky Mountains, and beyond.">
+  <meta name="description" content="Interactive Appalachian Trail map covering all 63 shelters from Springer Mountain to Damascus — Georgia, North Carolina, Great Smoky Mountains, Tennessee, and Virginia.">
   <title>Appalachian Trail Map — Georgia, North Carolina &amp; Great Smoky Mountains</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <style>
@@ -269,8 +269,8 @@
 
 <div id="header">
   <div>
-    <div class="sub">Appalachian Trail &mdash; Georgia to Tennessee &bull; Springer Mountain to Erwin</div>
-    <h1>&#9968; Appalachian Trail Map &mdash; 50 Shelters</h1>
+    <div class="sub">Appalachian Trail &mdash; Georgia to Virginia &bull; Springer Mountain to Damascus</div>
+    <h1>&#9968; Appalachian Trail Map &mdash; 63 Shelters</h1>
   </div>
   <div style="display:flex;align-items:center;gap:0.5rem;flex-shrink:0;">
     <button id="info-btn" onclick="document.getElementById('legend-modal').classList.add('open')">ⓘ Legend</button>
@@ -372,6 +372,19 @@ const shelters = [
   { name:'Bald Mountain Shelter',     state:'NC',    type:'lean-to', lat:36.000,  lng:-82.478,  mile:327.7,elev:5100, cap:10, url:'shelter-bald-mountain.html',      water:'Spring 200 ft on blue-blazed trail (reliable)' },
   { name:'No Business Knob Shelter',  state:'NC',    type:'lean-to', lat:36.067,  lng:-82.434,  mile:338.3,elev:3180, cap:8,  url:'shelter-no-business-knob.html',   water:'Spring 200-400 yards south on AT' },
   { name:'Curley Maple Gap Shelter',  state:'NC',    type:'lean-to', lat:36.104,  lng:-82.397,  mile:348.8,elev:3070, cap:14, url:'shelter-curley-maple-gap.html',   water:'Spring 100 ft south on AT' },
+  // Erwin, TN to Damascus, VA
+  { name:'Cherry Gap Shelter',        state:'NC',    type:'lean-to', lat:36.129,  lng:-82.264,  mile:361.7,elev:3900, cap:14, url:'shelter-cherry-gap.html',         water:'Spring 250 ft SW on blue-blazed trail (can be unreliable in dry seasons)' },
+  { name:'Clyde Smith Shelter',       state:'NC',    type:'lean-to', lat:36.149,  lng:-82.161,  mile:370.8,elev:4400, cap:10, url:'shelter-clyde-smith.html',        water:'Spring 205 yards W, steep downhill (buried drum with pipe)', closed:'bears' },
+  { name:'Roan High Knob Shelter',    state:'NC',    type:'stone-cabin', lat:36.105, lng:-82.122, mile:379.3,elev:6275, cap:15, url:'shelter-roan-high-knob.html',   water:'Spring ~100 yards opposite shelter on blue blaze', closed:'structural' },
+  { name:'Stan Murray Shelter',       state:'NC',    type:'lean-to', lat:36.112,  lng:-82.066,  mile:384.5,elev:5050, cap:6,  url:'shelter-stan-murray.html',        water:'Spring ~100 yards on blue blaze (unreliable, steep descent)' },
+  { name:'Overmountain Shelter',      state:'NC',    type:'lean-to', lat:36.123,  lng:-82.054,  mile:386.4,elev:4550, cap:30, url:'shelter-overmountain.html',       water:'Spring on blue-blazed trail between shelter and AT', closed:'permanent' },
+  { name:'Mountaineer Falls Shelter', state:'NC',    type:'lean-to', lat:36.220,  lng:-81.986,  mile:404.4,elev:3200, cap:14, url:'shelter-mountaineer-falls.html',  water:'Mountaineer Falls branch, few hundred yards on blue blaze' },
+  { name:'Moreland Gap Shelter',      state:'NC',    type:'lean-to', lat:36.220,  lng:-82.088,  mile:414.0,elev:3815, cap:6,  url:'shelter-moreland-gap.html',       water:'Spring 0.2 mi down hollow across from shelter' },
+  { name:'Laurel Fork Shelter',       state:'NC',    type:'lean-to', lat:36.279,  lng:-82.136,  mile:422.2,elev:2445, cap:8,  url:'shelter-laurel-fork.html',        water:'Cascading stream 150 ft on blue blaze behind shelter', closed:'fire' },
+  { name:'Vandeventer Shelter',       state:'NC',    type:'lean-to', lat:36.367,  lng:-82.059,  mile:438.0,elev:3620, cap:6,  url:'shelter-vandeventer.html',        water:'No reliable water at shelter — carry water from Watauga Lake' },
+  { name:'Iron Mountain Shelter',     state:'NC',    type:'lean-to', lat:36.435,  lng:-81.991,  mile:444.8,elev:4125, cap:6,  url:'shelter-iron-mountain.html',      water:'Spring 0.2 mi S on AT (crosses trail)' },
+  { name:'Double Springs Shelter',    state:'NC',    type:'lean-to', lat:36.509,  lng:-81.986,  mile:452.5,elev:4080, cap:6,  url:'shelter-double-springs.html',     water:'Spring 100 yards downhill W of shelter' },
+  { name:'Abingdon Gap Shelter',      state:'NC',    type:'lean-to', lat:36.581,  lng:-81.902,  mile:460.8,elev:3785, cap:5,  url:'shelter-abingdon-gap.html',       water:'Spring 275 yards downhill S on steep blue blaze' },
 ];
 
 // ── AT trail polyline ─────────────────────────────────────────────────────────
@@ -412,6 +425,17 @@ const trail = [
   [36.035,-82.597],[35.980,-82.580],[35.964,-82.587],
   [35.980,-82.530],[36.000,-82.478],[36.032,-82.420],
   [36.067,-82.434],[36.101,-82.444],[36.104,-82.397],
+  // Erwin, TN to Damascus, VA
+  [36.115,-82.350],[36.129,-82.264],[36.140,-82.200],
+  [36.149,-82.161],[36.120,-82.140],[36.105,-82.122],
+  [36.112,-82.066],[36.123,-82.054],[36.140,-82.020],
+  [36.160,-81.990],[36.200,-81.990],[36.220,-81.986],
+  [36.220,-82.088],[36.250,-82.120],[36.279,-82.136],
+  [36.300,-82.100],[36.330,-82.070],[36.367,-82.059],
+  [36.400,-82.020],[36.435,-81.991],[36.470,-81.990],
+  [36.509,-81.986],[36.540,-81.940],[36.555,-81.920],
+  [36.581,-81.902],[36.600,-81.820],[36.620,-81.790],
+  [36.634,-81.779],
 ];
 
 // ── Map ───────────────────────────────────────────────────────────────────────
@@ -522,7 +546,11 @@ shelters.forEach(s => {
   if (s.type === 'stone-cabin') extra += `<div style="background:#f7fafc;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#5a6e7e;margin-bottom:0.5rem;">&#127963; Historic CCC Stone Cabin</div>`;
   if (highestPerState[s.state] === s) { const label = s.state === 'GSMNP' ? 'Smokies' : s.state; extra += `<div style="background:#fffbeb;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#92400e;margin-bottom:0.5rem;">&#9968; Highest shelter in ${label} (${s.elev.toLocaleString()} ft)</div>`; }
   if (s.cap >= 20) extra += `<div style="background:#ebf8ff;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#2b6cb0;margin-bottom:0.5rem;">&#127969; Extra large capacity &mdash; sleeps ${s.cap}</div>`;
-  if (s.mile === 348.8) extra += `<div style="background:#fef3c7;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#92400e;margin-bottom:0.5rem;">&#127937; Northern end of coverage</div>`;
+  if (s.mile === 460.8) extra += `<div style="background:#fef3c7;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#92400e;margin-bottom:0.5rem;">&#127937; Northern end of coverage</div>`;
+  if (s.closed === 'bears') extra += `<div style="background:#fff5f5;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#e53e3e;margin-bottom:0.5rem;">🐻 CLOSED — food-conditioned bears</div>`;
+  if (s.closed === 'structural') extra += `<div style="background:#fff5f5;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#e53e3e;margin-bottom:0.5rem;">🚧 CLOSED — structural repairs</div>`;
+  if (s.closed === 'permanent') extra += `<div style="background:#fff5f5;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#e53e3e;margin-bottom:0.5rem;">⛔ PERMANENTLY CLOSED — being removed</div>`;
+  if (s.closed === 'fire') extra += `<div style="background:#fff5f5;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#e53e3e;margin-bottom:0.5rem;">🔥 DESTROYED BY FIRE (Aug 2024)</div>`;
   const stateClass = s.state === 'GSMNP' ? 'state-gsmnp' : `state-${s.state.toLowerCase()}`;
   const stateLabel = s.state === 'GSMNP' ? 'Smokies' : s.state;
   m.bindPopup(`
@@ -575,6 +603,32 @@ L.marker([36.101, -82.444], {
   })
 }).bindPopup(`<div class="sp"><h3>Erwin, TN</h3><div class="pm">Mile ~344.6 &bull; Trail Town &bull; Nolichucky River</div><div style="font-size:0.82rem;color:#4a5568;margin-bottom:0.5rem;">Full-service trail town. Uncle Johnny's Nolichucky Hostel &amp; Outfitter. Grocery, restaurants, laundry. Note: Chestoa Bridge destroyed by Hurricane Helene (2024) — 3.6 mi road detour in effect.</div></div>`, {maxWidth:220}).addTo(map);
 
+// Mountain Harbour marker
+L.marker([36.106, -82.111], {
+  icon: L.divIcon({
+    className:'',
+    html:`<div style="background:#92400e;color:white;border-radius:6px;padding:3px 7px;font-size:10px;font-weight:bold;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,0.4);">Mtn Harbour</div>`,
+    iconSize:null, iconAnchor:[35,-20]
+  })
+}).bindPopup(`<div class="sp"><h3>Mountain Harbour B&amp;B &amp; Hostel</h3><div class="pm">Mile ~381 &bull; Hostel, B&amp;B, Food &bull; 0.3 mi off AT at Carvers Gap</div><div style="font-size:0.82rem;color:#4a5568;margin-bottom:0.5rem;">Popular hostel near Roan Highlands. Famous burgers, shuttle to Carvers Gap, laundry, resupply. Hostel bunks from $25.</div></div>`, {maxWidth:220}).addTo(map);
+
+// Kincora Hostel marker
+L.marker([36.250, -82.120], {
+  icon: L.divIcon({
+    className:'',
+    html:`<div style="background:#92400e;color:white;border-radius:6px;padding:3px 7px;font-size:10px;font-weight:bold;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,0.4);">Kincora</div>`,
+    iconSize:null, iconAnchor:[25,-20]
+  })
+}).bindPopup(`<div class="sp"><h3>Kincora Hiking Hostel</h3><div class="pm">Mile ~418 &bull; Hostel &bull; 0.2 mi off AT at Dennis Cove Rd</div><div style="font-size:0.82rem;color:#4a5568;margin-bottom:0.5rem;">Legendary hiker hostel run by Bob Peoples. $5 suggested donation. Kitchen, laundry, showers. 3-night limit. Hampton, TN nearby for resupply.</div></div>`, {maxWidth:220}).addTo(map);
+
+// Damascus town marker
+L.marker([36.634, -81.779], {
+  icon: L.divIcon({
+    className:'',
+    html:`<div style="background:#6b21a8;color:white;border-radius:6px;padding:3px 7px;font-size:10px;font-weight:bold;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,0.4);">Damascus</div>`,
+    iconSize:null, iconAnchor:[30,-20]
+  })
+}).bindPopup(`<div class="sp"><h3>Damascus, VA</h3><div class="pm">Mile ~469 &bull; "Trail Town USA" &bull; AT runs through town</div><div style="font-size:0.82rem;color:#4a5568;margin-bottom:0.5rem;">Famous AT trail town. The Place (donation hostel), Woodchuck Hostel, multiple outfitters, restaurants, post office. Host of annual Trail Days festival. Full services.</div></div>`, {maxWidth:220}).addTo(map);
 
 // Road crossings
 const crossings = [
@@ -599,6 +653,17 @@ const crossings = [
   { name:"Sam's Gap\n(I-26)",        lat:35.980, lng:-82.530 },
   { name:'Spivey Gap\n(US 19W)',     lat:36.032, lng:-82.420 },
   { name:'Nolichucky River\n(Erwin)',lat:36.101, lng:-82.444 },
+  { name:'Iron Mtn Gap\n(TN 107)',   lat:36.140, lng:-82.200 },
+  { name:'Hughes Gap Rd',            lat:36.120, lng:-82.140 },
+  { name:'Carvers Gap\n(TN 143)',    lat:36.106, lng:-82.111 },
+  { name:'US 19E\n(Elk Park)',       lat:36.140, lng:-82.020 },
+  { name:'Dennis Cove Rd\n(USFS 50)',lat:36.250, lng:-82.120 },
+  { name:'US 321\n(Hampton)',        lat:36.300, lng:-82.100 },
+  { name:'Watauga Dam Rd',           lat:36.330, lng:-82.070 },
+  { name:'Wilbur Dam Rd',            lat:36.367, lng:-82.059 },
+  { name:'TN 91',                    lat:36.470, lng:-81.990 },
+  { name:'US 421\n(Shady Valley)',   lat:36.555, lng:-81.920 },
+  { name:'TN/VA State Line',         lat:36.600, lng:-81.820 },
 ];
 crossings.forEach(c => {
   L.marker([c.lat, c.lng], {
@@ -746,7 +811,7 @@ function locateMe() {
       hdr.innerHTML = s.state === 'GA'
         ? '⛰ Georgia — 11 Shelters (Springer Mountain → Plumorchard Gap)'
         : s.state === 'NC'
-          ? '⛰ North Carolina / Tennessee — 26 Shelters (Muskrat Creek → Curley Maple Gap)'
+          ? '⛰ North Carolina / Tennessee — 39 Shelters (Muskrat Creek → Abingdon Gap)'
           : '⛰ Great Smoky Mountains — 13 Shelters (Birch Spring Gap → Davenport Gap)';
       inner.appendChild(hdr);
       listDiv = document.createElement('div');
