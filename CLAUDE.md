@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-**HellowWorld** is a static HTML website serving as a collection of Appalachian Trail (AT) hiking guides and a Sumner Material Lift parts sales reference. It has zero build dependencies — no npm, no framework, no bundler. All pages are standalone HTML5 files with embedded CSS.
+**HellowWorld** is a static HTML website serving as a comprehensive Appalachian Trail (AT) hiking resource and a Sumner Material Lift parts sales reference. It has zero build dependencies — no npm, no framework, no bundler. All pages are standalone HTML5 files with embedded CSS and JavaScript where needed.
 
 ---
 
@@ -10,16 +10,31 @@
 
 ```
 HellowWorld/
-├── index.html              # Home page / navigation hub
-├── shelters.html           # Top 5 AT shelters guide
-├── neel-gap-guide.html     # Day hike guide north from Neel Gap (~12 mi, strenuous)
-├── sumner-parts.html       # Sumner Material Lift parts sales reference
-├── hiawassee-shuttle.html  # Shuttle options to Hiawassee from the AT
-├── low-gap-resupply.html   # Resupply guide from Low Gap Shelter
-├── hostel-vs-hotel.html    # Green Dragon Hostel vs. hotel comparison for AT Georgia
-├── README.md               # Minimal repo description
-└── CLAUDE.md               # This file
+├── index.html                  # Home page / navigation hub
+├── shelters.html               # Shelter directory (links to all 38 shelter pages)
+├── at-map.html                 # Interactive Leaflet map — all 38 shelters (GA + NC + GSMNP)
+├── at-georgia-map.html         # Redirect → at-map.html (kept for backwards compatibility)
+├── resupply-planner.html       # Interactive resupply planner with mileage/carry sliders
+├── noc-nantahala.html          # Nantahala Outdoor Center guide
+├── neel-gap-guide.html         # Day hike guide north from Neel Gap
+├── hiawassee-shuttle.html      # Shuttle options to Hiawassee from the AT
+├── low-gap-resupply.html       # Resupply guide from Low Gap Shelter
+├── hostel-vs-hotel.html        # Green Dragon Hostel vs. hotel comparison
+├── sumner-parts.html           # Sumner Material Lift parts sales reference
+├── shelter-*.html              # 38 individual shelter pages (see below)
+├── README.md                   # Minimal repo description
+└── CLAUDE.md                   # This file
 ```
+
+### Shelter Pages (38 total)
+
+Shelters are grouped by state and listed south-to-north (NOBO order):
+
+**Georgia (11):** springer-mountain, stover-creek, hawk-mountain, gooch-mountain, blood-mountain, whitley-gap, low-gap-resupply, blue-mountain, tray-mountain, deep-gap, plumorchard-gap
+
+**North Carolina (14):** muskrat-creek, standing-indian, carter-gap, big-spring, rock-gap, siler-bald, cold-spring, wayah-bald, wesser-bald, rufus-morgan, sassafras-gap-nc, brown-fork-gap, cable-gap, fontana-dam
+
+**Great Smoky Mountains NP (13):** birch-spring-gap, russell-field, mollies-ridge, spence-field, derrick-knob, silers-bald, double-spring-gap, mount-collins, icewater-spring, pecks-corner, tricorner-knob, cosby-knob, davenport-gap
 
 ---
 
@@ -27,9 +42,11 @@ HellowWorld/
 
 - **HTML5** — semantic markup, proper doctype, `lang="en"`
 - **CSS3** — embedded `<style>` blocks per page (no external stylesheets)
-- **No JavaScript** — fully static, no interactivity
-- **No dependencies** — no package.json, no node_modules, no build tools
-- **No CI/CD** — no automated testing or deployment pipelines
+- **JavaScript** — embedded `<script>` blocks for interactive pages
+- **[Leaflet.js](https://leafletjs.com/) v1.9.4** — used in `at-map.html` for the interactive trail map (loaded via CDN)
+- **[Open-Meteo API](https://open-meteo.com/)** — free, no-key weather API used in all 38 shelter pages for current conditions and 3-day forecast
+- **OpenStreetMap** — map tile provider for Leaflet
+- **No build tools** — no package.json, no node_modules, no bundler, no CI/CD
 
 ---
 
@@ -39,14 +56,14 @@ HellowWorld/
 
 1. Edit HTML files directly — no build step required
 2. Open in a browser to verify visually
-3. Commit with a descriptive message (see commit conventions below)
+3. Commit with a descriptive message (see conventions below)
 4. Push to the active feature branch
 
 ### Git Conventions
 
 Branch naming: `claude/<feature-description>-<id>` (e.g. `claude/add-claude-documentation-33Iwe`)
 
-Commit message style observed in this repo:
+Commit message style:
 - Imperative mood, sentence case
 - Specific and descriptive (e.g. `Add resupply guide from Low Gap Shelter with shuttles and tap-to-call contacts`)
 - No ticket numbers or scope prefixes
@@ -95,6 +112,7 @@ All pages follow these patterns — maintain consistency when adding or editing 
 | Body text | `#2d3748` |
 | Primary links | `#3182ce` / `#2b6cb0` |
 | Section headers | `#2b6cb0` |
+| AT green (map/header) | `#2d5a27` |
 | Success / positive | `#38a169` / `#276749` |
 | Warning / caution | `#f6ad55` |
 | Error / danger | `#e53e3e` |
@@ -106,16 +124,42 @@ All pages follow these patterns — maintain consistency when adding or editing 
 - Typography: `font-family: sans-serif`, rem-based sizing
 
 **Component patterns:**
-- **Alert/info boxes:** left border accent, color-coded background (see existing pages for examples)
+- **Alert/info boxes:** left border accent, color-coded background
 - **Tables:** striped rows (`tr:nth-child(even)`), hover highlight, `overflow-x: auto` wrapper for responsiveness
 - **Buttons/call-to-action links:** inline-block, background color matching primary or accent palette, `border-radius`, padding
 
 ### Navigation
 
-Every page should include a back link to `index.html`. Pattern:
+Every page should include a back link. Shelter pages use prev/next navigation linking the full chain in NOBO order. Pattern:
 ```html
 <a href="index.html">← Back to Home</a>
 ```
+
+---
+
+## Key Pages to Understand
+
+| File | Purpose | Notes |
+|---|---|---|
+| `index.html` | Entry point; lists all guides | Start here |
+| `at-map.html` | Leaflet map, 38 shelters, AT polyline | Uses CDN JS/CSS |
+| `resupply-planner.html` | Interactive planner with JS sliders | Most complex JS |
+| `shelter-blood-mountain.html` | Good shelter page example | Stone cabin type |
+| `shelter-fontana-dam.html` | "Hilton of the AT" — detailed shelter | Capacity 24 |
+| `sumner-parts.html` | Parts reference table | Non-AT content |
+
+---
+
+## Shelter Page Template
+
+Each shelter page follows a consistent structure:
+- Header with shelter name, state badge, mile marker, elevation, capacity, water source
+- Current weather widget (Open-Meteo API, lat/lng embedded per shelter)
+- Resupply/exit options with distances and directions
+- Hostel/hotel recommendations with pros & cons
+- Prev/next navigation linking adjacent shelters in NOBO order
+
+When adding a new shelter page, follow an existing page as a template and update `at-map.html` shelter data array and prev/next links on adjacent pages.
 
 ---
 
@@ -126,7 +170,7 @@ Every page should include a back link to `index.html`. Pattern:
 - Verify distances and elevations against authoritative sources (AWOL AT Guide, Guthook/FarOut)
 - Include tap-to-call links for shuttle/hostel phone numbers: `<a href="tel:+1XXXXXXXXXX">(XXX) XXX-XXXX</a>`
 - Use realistic, hiker-relevant warnings (water sources, bail-out points, weather)
-- Mileages should be directional (NOBO/SOBO context noted where relevant)
+- Mileages are NOBO (northbound) unless noted otherwise
 
 ### Sumner Parts Page
 
@@ -136,21 +180,11 @@ Every page should include a back link to `index.html`. Pattern:
 
 ---
 
-## Key Files to Understand
-
-| File | Purpose |
-|---|---|
-| `index.html` | Entry point; lists all guides with nav links |
-| `shelters.html` | Static content guide; good simple template example |
-| `sumner-parts.html` | Most complex page (566 lines); demonstrates table and card patterns |
-| `hostel-vs-hotel.html` | Most recent addition; clean example of current conventions |
-
----
-
 ## What NOT to Do
 
-- Do not introduce JavaScript, npm, or any build tooling unless explicitly requested
+- Do not introduce npm or any build tooling unless explicitly requested
 - Do not use external CSS frameworks (Bootstrap, Tailwind, etc.)
-- Do not add external fonts or icon libraries (keep pages self-contained)
+- Do not add external fonts or icon libraries beyond what's already in use
 - Do not split CSS into separate `.css` files — keep styles embedded per page
 - Do not add a backend or server-side logic — this is a static site
+- Do not add new CDN dependencies without good reason — Leaflet and Open-Meteo are the only current external dependencies
