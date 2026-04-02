@@ -160,6 +160,57 @@ a.back:hover { text-decoration:underline; }
 })();
 </script>
 <!-- END WEATHER WIDGET -->
+<!-- SUNRISE/SUNSET WIDGET -->
+<div style="background:white;border-radius:8px;padding:1.25rem;margin-bottom:1.25rem;box-shadow:0 2px 6px rgba(0,0,0,0.08);">
+  <h2 style="margin:0 0 1rem;font-size:1.1rem;color:#2b6cb0;border-bottom:1px solid #e2e8f0;padding-bottom:0.5rem;">&#127765; Sunrise &amp; Sunset</h2>
+  <div id="sun-data" style="display:flex;flex-wrap:wrap;gap:0.5rem;"></div>
+</div>
+<script>
+(function(){
+  var rad=Math.PI/180;
+  function calcSun(lat,lng,date){
+    var jd=Math.floor(365.25*(date.getFullYear()+4716))+Math.floor(30.6001*(date.getMonth()<2?date.getMonth()+13:date.getMonth()+1))+date.getDate()-1524.5;
+    var jc=(jd-2451545)/36525;
+    var gml=(280.46646+jc*(36000.76983+.0003032*jc))%360;
+    var gma=357.52911+jc*(35999.05029-.0001537*jc);
+    var eeo=.016708634-jc*(.000042037+.0000001267*jc);
+    var sec=Math.sin(gma*rad)*(1.914602-jc*(.004817+.000014*jc))+Math.sin(2*gma*rad)*(.019993-.000101*jc)+Math.sin(3*gma*rad)*.000289;
+    var stl=gml+sec,sta=gma+sec;
+    var sal=stl-.00569-.00478*Math.sin((125.04-1934.136*jc)*rad);
+    var oe=23+(26+((21.448-jc*(46.815+jc*(.00059-jc*.001813))))/60)/60+.00256*Math.cos((125.04-1934.136*jc)*rad);
+    var sd=Math.asin(Math.sin(oe*rad)*Math.sin(sal*rad))/rad;
+    var y=Math.tan(oe/2*rad)*Math.tan(oe/2*rad);
+    var eot=4*(y*Math.sin(2*gml*rad)-2*eeo*Math.sin(gma*rad)+4*eeo*y*Math.sin(gma*rad)*Math.cos(2*gml*rad)-.5*y*y*Math.sin(4*gml*rad)-1.25*eeo*eeo*Math.sin(2*gma*rad))/rad;
+    var ha=Math.acos(Math.cos(90.833*rad)/(Math.cos(lat*rad)*Math.cos(sd*rad))-Math.tan(lat*rad)*Math.tan(sd*rad))/rad;
+    var noon=(720-4*lng-eot+new Date().getTimezoneOffset())/1440;
+    var rise=noon-ha*4/1440,set=noon+ha*4/1440;
+    function fmt(f){var m=Math.round(f*1440),h=Math.floor(m/60),mn=m%60,ap=h>=12?'PM':'AM';return((h%12)||12)+':'+(mn<10?'0':'')+mn+' '+ap;}
+    var daylight=(set-rise)*24;
+    var now=(date.getHours()*60+date.getMinutes())/1440;
+    var remaining=Math.max(0,(set-now)*24);
+    return{rise:fmt(rise),set:fmt(set),daylight:daylight.toFixed(1),remaining:remaining.toFixed(1),twilight:Math.max(0,remaining+.5).toFixed(1)};
+  }
+  var container=document.getElementById('sun-data');
+  var today=new Date();
+  var days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  for(var i=0;i<4;i++){
+    var d=new Date(today);d.setDate(d.getDate()+i);
+    var s=calcSun(LAT,LNG,d);
+    var label=i===0?'Today':days[d.getDay()];
+    var isToday=i===0;
+    var el=document.createElement('div');
+    el.style.cssText='flex:1;min-width:120px;background:'+(isToday?'#fffbeb':'#f0f4f8')+';border-radius:6px;padding:0.6rem;text-align:center;font-size:0.82rem;'+(isToday?'border:2px solid #ecc94b;':'');
+    el.innerHTML='<div style="font-weight:bold;color:#4a5568;margin-bottom:0.3rem;">'+label+'</div>'
+      +'<div style="color:#744210;">&#127749; '+s.rise+'</div>'
+      +'<div style="color:#2b6cb0;">&#127751; '+s.set+'</div>'
+      +'<div style="color:#718096;margin-top:0.25rem;">'+s.daylight+'h daylight</div>'
+      +(isToday?'<div style="font-weight:bold;color:'+(parseFloat(s.remaining)<2?'#e53e3e':'#276749')+';margin-top:0.25rem;">'+s.remaining+'h remaining</div>'
+        +'<div style="color:#718096;font-size:0.75rem;">Usable light: ~'+s.twilight+'h</div>':'');
+    container.appendChild(el);
+  }
+})();
+</script>
+<!-- END SUNRISE/SUNSET WIDGET -->
 
 <div class="section">
   <h2>Shelter Overview</h2>

@@ -426,6 +426,35 @@ function makeIcon(shelter) {
   });
 }
 
+// ── Sunrise/Sunset calculator (NOAA algorithm) ─────────────────────────────
+function calcSun(lat, lng, date) {
+  const rad = Math.PI / 180;
+  const jd = Math.floor(365.25 * (date.getFullYear() + 4716)) + Math.floor(30.6001 * ((date.getMonth() < 2 ? date.getMonth() + 13 : date.getMonth() + 1))) + date.getDate() - 1524.5;
+  const jc = (jd - 2451545) / 36525;
+  const gml = (280.46646 + jc * (36000.76983 + 0.0003032 * jc)) % 360;
+  const gma = 357.52911 + jc * (35999.05029 - 0.0001537 * jc);
+  const eeo = 0.016708634 - jc * (0.000042037 + 0.0000001267 * jc);
+  const sec = Math.sin(gma * rad) * (1.914602 - jc * (0.004817 + 0.000014 * jc)) + Math.sin(2 * gma * rad) * (0.019993 - 0.000101 * jc) + Math.sin(3 * gma * rad) * 0.000289;
+  const stl = gml + sec;
+  const sta = gma + sec;
+  const srv = (1.000001018 * (1 - eeo * eeo)) / (1 + eeo * Math.cos(sta * rad));
+  const sal = stl - 0.00569 - 0.00478 * Math.sin((125.04 - 1934.136 * jc) * rad);
+  const oe = 23 + (26 + ((21.448 - jc * (46.815 + jc * (0.00059 - jc * 0.001813)))) / 60) / 60 + 0.00256 * Math.cos((125.04 - 1934.136 * jc) * rad);
+  const sd = Math.asin(Math.sin(oe * rad) * Math.sin(sal * rad)) / rad;
+  const y = Math.tan(oe / 2 * rad) * Math.tan(oe / 2 * rad);
+  const eot = 4 * (y * Math.sin(2 * gml * rad) - 2 * eeo * Math.sin(gma * rad) + 4 * eeo * y * Math.sin(gma * rad) * Math.cos(2 * gml * rad) - 0.5 * y * y * Math.sin(4 * gml * rad) - 1.25 * eeo * eeo * Math.sin(2 * gma * rad)) / rad;
+  const ha = Math.acos(Math.cos(90.833 * rad) / (Math.cos(lat * rad) * Math.cos(sd * rad)) - Math.tan(lat * rad) * Math.tan(sd * rad)) / rad;
+  const noon = (720 - 4 * lng - eot + new Date().getTimezoneOffset()) / 1440;
+  const rise = noon - ha * 4 / 1440;
+  const set = noon + ha * 4 / 1440;
+  function fmt(frac) { const m = Math.round(frac * 1440); const h = Math.floor(m / 60); const mn = m % 60; const ap = h >= 12 ? 'PM' : 'AM'; return ((h % 12) || 12) + ':' + (mn < 10 ? '0' : '') + mn + ' ' + ap; }
+  const daylight = (set - rise) * 24;
+  const now = (date.getHours() * 60 + date.getMinutes()) / 1440;
+  const remaining = Math.max(0, (set - now) * 24);
+  const twilight = Math.max(0, remaining + 0.5);
+  return { rise: fmt(rise), set: fmt(set), daylight: daylight.toFixed(1), remaining: remaining.toFixed(1), twilight: twilight.toFixed(1) };
+}
+
 // ── Derived callouts ─────────────────────────────────────────────────────────
 const highestPerState = {};
 shelters.forEach(s => {
@@ -458,6 +487,7 @@ shelters.forEach(s => {
       <h3>${s.name}</h3>
       <div class="pm">Mile ${s.mile} (NOBO) &bull; ${s.elev.toLocaleString()} ft &bull; ${typeLabel}<br>Sleeps ~${s.cap}</div>
       <div style="background:${getWaterStatus(s.water).bg};border-radius:4px;padding:0.25rem 0.4rem;font-size:0.78rem;color:${getWaterStatus(s.water).color};margin-bottom:0.5rem;display:flex;align-items:center;gap:0.35rem;"><span style="width:9px;height:9px;border-radius:50%;background:${getWaterStatus(s.water).status === 'red' ? '#e53e3e' : getWaterStatus(s.water).status === 'green' ? '#38a169' : '#ecc94b'};flex-shrink:0;"></span><strong>Water:</strong> ${s.water}</div>
+      <div style="background:#fffbeb;border-radius:4px;padding:0.25rem 0.4rem;font-size:0.78rem;color:#744210;margin-bottom:0.5rem;">&#127765; ${(() => { const sun = calcSun(s.lat, s.lng, new Date()); return 'Rise ' + sun.rise + ' &bull; Set ' + sun.set + ' &bull; ' + sun.remaining + 'h left'; })()}</div>
       ${extra}
       <a href="${s.url}">View Shelter Details &rarr;</a>
     </div>
