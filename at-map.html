@@ -150,6 +150,60 @@
       font-weight: bold;
     }
     .back-btn:hover { background: #f0f4f8; }
+
+    #locate-btn {
+      position: absolute;
+      top: 54px; right: 10px;
+      z-index: 1000;
+      background: white;
+      border: none;
+      border-radius: 6px;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+      color: #2d3748;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    #locate-btn:hover { background: #f0f4f8; }
+    #locate-btn.loading { color: #3182ce; }
+    #locate-btn.active { color: #3182ce; background: #ebf8ff; }
+
+    @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .spin { display: inline-block; animation: spin 0.8s linear infinite; }
+
+    @keyframes pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(49,130,206,0.5); }
+      70%  { box-shadow: 0 0 0 12px rgba(49,130,206,0); }
+      100% { box-shadow: 0 0 0 0 rgba(49,130,206,0); }
+    }
+    .user-dot {
+      width: 16px; height: 16px;
+      background: #3182ce;
+      border: 3px solid white;
+      border-radius: 50%;
+      animation: pulse 1.8s infinite;
+    }
+
+    #toast {
+      position: absolute;
+      bottom: 60px; left: 50%;
+      transform: translateX(-50%);
+      background: rgba(45,55,72,0.92);
+      color: white;
+      padding: 0.5rem 1.1rem;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      z-index: 2000;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      white-space: nowrap;
+    }
+    #toast.show { opacity: 1; }
   </style>
 </head>
 <body>
@@ -165,6 +219,8 @@
 <div id="map-wrap">
   <a href="index.html" class="back-btn">&larr; Home</a>
   <a href="resupply-planner.html" class="back-btn" style="left:auto;right:10px;">&#127978; Resupply</a>
+  <button id="locate-btn" onclick="locateMe()" title="Find my location">&#9685; Locate Me</button>
+  <div id="toast"></div>
   <div id="map"></div>
 
   <div id="panel">
@@ -370,6 +426,89 @@ crossings.forEach(c => {
 
 function togglePanel() {
   document.getElementById('panel').classList.toggle('open');
+}
+
+// ── Locate Me ─────────────────────────────────────────────────────────────────
+let userMarker = null;
+
+function haversineKm(lat1, lng1, lat2, lng2) {
+  const R = 6371;
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLng = (lng2 - lng1) * Math.PI / 180;
+  const a = Math.sin(dLat/2) * Math.sin(dLat/2)
+    + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180)
+    * Math.sin(dLng/2) * Math.sin(dLng/2);
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function nearestShelter(lat, lng) {
+  let nearest = null, minDist = Infinity;
+  shelters.forEach(s => {
+    const d = haversineKm(lat, lng, s.lat, s.lng);
+    if (d < minDist) { minDist = d; nearest = s; }
+  });
+  return { shelter: nearest, km: minDist };
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+function setLocateBtn(state) {
+  const btn = document.getElementById('locate-btn');
+  btn.className = state;
+  if (state === 'loading') {
+    btn.innerHTML = '<span class="spin">&#9685;</span> Locating&hellip;';
+    btn.disabled = true;
+  } else if (state === 'active') {
+    btn.innerHTML = '&#9685; Located';
+    btn.disabled = false;
+  } else {
+    btn.innerHTML = '&#9685; Locate Me';
+    btn.disabled = false;
+  }
+}
+
+function locateMe() {
+  if (!navigator.geolocation) {
+    showToast('Geolocation not supported by your browser');
+    return;
+  }
+  setLocateBtn('loading');
+  navigator.geolocation.getCurrentPosition(
+    function(pos) {
+      const lat = pos.coords.latitude;
+      const lng = pos.coords.longitude;
+      if (userMarker) { map.removeLayer(userMarker); }
+      const { shelter, km } = nearestShelter(lat, lng);
+      const miles = (km * 0.621371).toFixed(1);
+      userMarker = L.marker([lat, lng], {
+        icon: L.divIcon({
+          className: '',
+          html: '<div class="user-dot"></div>',
+          iconSize: [16, 16],
+          iconAnchor: [8, 8],
+          popupAnchor: [0, -12],
+        }),
+        zIndexOffset: 1000,
+      }).addTo(map);
+      userMarker.bindPopup(
+        `<div class="sp"><h3>&#128205; You are here</h3><div class="pm">Nearest shelter:<br><strong>${shelter.name}</strong> &mdash; ${miles} mi away</div><a href="${shelter.url}">View Shelter Details &rarr;</a></div>`,
+        { maxWidth: 220, minWidth: 180 }
+      ).openPopup();
+      map.setView([lat, lng], 13, { animate: true });
+      setLocateBtn('active');
+    },
+    function(err) {
+      setLocateBtn('');
+      const msgs = { 1: 'Location access denied', 2: 'Could not determine location', 3: 'Location request timed out' };
+      showToast(msgs[err.code] || 'Location unavailable');
+    },
+    { timeout: 10000, maximumAge: 60000 }
+  );
 }
 
 // Build shelter-list divs properly (one per state)
