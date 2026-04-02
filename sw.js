@@ -85,6 +85,8 @@ const CORE_ASSETS = [
   'shelter-iron-mountain.html',
   'shelter-double-springs.html',
   'shelter-abingdon-gap.html',
+  // Tools
+  'gear-checklist.html',
   // Leaflet CDN assets
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
