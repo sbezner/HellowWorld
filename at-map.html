@@ -469,8 +469,8 @@ function calcSun(lat, lng, date) {
   const daylight = (set - rise) * 24;
   const nowUtc = date.getUTCHours() * 60 + date.getUTCMinutes();
   const now = ((nowUtc - etOffset(date) + 1440) % 1440) / 1440;
-  const remaining = Math.max(0, (set - now) * 24);
-  const twilight = Math.max(0, remaining + 0.5);
+  const remaining = (now >= rise && now <= set) ? Math.max(0, (set - now) * 24) : 0;
+  const twilight = remaining > 0 ? Math.max(0, remaining + 0.5) : 0;
   return { rise: fmt(rise), set: fmt(set), daylight: daylight.toFixed(1), remaining: remaining.toFixed(1), twilight: twilight.toFixed(1) };
 }
 
@@ -506,7 +506,7 @@ shelters.forEach(s => {
       <h3>${s.name}</h3>
       <div class="pm">Mile ${s.mile} (NOBO) &bull; ${s.elev.toLocaleString()} ft &bull; ${typeLabel}<br>Sleeps ~${s.cap}</div>
       <div style="background:${getWaterStatus(s.water).bg};border-radius:4px;padding:0.25rem 0.4rem;font-size:0.78rem;color:${getWaterStatus(s.water).color};margin-bottom:0.5rem;display:flex;align-items:center;gap:0.35rem;"><span style="width:9px;height:9px;border-radius:50%;background:${getWaterStatus(s.water).status === 'red' ? '#e53e3e' : getWaterStatus(s.water).status === 'green' ? '#38a169' : '#ecc94b'};flex-shrink:0;"></span><strong>Water:</strong> ${s.water}</div>
-      <div style="background:#fffbeb;border-radius:4px;padding:0.25rem 0.4rem;font-size:0.78rem;color:#744210;margin-bottom:0.5rem;">&#127765; ${(() => { const sun = calcSun(s.lat, s.lng, new Date()); return 'Rise ' + sun.rise + ' &bull; Set ' + sun.set + ' &bull; ' + sun.remaining + 'h left'; })()}</div>
+      <div style="background:#fffbeb;border-radius:4px;padding:0.25rem 0.4rem;font-size:0.78rem;color:#744210;margin-bottom:0.5rem;">&#127765; ${(() => { const sun = calcSun(s.lat, s.lng, new Date()); return 'Rise ' + sun.rise + ' &bull; Set ' + sun.set + (parseFloat(sun.remaining) > 0 ? ' &bull; ' + sun.remaining + 'h until sunset' : ' &bull; Currently dark'); })()}</div>
       ${extra}
       <a href="${s.url}">View Shelter Details &rarr;</a>
     </div>
