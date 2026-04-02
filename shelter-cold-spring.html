@@ -158,11 +158,11 @@ var LAT=35.185,LNG=-83.537;
     var y=Math.tan(oe/2*rad)*Math.tan(oe/2*rad);
     var eot=4*(y*Math.sin(2*gml*rad)-2*eeo*Math.sin(gma*rad)+4*eeo*y*Math.sin(gma*rad)*Math.cos(2*gml*rad)-.5*y*y*Math.sin(4*gml*rad)-1.25*eeo*eeo*Math.sin(2*gma*rad))/rad;
     var ha=Math.acos(Math.cos(90.833*rad)/(Math.cos(lat*rad)*Math.cos(sd*rad))-Math.tan(lat*rad)*Math.tan(sd*rad))/rad;
-    var noon=(720-4*lng-eot+new Date().getTimezoneOffset())/1440;
+    var noon=(720-4*lng-eot+(function(d){var mar=new Date(d.getFullYear(),2,1),nov=new Date(d.getFullYear(),10,1);mar.setDate(14-mar.getDay());nov.setDate(1+(7-nov.getDay())%7);return(d>=mar&&d<nov)?240:300;})(date))/1440;
     var rise=noon-ha*4/1440,set=noon+ha*4/1440;
     function fmt(f){var m=Math.round(f*1440);if(m<0)m+=1440;m=m%1440;var h=Math.floor(m/60),mn=m%60,ap=h>=12?'PM':'AM';return((h%12)||12)+':'+(mn<10?'0':'')+mn+' '+ap;}
     var daylight=(set-rise)*24;
-    var now=(date.getHours()*60+date.getMinutes())/1440;
+    var etOff=(function(d){var mar=new Date(d.getFullYear(),2,1),nov=new Date(d.getFullYear(),10,1);mar.setDate(14-mar.getDay());nov.setDate(1+(7-nov.getDay())%7);return(d>=mar&&d<nov)?240:300;})(date);var nowUtc=date.getUTCHours()*60+date.getUTCMinutes();var now=((nowUtc-etOff+1440)%1440)/1440;
     var remaining=Math.max(0,(set-now)*24);
     return{rise:fmt(rise),set:fmt(set),daylight:daylight.toFixed(1),remaining:remaining.toFixed(1),twilight:Math.max(0,remaining+.5).toFixed(1)};
   }
