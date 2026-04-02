@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: sans-serif; height: 100vh; display: flex; flex-direction: column; overflow: hidden; background: #1a1a1a; color: #2d3748; }
+    body { font-family: sans-serif; height: 100vh; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; background: #1a1a1a; color: #2d3748; }
 
     #header {
       background: #2d5a27;
@@ -40,11 +40,13 @@
       bottom: 0; left: 0; right: 0;
       background: white;
       border-top: 3px solid #2d5a27;
-      max-height: 260px;
+      max-height: 60dvh;
+      max-height: 60vh;
       overflow-y: auto;
       z-index: 1000;
       transform: translateY(calc(100% - 42px));
       transition: transform 0.3s ease;
+      padding-bottom: env(safe-area-inset-bottom, 0px);
     }
     #panel.open { transform: translateY(0); }
 
@@ -129,15 +131,27 @@
     .legend {
       background: white;
       border-radius: 8px;
-      padding: 0.55rem 0.75rem;
+      padding: 0.45rem 0.65rem;
       box-shadow: 0 2px 8px rgba(0,0,0,0.25);
       font-size: 0.76rem;
       line-height: 1.8;
       max-width: calc(100vw - 2rem);
-      max-height: 38vh;
-      overflow-y: auto;
+      cursor: pointer;
+      user-select: none;
     }
-    .leg-title { font-weight: bold; margin-bottom: 0.2rem; color: #2d3748; font-size: 0.78rem; }
+    .leg-title {
+      font-weight: bold;
+      color: #2d3748;
+      font-size: 0.78rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .leg-arrow { font-size: 0.65rem; transition: transform 0.25s; }
+    .legend.open .leg-arrow { transform: rotate(180deg); }
+    .leg-items { display: none; margin-top: 0.25rem; }
+    .legend.open .leg-items { display: block; }
     .leg-row { display: flex; align-items: center; gap: 0.4rem; }
 
     .back-btn {
@@ -391,14 +405,17 @@ const legend = L.control({ position: 'bottomleft' });
 legend.onAdd = () => {
   const div = L.DomUtil.create('div','legend');
   div.innerHTML = `
-    <div class="leg-title">Shelter Types</div>
-    <div class="leg-row"><div style="background:#8B4513;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,0.8);flex-shrink:0;"></div><span>GA Lean-to</span></div>
-    <div class="leg-row"><div style="background:#5a6e7e;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,0.8);flex-shrink:0;"></div><span>Stone Cabin</span></div>
-    <div class="leg-row"><div style="background:#2b6cb0;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,0.8);flex-shrink:0;"></div><span>NC Lean-to</span></div>
-    <div class="leg-row"><div style="background:#6b21a8;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,0.8);flex-shrink:0;"></div><span>Fontana Hilton</span></div>
-    <div class="leg-row"><div style="background:#065f46;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,0.8);flex-shrink:0;"></div><span>GSMNP Lean-to</span></div>
-    <div class="leg-row" style="margin-top:0.3rem;"><div style="width:22px;height:3px;background:white;border:1px solid #3a1e00;flex-shrink:0;"></div><span>AT Route</span></div>
+    <div class="leg-title">Shelter Types <span class="leg-arrow">&#9650;</span></div>
+    <div class="leg-items">
+      <div class="leg-row"><div style="background:#8B4513;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,0.8);flex-shrink:0;"></div><span>GA Lean-to</span></div>
+      <div class="leg-row"><div style="background:#5a6e7e;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,0.8);flex-shrink:0;"></div><span>Stone Cabin</span></div>
+      <div class="leg-row"><div style="background:#2b6cb0;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,0.8);flex-shrink:0;"></div><span>NC Lean-to</span></div>
+      <div class="leg-row"><div style="background:#6b21a8;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,0.8);flex-shrink:0;"></div><span>Fontana Hilton</span></div>
+      <div class="leg-row"><div style="background:#065f46;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,0.8);flex-shrink:0;"></div><span>GSMNP Lean-to</span></div>
+      <div class="leg-row" style="margin-top:0.3rem;"><div style="width:22px;height:3px;background:white;border:1px solid #3a1e00;flex-shrink:0;"></div><span>AT Route</span></div>
+    </div>
   `;
+  div.addEventListener('click', () => div.classList.toggle('open'));
   return div;
 };
 legend.addTo(map);
