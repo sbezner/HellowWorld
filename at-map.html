@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Interactive Appalachian Trail map covering all 63 shelters from Springer Mountain to Damascus — Georgia, North Carolina, Great Smoky Mountains, Tennessee, and Virginia.">
+  <meta name="description" content="Interactive Appalachian Trail map covering all 62 shelters from Springer Mountain to Damascus — Georgia, North Carolina, Great Smoky Mountains, Tennessee, and Virginia.">
   <title>Appalachian Trail Map — Georgia, North Carolina &amp; Great Smoky Mountains</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <style>
@@ -270,7 +270,7 @@
 <div id="header">
   <div>
     <div class="sub">Appalachian Trail &mdash; Georgia to Virginia &bull; Springer Mountain to Damascus</div>
-    <h1>&#9968; Appalachian Trail Map &mdash; 63 Shelters</h1>
+    <h1>&#9968; Appalachian Trail Map &mdash; 62 Shelters</h1>
   </div>
   <div style="display:flex;align-items:center;gap:0.5rem;flex-shrink:0;">
     <button id="info-btn" onclick="document.getElementById('legend-modal').classList.add('open')">ⓘ Legend</button>
@@ -811,7 +811,7 @@ function locateMe() {
       hdr.innerHTML = s.state === 'GA'
         ? '⛰ Georgia — 11 Shelters (Springer Mountain → Plumorchard Gap)'
         : s.state === 'NC'
-          ? '⛰ North Carolina / Tennessee — 39 Shelters (Muskrat Creek → Abingdon Gap)'
+          ? '⛰ North Carolina / Tennessee — 38 Shelters (Muskrat Creek → Abingdon Gap)'
           : '⛰ Great Smoky Mountains — 13 Shelters (Birch Spring Gap → Davenport Gap)';
       inner.appendChild(hdr);
       listDiv = document.createElement('div');
