@@ -1,0 +1,190 @@
+# CLAUDE.md — AI Assistant Guide for HellowWorld
+
+## Project Overview
+
+**HellowWorld** is a static HTML website serving as a comprehensive Appalachian Trail (AT) hiking resource and a Sumner Material Lift parts sales reference. It has zero build dependencies — no npm, no framework, no bundler. All pages are standalone HTML5 files with embedded CSS and JavaScript where needed.
+
+---
+
+## Repository Structure
+
+```
+HellowWorld/
+├── index.html                  # Home page / navigation hub
+├── shelters.html               # Shelter directory (links to all 38 shelter pages)
+├── at-map.html                 # Interactive Leaflet map — all 38 shelters (GA + NC + GSMNP)
+├── at-georgia-map.html         # Redirect → at-map.html (kept for backwards compatibility)
+├── resupply-planner.html       # Interactive resupply planner with mileage/carry sliders
+├── noc-nantahala.html          # Nantahala Outdoor Center guide
+├── neel-gap-guide.html         # Day hike guide north from Neel Gap
+├── hiawassee-shuttle.html      # Shuttle options to Hiawassee from the AT
+├── low-gap-resupply.html       # Resupply guide from Low Gap Shelter
+├── hostel-vs-hotel.html        # Green Dragon Hostel vs. hotel comparison
+├── sumner-parts.html           # Sumner Material Lift parts sales reference
+├── shelter-*.html              # 38 individual shelter pages (see below)
+├── README.md                   # Minimal repo description
+└── CLAUDE.md                   # This file
+```
+
+### Shelter Pages (38 total)
+
+Shelters are grouped by state and listed south-to-north (NOBO order):
+
+**Georgia (11):** springer-mountain, stover-creek, hawk-mountain, gooch-mountain, blood-mountain, whitley-gap, low-gap-resupply, blue-mountain, tray-mountain, deep-gap, plumorchard-gap
+
+**North Carolina (14):** muskrat-creek, standing-indian, carter-gap, big-spring, rock-gap, siler-bald, cold-spring, wayah-bald, wesser-bald, rufus-morgan, sassafras-gap-nc, brown-fork-gap, cable-gap, fontana-dam
+
+**Great Smoky Mountains NP (13):** birch-spring-gap, russell-field, mollies-ridge, spence-field, derrick-knob, silers-bald, double-spring-gap, mount-collins, icewater-spring, pecks-corner, tricorner-knob, cosby-knob, davenport-gap
+
+---
+
+## Tech Stack
+
+- **HTML5** — semantic markup, proper doctype, `lang="en"`
+- **CSS3** — embedded `<style>` blocks per page (no external stylesheets)
+- **JavaScript** — embedded `<script>` blocks for interactive pages
+- **[Leaflet.js](https://leafletjs.com/) v1.9.4** — used in `at-map.html` for the interactive trail map (loaded via CDN)
+- **[Open-Meteo API](https://open-meteo.com/)** — free, no-key weather API used in all 38 shelter pages for current conditions and 3-day forecast
+- **OpenStreetMap** — map tile provider for Leaflet
+- **No build tools** — no package.json, no node_modules, no bundler, no CI/CD
+
+---
+
+## Development Workflow
+
+### Making Changes
+
+1. Edit HTML files directly — no build step required
+2. Open in a browser to verify visually
+3. Commit with a descriptive message (see conventions below)
+4. Push to the active feature branch
+
+### Git Conventions
+
+Branch naming: `claude/<feature-description>-<id>` (e.g. `claude/add-claude-documentation-33Iwe`)
+
+Commit message style:
+- Imperative mood, sentence case
+- Specific and descriptive (e.g. `Add resupply guide from Low Gap Shelter with shuttles and tap-to-call contacts`)
+- No ticket numbers or scope prefixes
+
+### No Tests
+
+There are no automated tests. QA is done manually by reviewing page content for accuracy (distances, elevations, pricing, contact numbers).
+
+---
+
+## HTML & CSS Conventions
+
+All pages follow these patterns — maintain consistency when adding or editing pages.
+
+### HTML Structure
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Title</title>
+  <style>
+    /* embedded styles here */
+  </style>
+</head>
+<body>
+  <!-- content -->
+</body>
+</html>
+```
+
+### CSS Conventions
+
+**Universal reset** — always include:
+```css
+* { box-sizing: border-box; margin: 0; padding: 0; }
+```
+
+**Color palette** — use these values consistently:
+
+| Role | Value |
+|---|---|
+| Page background | `#f0f4f8` |
+| Body text | `#2d3748` |
+| Primary links | `#3182ce` / `#2b6cb0` |
+| Section headers | `#2b6cb0` |
+| AT green (map/header) | `#2d5a27` |
+| Success / positive | `#38a169` / `#276749` |
+| Warning / caution | `#f6ad55` |
+| Error / danger | `#e53e3e` |
+| Card background | `#ffffff` |
+
+**Layout:**
+- Use **flexbox** for all layouts (`display: flex`, `flex-wrap: wrap`)
+- Cards: white background, `border-radius: 6–8px`, `box-shadow: 0 2px 6px rgba(0,0,0,0.08)`, consistent padding
+- Typography: `font-family: sans-serif`, rem-based sizing
+
+**Component patterns:**
+- **Alert/info boxes:** left border accent, color-coded background
+- **Tables:** striped rows (`tr:nth-child(even)`), hover highlight, `overflow-x: auto` wrapper for responsiveness
+- **Buttons/call-to-action links:** inline-block, background color matching primary or accent palette, `border-radius`, padding
+
+### Navigation
+
+Every page should include a back link. Shelter pages use prev/next navigation linking the full chain in NOBO order. Pattern:
+```html
+<a href="index.html">← Back to Home</a>
+```
+
+---
+
+## Key Pages to Understand
+
+| File | Purpose | Notes |
+|---|---|---|
+| `index.html` | Entry point; lists all guides | Start here |
+| `at-map.html` | Leaflet map, 38 shelters, AT polyline | Uses CDN JS/CSS |
+| `resupply-planner.html` | Interactive planner with JS sliders | Most complex JS |
+| `shelter-blood-mountain.html` | Good shelter page example | Stone cabin type |
+| `shelter-fontana-dam.html` | "Hilton of the AT" — detailed shelter | Capacity 24 |
+| `sumner-parts.html` | Parts reference table | Non-AT content |
+
+---
+
+## Shelter Page Template
+
+Each shelter page follows a consistent structure:
+- Header with shelter name, state badge, mile marker, elevation, capacity, water source
+- Current weather widget (Open-Meteo API, lat/lng embedded per shelter)
+- Resupply/exit options with distances and directions
+- Hostel/hotel recommendations with pros & cons
+- Prev/next navigation linking adjacent shelters in NOBO order
+
+When adding a new shelter page, follow an existing page as a template and update `at-map.html` shelter data array and prev/next links on adjacent pages.
+
+---
+
+## Content Guidelines
+
+### Appalachian Trail Pages
+
+- Verify distances and elevations against authoritative sources (AWOL AT Guide, Guthook/FarOut)
+- Include tap-to-call links for shuttle/hostel phone numbers: `<a href="tel:+1XXXXXXXXXX">(XXX) XXX-XXXX</a>`
+- Use realistic, hiker-relevant warnings (water sources, bail-out points, weather)
+- Mileages are NOBO (northbound) unless noted otherwise
+
+### Sumner Parts Page
+
+- Pricing and supplier links must reflect current catalog data
+- Each part entry should include: part name, part number, price, and supplier
+- Maintain the sales reference format — this is a quick-lookup tool
+
+---
+
+## What NOT to Do
+
+- Do not introduce npm or any build tooling unless explicitly requested
+- Do not use external CSS frameworks (Bootstrap, Tailwind, etc.)
+- Do not add external fonts or icon libraries beyond what's already in use
+- Do not split CSS into separate `.css` files — keep styles embedded per page
+- Do not add a backend or server-side logic — this is a static site
+- Do not add new CDN dependencies without good reason — Leaflet and Open-Meteo are the only current external dependencies
