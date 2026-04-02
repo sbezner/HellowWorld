@@ -100,7 +100,7 @@
   <p class="subtitle">Georgia &bull; North Carolina &bull; Tennessee &bull; Virginia &mdash; Miles 0&ndash;469 &bull; 8 resupply stops</p>
 
   <div class="alert">
-    <strong>Coverage: Springer Mountain (Mile 0) &rarr; Davenport Gap (Mile 227.3)</strong>
+    <strong>Coverage: Springer Mountain (Mile 0) &rarr; Damascus, VA (Mile 469)</strong>
     Adjust your daily mileage and food carry below. Each segment turns red when it exceeds your carry range. The Smokies have <strong>zero resupply</strong> for ~62 miles &mdash; plan accordingly.
   </div>
 
@@ -137,7 +137,7 @@
 
   <!-- Visual timeline -->
   <div class="section">
-    <h2>&#128506;&#65039; Trail Timeline &mdash; Miles 0&ndash;227.3</h2>
+    <h2>&#128506;&#65039; Trail Timeline &mdash; Miles 0&ndash;469</h2>
     <p style="font-size:0.8rem;color:#718096;margin:0 0 1rem;">Colored circles = resupply towns &bull; Color of each segment reflects difficulty relative to your carry range</p>
     <div class="tl-wrap">
       <div class="tl-inner" id="timeline"></div>
@@ -299,7 +299,7 @@
     document.getElementById('val-days').textContent  = carryDays + ' days';
     document.getElementById('max-range').textContent = maxRange + ' miles';
 
-    // Build segments: each pair of consecutive towns + final segment to Davenport
+    // Build segments: each pair of consecutive towns + final segment to Damascus
     var segs = [];
     for (var i = 0; i < TOWNS.length; i++) {
       var from = TOWNS[i];
@@ -386,13 +386,13 @@
     // End marker
     var endDot = document.createElement('div');
     endDot.className = 'tl-end';
-    endDot.style.left = pct(227.3) + '%';
+    endDot.style.left = pct(469) + '%';
     tl.appendChild(endDot);
 
     var endLbl = document.createElement('div');
     endLbl.className = 'tl-end-label';
-    endLbl.style.left = pct(227.3) + '%';
-    endLbl.innerHTML = 'Davenport<br>Gap';
+    endLbl.style.left = pct(469) + '%';
+    endLbl.innerHTML = 'Damascus<br>VA';
     tl.appendChild(endLbl);
   }
 
