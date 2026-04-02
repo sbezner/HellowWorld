@@ -464,7 +464,7 @@ function calcSun(lat, lng, date) {
   const noon = (720 - 4 * lng - eot + new Date().getTimezoneOffset()) / 1440;
   const rise = noon - ha * 4 / 1440;
   const set = noon + ha * 4 / 1440;
-  function fmt(frac) { const m = Math.round(frac * 1440); const h = Math.floor(m / 60); const mn = m % 60; const ap = h >= 12 ? 'PM' : 'AM'; return ((h % 12) || 12) + ':' + (mn < 10 ? '0' : '') + mn + ' ' + ap; }
+  function fmt(frac) { var m = Math.round(frac * 1440); if (m < 0) m += 1440; m = m % 1440; const h = Math.floor(m / 60); const mn = m % 60; const ap = h >= 12 ? 'PM' : 'AM'; return ((h % 12) || 12) + ':' + (mn < 10 ? '0' : '') + mn + ' ' + ap; }
   const daylight = (set - rise) * 24;
   const now = (date.getHours() * 60 + date.getMinutes()) / 1440;
   const remaining = Math.max(0, (set - now) * 24);

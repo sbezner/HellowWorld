@@ -250,7 +250,7 @@ function calcSun(lat, lng, date) {
   const ha = Math.acos(Math.cos(90.833 * rad) / (Math.cos(lat * rad) * Math.cos(sd * rad)) - Math.tan(lat * rad) * Math.tan(sd * rad)) / rad;
   const noon = (720 - 4 * lng - eot + new Date().getTimezoneOffset()) / 1440;
   const rise = noon - ha * 4 / 1440, set = noon + ha * 4 / 1440;
-  function fmt(f) { const m = Math.round(f * 1440), h = Math.floor(m / 60), mn = m % 60, ap = h >= 12 ? 'PM' : 'AM'; return ((h % 12) || 12) + ':' + (mn < 10 ? '0' : '') + mn + ' ' + ap; }
+  function fmt(f) { var m = Math.round(f * 1440); if (m < 0) m += 1440; m = m % 1440; const h = Math.floor(m / 60), mn = m % 60, ap = h >= 12 ? 'PM' : 'AM'; return ((h % 12) || 12) + ':' + (mn < 10 ? '0' : '') + mn + ' ' + ap; }
   const daylight = (set - rise) * 24;
   const now = (date.getHours() * 60 + date.getMinutes()) / 1440;
   const remaining = Math.max(0, (set - now) * 24);
