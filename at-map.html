@@ -127,42 +127,40 @@
       margin-top: 0.35rem;
     }
 
-    #legend {
-      position: absolute;
-      bottom: 52px;
-      left: 10px;
-      z-index: 1000;
-      background: white;
-      border-radius: 8px;
-      padding: 0.45rem 0.65rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-      font-size: 0.76rem;
-      line-height: 1.8;
-      max-width: calc(100vw - 2rem);
+    #info-btn {
+      background: rgba(0,0,0,0.25);
+      border: none;
+      border-radius: 12px;
+      padding: 0.2rem 0.6rem;
+      color: white;
+      font-size: 0.8rem;
       cursor: pointer;
-      user-select: none;
-    }
-    .leg-title {
-      font-weight: bold;
-      color: #2d3748;
-      font-size: 0.78rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
       white-space: nowrap;
+      flex-shrink: 0;
     }
-    .leg-arrow { font-size: 0.65rem; transition: transform 0.25s; }
-    #legend.open .leg-arrow { transform: rotate(180deg); }
-    .leg-items {
+    #info-btn:hover { background: rgba(0,0,0,0.4); }
+
+    #legend-modal {
       display: none;
-      margin-top: 0.25rem;
-      max-height: calc(50dvh - 80px);
-      max-height: calc(50vh - 80px);
-      overflow-y: auto;
+      position: fixed;
+      inset: 0;
+      z-index: 3000;
+      background: rgba(0,0,0,0.45);
+      align-items: center;
+      justify-content: center;
     }
-    #legend.open .leg-items { display: block; }
-    .leg-row { display: flex; align-items: center; gap: 0.4rem; }
+    #legend-modal.open { display: flex; }
+    #legend-modal-box {
+      background: white;
+      border-radius: 12px;
+      padding: 1.1rem 1.3rem;
+      min-width: 200px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      font-size: 0.85rem;
+      line-height: 2;
+    }
+    #legend-modal-box h3 { font-size: 0.9rem; margin-bottom: 0.4rem; color: #2d3748; }
+    .leg-row { display: flex; align-items: center; gap: 0.55rem; }
 
     .back-btn {
       position: absolute;
@@ -241,7 +239,23 @@
     <div class="sub">Appalachian Trail &mdash; Georgia, North Carolina &amp; Great Smoky Mountains &bull; Springer Mountain to Davenport Gap</div>
     <h1>&#9968; Appalachian Trail Map &mdash; 38 Shelters</h1>
   </div>
-  <span class="offline-badge">&#9888; Map tiles require internet &bull; All shelter pages work offline</span>
+  <div style="display:flex;align-items:center;gap:0.5rem;flex-shrink:0;">
+    <button id="info-btn" onclick="document.getElementById('legend-modal').classList.add('open')">ⓘ Legend</button>
+    <span class="offline-badge">&#9888; Map tiles require internet</span>
+  </div>
+</div>
+
+<div id="legend-modal" onclick="document.getElementById('legend-modal').classList.remove('open')">
+  <div id="legend-modal-box" onclick="event.stopPropagation()">
+    <h3>Shelter Types</h3>
+    <div class="leg-row"><div style="background:#8B4513;width:16px;height:16px;border-radius:50%;flex-shrink:0;"></div><span>GA Lean-to</span></div>
+    <div class="leg-row"><div style="background:#5a6e7e;width:16px;height:16px;border-radius:50%;flex-shrink:0;"></div><span>Stone Cabin</span></div>
+    <div class="leg-row"><div style="background:#2b6cb0;width:16px;height:16px;border-radius:50%;flex-shrink:0;"></div><span>NC Lean-to</span></div>
+    <div class="leg-row"><div style="background:#6b21a8;width:16px;height:16px;border-radius:50%;flex-shrink:0;"></div><span>Fontana Hilton</span></div>
+    <div class="leg-row"><div style="background:#065f46;width:16px;height:16px;border-radius:50%;flex-shrink:0;"></div><span>GSMNP Lean-to</span></div>
+    <div class="leg-row" style="margin-top:0.2rem;"><div style="width:24px;height:3px;background:#888;border:1px solid #3a1e00;flex-shrink:0;"></div><span>AT Route</span></div>
+    <button onclick="document.getElementById('legend-modal').classList.remove('open')" style="margin-top:0.8rem;width:100%;padding:0.4rem;background:#2d5a27;color:white;border:none;border-radius:6px;font-size:0.85rem;cursor:pointer;">Close</button>
+  </div>
 </div>
 
 <div id="map-wrap">
@@ -250,18 +264,6 @@
   <button id="locate-btn" onclick="locateMe()" title="Find my location">&#9685; Locate Me</button>
   <div id="toast"></div>
   <div id="map"></div>
-  <div id="legend">
-    <div class="leg-title">Shelter Types <span class="leg-arrow">&#9650;</span></div>
-    <div class="leg-items">
-      <div class="leg-row"><div style="background:#8B4513;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,0.8);flex-shrink:0;"></div><span>GA Lean-to</span></div>
-      <div class="leg-row"><div style="background:#5a6e7e;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,0.8);flex-shrink:0;"></div><span>Stone Cabin</span></div>
-      <div class="leg-row"><div style="background:#2b6cb0;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,0.8);flex-shrink:0;"></div><span>NC Lean-to</span></div>
-      <div class="leg-row"><div style="background:#6b21a8;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,0.8);flex-shrink:0;"></div><span>Fontana Hilton</span></div>
-      <div class="leg-row"><div style="background:#065f46;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,0.8);flex-shrink:0;"></div><span>GSMNP Lean-to</span></div>
-      <div class="leg-row" style="margin-top:0.3rem;"><div style="width:22px;height:3px;background:white;border:1px solid #3a1e00;flex-shrink:0;"></div><span>AT Route</span></div>
-    </div>
-  </div>
-
   <div id="panel">
     <div id="panel-toggle" onclick="togglePanel()">
       <span>&#9968; All Shelters &mdash; Click to expand list &bull; GA (11) + NC (14) + Smokies (13)</span>
@@ -421,10 +423,6 @@ L.marker([35.335, -83.579], {
   })
 }).bindPopup(`<div class="sp"><h3>Nantahala Outdoor Center</h3><div class="pm">Mile ~137 &bull; Restaurant, Outfitter, Rafting, Lodging &bull; Right on the AT</div><a href="noc-nantahala.html">View NOC Guide &rarr;</a></div>`, {maxWidth:220}).addTo(map);
 
-// ── Legend (custom div, not Leaflet control) ──────────────────────────────────
-document.getElementById('legend').addEventListener('click', () => {
-  document.getElementById('legend').classList.toggle('open');
-});
 
 // Road crossings
 const crossings = [
