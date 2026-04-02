@@ -73,6 +73,7 @@
     .badge-near   { background: #bee3f8; color: #2b6cb0; }
     .badge-town   { background: #fefcbf; color: #744210; }
     .badge-crit   { background: #fed7d7; color: #742a2a; }
+    .badge-hostel { background: #fef3c7; color: #92400e; }
     .mail-addr { font-size: 0.78rem; color: #4a5568; margin-top: 0.35rem; padding: 0.5rem 0.75rem; background: #f7fafc; border-radius: 6px; font-style: italic; }
     .contact-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
     .call-btn { display: inline-block; background: #2b6cb0; color: white; text-decoration: none; padding: 0.4rem 0.9rem; border-radius: 6px; font-size: 0.85rem; font-weight: 700; }
@@ -97,10 +98,10 @@
   </div>
 
   <h1>&#127978; AT Resupply Planner</h1>
-  <p class="subtitle">Georgia &bull; North Carolina &bull; Tennessee &bull; Virginia &mdash; Miles 0&ndash;469 &bull; 8 resupply stops</p>
+  <p class="subtitle">Georgia &bull; North Carolina &bull; Tennessee &bull; Virginia &mdash; Miles 0&ndash;469 &bull; 11 resupply stops</p>
 
   <div class="alert">
-    <strong>Coverage: Springer Mountain (Mile 0) &rarr; Davenport Gap (Mile 227.3)</strong>
+    <strong>Coverage: Springer Mountain (Mile 0) &rarr; Damascus, VA (Mile 469)</strong>
     Adjust your daily mileage and food carry below. Each segment turns red when it exceeds your carry range. The Smokies have <strong>zero resupply</strong> for ~62 miles &mdash; plan accordingly.
   </div>
 
@@ -137,7 +138,7 @@
 
   <!-- Visual timeline -->
   <div class="section">
-    <h2>&#128506;&#65039; Trail Timeline &mdash; Miles 0&ndash;227.3</h2>
+    <h2>&#128506;&#65039; Trail Timeline &mdash; Miles 0&ndash;469</h2>
     <p style="font-size:0.8rem;color:#718096;margin:0 0 1rem;">Colored circles = resupply towns &bull; Color of each segment reflects difficulty relative to your carry range</p>
     <div class="tl-wrap">
       <div class="tl-inner" id="timeline"></div>
@@ -299,7 +300,7 @@
     document.getElementById('val-days').textContent  = carryDays + ' days';
     document.getElementById('max-range').textContent = maxRange + ' miles';
 
-    // Build segments: each pair of consecutive towns + final segment to Davenport
+    // Build segments: each pair of consecutive towns + final segment to Damascus
     var segs = [];
     for (var i = 0; i < TOWNS.length; i++) {
       var from = TOWNS[i];
@@ -307,8 +308,9 @@
       var toMile = toTown ? toTown.mile : 469.0;
       var toName = toTown ? toTown.name.replace(/&mdash;.*/, '').trim() : 'Damascus, VA (end of coverage)';
       var trailMiles = toMile - from.mile;
+      if (trailMiles <= 0) continue; // skip empty final segment
       var daysNeeded = trailMiles / dailyMiles;
-      var isSmokies = from.mile >= 164.9;
+      var isSmokies = from.mile >= 164.9 && from.mile < 228.5;
       segs.push({ from: from, toName: toName, toMile: toMile, trailMiles: trailMiles, daysNeeded: daysNeeded, isSmokies: isSmokies });
     }
 
@@ -383,17 +385,7 @@
       tl.appendChild(mileEl);
     });
 
-    // End marker
-    var endDot = document.createElement('div');
-    endDot.className = 'tl-end';
-    endDot.style.left = pct(227.3) + '%';
-    tl.appendChild(endDot);
-
-    var endLbl = document.createElement('div');
-    endLbl.className = 'tl-end-label';
-    endLbl.style.left = pct(227.3) + '%';
-    endLbl.innerHTML = 'Davenport<br>Gap';
-    tl.appendChild(endLbl);
+    // No separate end marker needed — Damascus is already in TOWNS array
   }
 
   // Town cards (static)
