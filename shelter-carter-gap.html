@@ -163,8 +163,8 @@ var LAT=35.07,LNG=-83.596;
     function fmt(f){var m=Math.round(f*1440);if(m<0)m+=1440;m=m%1440;var h=Math.floor(m/60),mn=m%60,ap=h>=12?'PM':'AM';return((h%12)||12)+':'+(mn<10?'0':'')+mn+' '+ap;}
     var daylight=(set-rise)*24;
     var etOff=(function(d){var mar=new Date(d.getFullYear(),2,1),nov=new Date(d.getFullYear(),10,1);mar.setDate(14-mar.getDay());nov.setDate(1+(7-nov.getDay())%7);return(d>=mar&&d<nov)?240:300;})(date);var nowUtc=date.getUTCHours()*60+date.getUTCMinutes();var now=((nowUtc-etOff+1440)%1440)/1440;
-    var remaining=Math.max(0,(set-now)*24);
-    return{rise:fmt(rise),set:fmt(set),daylight:daylight.toFixed(1),remaining:remaining.toFixed(1),twilight:Math.max(0,remaining+.5).toFixed(1)};
+    var remaining=(now>=rise&&now<=set)?Math.max(0,(set-now)*24):0;
+    return{rise:fmt(rise),set:fmt(set),daylight:daylight.toFixed(1),remaining:remaining.toFixed(1),twilight:remaining>0?Math.max(0,remaining+.5).toFixed(1):'0'};
   }
   var container=document.getElementById('sun-data');
   var today=new Date();
@@ -180,8 +180,7 @@ var LAT=35.07,LNG=-83.596;
       +'<div style="color:#744210;">&#127749; '+s.rise+'</div>'
       +'<div style="color:#2b6cb0;">&#127751; '+s.set+'</div>'
       +'<div style="color:#718096;margin-top:0.25rem;">'+s.daylight+'h daylight</div>'
-      +(isToday?'<div style="font-weight:bold;color:'+(parseFloat(s.remaining)<2?'#e53e3e':'#276749')+';margin-top:0.25rem;">'+s.remaining+'h remaining</div>'
-        +'<div style="color:#718096;font-size:0.75rem;">Usable light: ~'+s.twilight+'h</div>':'');
+      +(isToday?(parseFloat(s.remaining)>0?'<div style="font-weight:bold;color:'+(parseFloat(s.remaining)<2?'#e53e3e':'#276749')+';margin-top:0.25rem;">'+s.remaining+'h until sunset</div>'+'<div style="color:#718096;font-size:0.75rem;">Hikeable light: ~'+s.twilight+'h</div>':'<div style="font-weight:bold;color:#718096;margin-top:0.25rem;">Currently dark</div>'):'');
     container.appendChild(el);
   }
 })();

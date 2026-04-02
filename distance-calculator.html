@@ -255,8 +255,8 @@ function calcSun(lat, lng, date) {
   const daylight = (set - rise) * 24;
   const nowUtc = date.getUTCHours() * 60 + date.getUTCMinutes();
   const now = ((nowUtc - etOffset(date) + 1440) % 1440) / 1440;
-  const remaining = Math.max(0, (set - now) * 24);
-  return { rise: fmt(rise), set: fmt(set), daylight: daylight.toFixed(1), remaining: parseFloat(((set - now) * 24).toFixed(1)), setFrac: set };
+  const remaining = (now >= rise && now <= set) ? Math.max(0, (set - now) * 24) : 0;
+  return { rise: fmt(rise), set: fmt(set), daylight: daylight.toFixed(1), remaining: parseFloat(remaining.toFixed(1)), setFrac: set };
 }
 
 function getWaterStatus(waterText) {
