@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Calculate distance and elevation change between any two AT shelters from Springer Mountain to Hot Springs.">
+  <meta name="description" content="Calculate distance and elevation change between any two AT shelters from Springer Mountain to Erwin.">
   <title>AT Distance Calculator — Shelter to Shelter</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -156,7 +156,7 @@
 <div class="container">
   <div class="breadcrumb"><a href="index.html">&larr; Home</a> &bull; <a href="at-map.html">Map</a></div>
   <h1>&#128207; AT Distance Calculator</h1>
-  <p class="subtitle">Calculate mileage and elevation between any two shelters &mdash; Springer Mountain to Hot Springs</p>
+  <p class="subtitle">Calculate mileage and elevation between any two shelters &mdash; Springer Mountain to Erwin</p>
 
   <div class="card">
     <h2>Select Shelters</h2>
@@ -235,6 +235,15 @@ const shelters = [
   { name:'Roaring Fork Shelter',      state:'NC',    lat:35.805,  lng:-82.950,  mile:257.3, elev:3590, url:'shelter-roaring-fork.html',       water:'Water 800 ft north and south on AT' },
   { name:'Walnut Mountain Shelter',   state:'NC',    lat:35.837,  lng:-82.936,  mile:262.1, elev:4260, url:'shelter-walnut-mountain.html',    water:'Spring down blue-blazed trail (unreliable in dry periods)' },
   { name:'Deer Park Mountain Shelter',state:'NC',    lat:35.876,  lng:-82.861,  mile:272.0, elev:2330, url:'shelter-deer-park-mountain.html', water:'Walled-in spring (slow flow, unreliable in dry seasons)' },
+  // Hot Springs to Erwin, TN
+  { name:'Spring Mountain Shelter',   state:'NC',    lat:35.952,  lng:-82.790,  mile:286.2, elev:3300, url:'shelter-spring-mountain.html',    water:'Spring 75 yards down hillside (can be unreliable in dry conditions)' },
+  { name:'Little Laurel Shelter',     state:'NC',    lat:36.015,  lng:-82.736,  mile:294.8, elev:3620, url:'shelter-little-laurel.html',      water:'Piped spring 100 yards via blue-blazed trail' },
+  { name:'Jerry Cabin Shelter',       state:'NC',    lat:36.057,  lng:-82.657,  mile:302.1, elev:4150, url:'shelter-jerry-cabin.html',        water:'Spring 100 yards on side trail (two pipes; upper pipe more reliable)' },
+  { name:'Flint Mountain Shelter',    state:'NC',    lat:36.035,  lng:-82.597,  mile:308.8, elev:3570, url:'shelter-flint-mountain.html',     water:'Spring near shelter' },
+  { name:'Hogback Ridge Shelter',     state:'NC',    lat:35.964,  lng:-82.587,  mile:317.6, elev:4255, url:'shelter-hogback-ridge.html',      water:'Stream 0.2 mi west via blue-blazed trail' },
+  { name:'Bald Mountain Shelter',     state:'NC',    lat:36.000,  lng:-82.478,  mile:327.7, elev:5100, url:'shelter-bald-mountain.html',      water:'Spring 200 ft on blue-blazed trail (reliable)' },
+  { name:'No Business Knob Shelter',  state:'NC',    lat:36.067,  lng:-82.434,  mile:338.3, elev:3180, url:'shelter-no-business-knob.html',   water:'Spring 200-400 yards south on AT' },
+  { name:'Curley Maple Gap Shelter',  state:'NC',    lat:36.104,  lng:-82.397,  mile:348.8, elev:3070, url:'shelter-curley-maple-gap.html',   water:'Spring 100 ft south on AT' },
 ];
 
 // ── Sunrise/Sunset calculator (NOAA algorithm) ─────────────────────────────

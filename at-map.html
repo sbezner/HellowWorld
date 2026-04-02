@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Interactive Appalachian Trail map covering all 42 shelters from Springer Mountain to Hot Springs — Georgia, North Carolina, Great Smoky Mountains, and beyond.">
+  <meta name="description" content="Interactive Appalachian Trail map covering all 50 shelters from Springer Mountain to Erwin — Georgia, North Carolina, Great Smoky Mountains, and beyond.">
   <title>Appalachian Trail Map — Georgia, North Carolina &amp; Great Smoky Mountains</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <style>
@@ -269,8 +269,8 @@
 
 <div id="header">
   <div>
-    <div class="sub">Appalachian Trail &mdash; Georgia, North Carolina &amp; Great Smoky Mountains &bull; Springer Mountain to Hot Springs</div>
-    <h1>&#9968; Appalachian Trail Map &mdash; 42 Shelters</h1>
+    <div class="sub">Appalachian Trail &mdash; Georgia to Tennessee &bull; Springer Mountain to Erwin</div>
+    <h1>&#9968; Appalachian Trail Map &mdash; 50 Shelters</h1>
   </div>
   <div style="display:flex;align-items:center;gap:0.5rem;flex-shrink:0;">
     <button id="info-btn" onclick="document.getElementById('legend-modal').classList.add('open')">ⓘ Legend</button>
@@ -363,6 +363,15 @@ const shelters = [
   { name:'Roaring Fork Shelter',      state:'NC',    type:'lean-to', lat:35.805,  lng:-82.950,  mile:257.3,elev:3590, cap:5,  url:'shelter-roaring-fork.html',       water:'Water 800 ft north and south on AT' },
   { name:'Walnut Mountain Shelter',   state:'NC',    type:'lean-to', lat:35.837,  lng:-82.936,  mile:262.1,elev:4260, cap:5,  url:'shelter-walnut-mountain.html',    water:'Spring down blue-blazed trail (unreliable in dry periods)' },
   { name:'Deer Park Mountain Shelter',state:'NC',    type:'lean-to', lat:35.876,  lng:-82.861,  mile:272.0,elev:2330, cap:6,  url:'shelter-deer-park-mountain.html', water:'Walled-in spring (slow flow, unreliable in dry seasons)' },
+  // Hot Springs to Erwin, TN
+  { name:'Spring Mountain Shelter',   state:'NC',    type:'lean-to', lat:35.952,  lng:-82.790,  mile:286.2,elev:3300, cap:6,  url:'shelter-spring-mountain.html',    water:'Spring 75 yards down hillside (can be unreliable in dry conditions)' },
+  { name:'Little Laurel Shelter',     state:'NC',    type:'lean-to', lat:36.015,  lng:-82.736,  mile:294.8,elev:3620, cap:5,  url:'shelter-little-laurel.html',      water:'Piped spring 100 yards via blue-blazed trail' },
+  { name:'Jerry Cabin Shelter',       state:'NC',    type:'stone-cabin', lat:36.057,  lng:-82.657,  mile:302.1,elev:4150, cap:6,  url:'shelter-jerry-cabin.html',       water:'Spring 100 yards on side trail (two pipes; upper pipe more reliable)' },
+  { name:'Flint Mountain Shelter',    state:'NC',    type:'lean-to', lat:36.035,  lng:-82.597,  mile:308.8,elev:3570, cap:6,  url:'shelter-flint-mountain.html',     water:'Spring near shelter' },
+  { name:'Hogback Ridge Shelter',     state:'NC',    type:'lean-to', lat:35.964,  lng:-82.587,  mile:317.6,elev:4255, cap:6,  url:'shelter-hogback-ridge.html',      water:'Stream 0.2 mi west via blue-blazed trail' },
+  { name:'Bald Mountain Shelter',     state:'NC',    type:'lean-to', lat:36.000,  lng:-82.478,  mile:327.7,elev:5100, cap:10, url:'shelter-bald-mountain.html',      water:'Spring 200 ft on blue-blazed trail (reliable)' },
+  { name:'No Business Knob Shelter',  state:'NC',    type:'lean-to', lat:36.067,  lng:-82.434,  mile:338.3,elev:3180, cap:8,  url:'shelter-no-business-knob.html',   water:'Spring 200-400 yards south on AT' },
+  { name:'Curley Maple Gap Shelter',  state:'NC',    type:'lean-to', lat:36.104,  lng:-82.397,  mile:348.8,elev:3070, cap:14, url:'shelter-curley-maple-gap.html',   water:'Spring 100 ft south on AT' },
 ];
 
 // ── AT trail polyline ─────────────────────────────────────────────────────────
@@ -397,6 +406,12 @@ const trail = [
   [35.795,-82.963],[35.805,-82.950],[35.822,-82.936],
   [35.837,-82.936],[35.853,-82.875],[35.876,-82.861],
   [35.897,-82.826],
+  // Hot Springs to Erwin, TN
+  [35.929,-82.803],[35.952,-82.790],[35.975,-82.760],
+  [36.015,-82.736],[36.035,-82.700],[36.057,-82.657],
+  [36.035,-82.597],[35.980,-82.580],[35.964,-82.587],
+  [35.980,-82.530],[36.000,-82.478],[36.032,-82.420],
+  [36.067,-82.434],[36.101,-82.444],[36.104,-82.397],
 ];
 
 // ── Map ───────────────────────────────────────────────────────────────────────
@@ -507,7 +522,7 @@ shelters.forEach(s => {
   if (s.type === 'stone-cabin') extra += `<div style="background:#f7fafc;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#5a6e7e;margin-bottom:0.5rem;">&#127963; Historic CCC Stone Cabin</div>`;
   if (highestPerState[s.state] === s) { const label = s.state === 'GSMNP' ? 'Smokies' : s.state; extra += `<div style="background:#fffbeb;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#92400e;margin-bottom:0.5rem;">&#9968; Highest shelter in ${label} (${s.elev.toLocaleString()} ft)</div>`; }
   if (s.cap >= 20) extra += `<div style="background:#ebf8ff;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#2b6cb0;margin-bottom:0.5rem;">&#127969; Extra large capacity &mdash; sleeps ${s.cap}</div>`;
-  if (s.mile === 272.0) extra += `<div style="background:#fef3c7;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#92400e;margin-bottom:0.5rem;">&#127937; Northern end of coverage</div>`;
+  if (s.mile === 348.8) extra += `<div style="background:#fef3c7;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#92400e;margin-bottom:0.5rem;">&#127937; Northern end of coverage</div>`;
   const stateClass = s.state === 'GSMNP' ? 'state-gsmnp' : `state-${s.state.toLowerCase()}`;
   const stateLabel = s.state === 'GSMNP' ? 'Smokies' : s.state;
   m.bindPopup(`
@@ -551,6 +566,15 @@ L.marker([35.897, -82.826], {
   })
 }).bindPopup(`<div class="sp"><h3>Hot Springs, NC</h3><div class="pm">Mile ~273.9 &bull; Trail Town &bull; AT walks through downtown</div><div style="font-size:0.82rem;color:#4a5568;margin-bottom:0.5rem;">Full-service trail town on the French Broad River. Grocery, restaurants, outfitter, post office, mineral hot springs spa. Elmer's Sunnybank Inn &amp; Laughing Heart Lodge.</div></div>`, {maxWidth:220}).addTo(map);
 
+// Uncle Johnny's / Erwin marker
+L.marker([36.101, -82.444], {
+  icon: L.divIcon({
+    className:'',
+    html:`<div style="background:#6b21a8;color:white;border-radius:6px;padding:3px 7px;font-size:10px;font-weight:bold;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,0.4);">Erwin</div>`,
+    iconSize:null, iconAnchor:[18,-20]
+  })
+}).bindPopup(`<div class="sp"><h3>Erwin, TN</h3><div class="pm">Mile ~344.6 &bull; Trail Town &bull; Nolichucky River</div><div style="font-size:0.82rem;color:#4a5568;margin-bottom:0.5rem;">Full-service trail town. Uncle Johnny's Nolichucky Hostel &amp; Outfitter. Grocery, restaurants, laundry. Note: Chestoa Bridge destroyed by Hurricane Helene (2024) — 3.6 mi road detour in effect.</div></div>`, {maxWidth:220}).addTo(map);
+
 
 // Road crossings
 const crossings = [
@@ -570,6 +594,11 @@ const crossings = [
   { name:'Max Patch Road\n(SR 1182)', lat:35.795, lng:-82.963 },
   { name:'Lemon Gap\n(NC/TN)',        lat:35.822, lng:-82.936 },
   { name:'Hot Springs\n(US 25/70)',   lat:35.897, lng:-82.826 },
+  { name:'Allen Gap\n(NC 208)',       lat:35.929, lng:-82.803 },
+  { name:'Devil Fork Gap\n(NC 212)', lat:36.035, lng:-82.700 },
+  { name:"Sam's Gap\n(I-26)",        lat:35.980, lng:-82.530 },
+  { name:'Spivey Gap\n(US 19W)',     lat:36.032, lng:-82.420 },
+  { name:'Nolichucky River\n(Erwin)',lat:36.101, lng:-82.444 },
 ];
 crossings.forEach(c => {
   L.marker([c.lat, c.lng], {
@@ -717,7 +746,7 @@ function locateMe() {
       hdr.innerHTML = s.state === 'GA'
         ? '⛰ Georgia — 11 Shelters (Springer Mountain → Plumorchard Gap)'
         : s.state === 'NC'
-          ? '⛰ North Carolina — 18 Shelters (Muskrat Creek → Deer Park Mountain)'
+          ? '⛰ North Carolina / Tennessee — 26 Shelters (Muskrat Creek → Curley Maple Gap)'
           : '⛰ Great Smoky Mountains — 13 Shelters (Birch Spring Gap → Davenport Gap)';
       inner.appendChild(hdr);
       listDiv = document.createElement('div');

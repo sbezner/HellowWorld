@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Deer Park Mountain Shelter — AT Mile ~272.0, 2,330 ft, sleeps 6. NC lean-to just 3.2 miles south of Hot Springs with unreliable walled-in spring.">
-<title>Deer Park Mountain Shelter – Appalachian Trail NC</title>
+<meta name="description" content="Curley Maple Gap Shelter — AT Mile 348.8, 3,070 ft, sleeps 14. Concrete block shelter in Unicoi County, TN with spring water. Maintained by TEHCC.">
+<title>Curley Maple Gap Shelter – Appalachian Trail TN</title>
 <style>
 * { box-sizing: border-box; }
 body { margin:0; padding:1.5rem; background:#f0f4f8; font-family:sans-serif; color:#2d3748; }
@@ -29,12 +29,15 @@ h1 { font-size:1.7rem; margin-bottom:0.2rem; }
 .route-card { flex:1 1 220px; border-radius:8px; padding:1rem; border:2px solid transparent; }
 .route-card.recommended { background:#f0fff4; border-color:#38a169; }
 .route-card.alternate { background:#ebf8ff; border-color:#90cdf4; }
+.route-card.far { background:#f7fafc; border-color:#cbd5e0; }
 .route-card h3 { margin:0 0 0.3rem; font-size:1rem; }
 .route-card.recommended h3 { color:#276749; }
 .route-card.alternate h3 { color:#2b6cb0; }
+.route-card.far h3 { color:#4a5568; }
 .route-badge { display:inline-block; font-size:0.72rem; font-weight:bold; padding:0.15rem 0.5rem; border-radius:10px; margin-bottom:0.5rem; }
 .badge-rec { background:#c6f6d5; color:#276749; }
 .badge-alt { background:#bee3f8; color:#2b6cb0; }
+.badge-far { background:#e2e8f0; color:#4a5568; }
 .route-card p { margin:0; font-size:0.88rem; line-height:1.6; }
 .lodging-card { border:1px solid #e2e8f0; border-radius:8px; padding:1rem; margin-bottom:0.75rem; }
 .lodging-card:last-child { margin-bottom:0; }
@@ -49,6 +52,11 @@ h1 { font-size:1.7rem; margin-bottom:0.2rem; }
 .pros strong { color:#276749; display:block; margin-bottom:0.2rem; }
 .cons strong { color:#c53030; display:block; margin-bottom:0.2rem; }
 .pros ul, .cons ul { margin:0; padding-left:1.2rem; }
+.contact-row { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.75rem; }
+.call-btn { display:inline-block; background:#2b6cb0; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; font-weight:bold; }
+.call-btn:hover { background:#2c5282; }
+.text-btn { display:inline-block; background:#38a169; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; font-weight:bold; }
+.text-btn:hover { background:#276749; }
 .nav-strip { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-top:1.5rem; }
 .nav-btn { display:inline-block; padding:0.5rem 1rem; border-radius:6px; font-size:0.88rem; text-decoration:none; background:white; color:#2b6cb0; border:1px solid #bee3f8; }
 .nav-btn:hover { background:#ebf8ff; }
@@ -61,18 +69,14 @@ a.back:hover { text-decoration:underline; }
 <div class="breadcrumb">
   <a href="index.html">Home</a> &rsaquo;
   <a href="at-map.html">AT Map</a> &rsaquo;
-  Deer Park Mountain Shelter
+  Curley Maple Gap Shelter
 </div>
 
-<h1>Deer Park Mountain Shelter</h1>
-<p class="subtitle">North Carolina &nbsp;&middot;&nbsp; AT Mile ~272.0 &nbsp;&middot;&nbsp; Lean-to &nbsp;&middot;&nbsp; Elev. ~2,330 ft</p>
-
-<div class="alert">
-  <strong>Hot Springs Is Close!</strong> You are just 3.2 trail miles from Hot Springs, NC — one of the AT's most beloved trail towns. Many NOBO hikers skip this shelter entirely and push into town for a hot meal, mineral soak, and real bed. But if you arrive late in the day, Deer Park Mountain makes a fine last night before town.
-</div>
+<h1>Curley Maple Gap Shelter</h1>
+<p class="subtitle">Tennessee &nbsp;&middot;&nbsp; AT Mile ~348.8 &nbsp;&middot;&nbsp; Concrete Block Shelter &nbsp;&middot;&nbsp; Elev. ~3,070 ft</p>
 
 <div class="warning">
-  <strong>Unreliable Water:</strong> The walled-in spring has slow flow and can dry up in dry seasons. The spring is located south on the AT, halfway to the shelter on a side trail. Carry water from a reliable source or plan to reach Hot Springs where town water is available.
+  <strong>Hurricane Helene Detour (2024):</strong> Hurricane Helene destroyed Chestoa Bridge over the Nolichucky River. As of 2026, a 3.6-mile road walk detour is in effect for hikers crossing the Nolichucky south of Erwin. Check ATC and TEHCC trail updates for the latest status before heading into this section.
 </div>
 
 
@@ -100,7 +104,7 @@ a.back:hover { text-decoration:underline; }
   </div>
 </div>
 <script>
-var LAT=35.876,LNG=-82.861;
+var LAT=36.104,LNG=-82.397;
 (function(){
   var url='https://api.open-meteo.com/v1/forecast?latitude='+LAT+'&longitude='+LNG
     +'&current=temperature_2m,apparent_temperature,precipitation,weathercode,windspeed_10m,winddirection_10m'
@@ -201,36 +205,36 @@ var LAT=35.876,LNG=-82.861;
 <div class="section">
   <h2>Shelter Overview</h2>
   <div class="stat-grid">
-    <div class="stat">AT Mile <span>~272.0</span></div>
-    <div class="stat">Elevation <span>~2,330 ft</span></div>
-    <div class="stat">Capacity <span>6</span></div>
-    <div class="stat">Type <span>Lean-to</span></div>
-    <div class="stat">County <span>Madison, NC</span></div>
-    <div class="stat">Water <span>Walled-in spring (slow flow, unreliable in dry seasons)</span></div>
-    <div class="stat">Privy <span>Yes</span></div>
+    <div class="stat">AT Mile <span>348.8</span></div>
+    <div class="stat">Elevation <span>3,070 ft</span></div>
+    <div class="stat">Capacity <span>14</span></div>
+    <div class="stat">Type <span>Concrete block shelter (built 1961, remodeled 2010)</span></div>
+    <div class="stat">County <span>Unicoi, TN</span></div>
+    <div class="stat">Water <span>Spring 100 ft south on AT</span></div>
+    <div class="stat">Privy <span>No</span></div>
     <div class="stat">Fee <span class="badge badge-free">Free</span></div>
   </div>
 
-  <p>Deer Park Mountain Shelter is the last shelter before Hot Springs, NC — sitting just 3.2 trail miles south of town at 2,330 feet. The lean-to sleeps 6 and is located 0.2 miles east of the AT via a short side trail. Tent sites are available north of the shelter for overflow camping. The shelter is maintained by the Carolina Mountain Club.</p>
+  <p>Curley Maple Gap Shelter sits at 3,070 feet in Unicoi County, Tennessee, along a wooded gap in Cherokee National Forest. Originally built by the USFS in 1961 as a basic concrete block structure, the shelter was heavily remodeled in 2010 with funding from an LL Bean grant. The renovation modernized the shelter while preserving its sturdy concrete block construction, and added a covered eating area — a welcome feature in rainy weather that most AT shelters lack.</p>
 
-  <p>The water situation here demands attention. A walled-in spring is located south on the AT, roughly halfway to the shelter's side trail turnoff, but the flow is slow and can dry up entirely during dry seasons. If you're staying overnight, consider carrying water from a reliable source earlier on the trail, or push the final 3.2 miles into Hot Springs where town water is readily available.</p>
+  <p>The shelter sleeps 14 on wooden platforms, making it one of the larger shelters in this section. The water source is a spring located approximately 100 feet south on the AT — reliable in most conditions. There is no privy at this shelter and no bear cables, so you will need to hang your food bag properly using the surrounding trees. The Tennessee Eastman Hiking and Canoeing Club (TEHCC) maintains this shelter and the surrounding trail section.</p>
 
-  <p>The descent from Deer Park Mountain into Hot Springs drops about 1,000 feet over 3.2 miles — a pleasant downhill walk through mixed hardwoods to the French Broad River. Most NOBO thru-hikers pass through this shelter without stopping, eager to reach town. But if you arrive at the shelter turnoff late in the day, spending the night here and walking into Hot Springs fresh in the morning has its appeal — you'll arrive in town with maximum energy to enjoy it.</p>
+  <p>One of the distinctive features of Curley Maple Gap is that you can hear freight trains from the shelter, echoing up from the Nolichucky River gorge below. The sound carries remarkably well at night — some hikers find it comforting, others less so. The shelter area has decent tent sites in the gap, and the surrounding hardwood forest provides good tree cover for hammock campers.</p>
 
   <div class="tip">
-    <strong>Hot Springs Preview:</strong> Hot Springs (pop. ~600) is one of only a handful of towns where the AT passes directly through the center of town. The French Broad River, mineral hot springs spa, restaurants, and multiple hiker hostels await just 3.2 miles ahead. The next shelter north (Spring Mountain) is 14.2 miles past Hot Springs — plan accordingly.
+    <strong>TEHCC Maintained:</strong> This section of the AT is maintained by the Tennessee Eastman Hiking and Canoeing Club, one of the most active trail maintaining clubs in the southern Appalachians. The 2010 remodel with LL Bean grant funding brought this shelter up to modern standards. Please pack out all trash and practice Leave No Trace to help keep this shelter in good condition.
   </div>
 </div>
 
 <div class="section">
   <h2>Getting Supplies</h2>
-  <p style="font-size:0.88rem; color:#4a5568; margin-bottom:1rem;">Hot Springs is right around the corner — 3.2 miles north. There is no reason to resupply from anywhere else.</p>
+  <p style="font-size:0.88rem; color:#4a5568; margin-bottom:1rem;">Erwin, Tennessee is the nearest trail town and the primary resupply point for this section. Access is via the Nolichucky River crossing south of the shelter, though the Hurricane Helene bridge destruction requires a road walk detour as of 2026.</p>
 
   <div class="route-grid">
     <div class="route-card recommended">
-      <span class="route-badge badge-rec">RECOMMENDED</span>
-      <h3>Hot Springs, NC — 3.2 trail miles north</h3>
-      <p><strong>Just 3.2 miles north, mostly downhill to the French Broad River.</strong> Hot Springs is a full-service trail town. Dollar General for groceries, multiple restaurants (Smoky Mountain Diner is a hiker favorite), outfitter, post office, laundry, and the Hot Springs Resort &amp; Spa with mineral soaking tubs ($20+). The AT enters town across the French Broad River bridge and walks right through downtown on Bridge Street. Mail drop: Hot Springs Post Office, 173 Bridge St, Hot Springs, NC 28743.</p>
+      <span class="route-badge badge-rec">NEAREST TOWN</span>
+      <h3>Erwin, TN — ~5 mi south via Nolichucky River</h3>
+      <p><strong>~5 trail miles south via the Nolichucky River crossing (road detour in effect).</strong> Erwin is a full-service trail town with a Food Lion grocery store, multiple restaurants, a Dollar General, post office for mail drops, and several outfitters. Uncle Johnny's Nolichucky Hostel &amp; Outfitter is located near the river crossing and offers shuttles into town, resupply, gear, laundry, and bunk beds. Due to the Chestoa Bridge destruction from Hurricane Helene (2024), hikers must follow a 3.6-mile road walk detour to cross the Nolichucky. Full services available in Erwin including pharmacies, hardware store, and medical clinic.</p>
     </div>
   </div>
 </div>
@@ -240,26 +244,27 @@ var LAT=35.876,LNG=-82.861;
 
   <div class="lodging-card">
     <div class="lodging-header">
-      <span class="lodging-name">Deer Park Mountain Shelter (AT Lean-to)</span>
+      <span class="lodging-name">Curley Maple Gap Shelter (AT Shelter)</span>
       <span class="badge badge-free">Free</span>
     </div>
-    <div class="lodging-meta">0.2 mi east of AT · AT Mile ~272.0 · Capacity 6 + tent sites</div>
-    <div class="lodging-desc">Standard lean-to with wooden sleeping platform. Bear box and privy on site. Water from walled-in spring is unreliable — carry water or push to Hot Springs. Tent sites north of shelter. Last shelter before Hot Springs — many hikers skip it to reach town.</div>
+    <div class="lodging-meta">On AT · Mile 348.8 · Capacity 14</div>
+    <div class="lodging-desc">Concrete block shelter remodeled in 2010 with LL Bean grant funding, sleeping 14 on wooden platforms. Covered eating area adjacent to the shelter. Spring water 100 ft south on the AT. No privy and no bear cables — hang your food properly. Decent tent sites in the gap and good trees for hammock camping. You may hear trains from the Nolichucky gorge below.</div>
     <div class="pros-cons">
       <div class="pros"><strong>Pros</strong>
         <ul>
           <li>No cost</li>
-          <li>Only 3.2 mi from Hot Springs</li>
-          <li>Bear box available</li>
-          <li>Privy on site</li>
+          <li>Large capacity (14)</li>
+          <li>Covered eating area</li>
+          <li>Reliable spring water nearby</li>
+          <li>Remodeled in 2010 — solid condition</li>
         </ul>
       </div>
       <div class="cons"><strong>Cons</strong>
         <ul>
-          <li>Water unreliable</li>
-          <li>Small capacity (6)</li>
-          <li>Most hikers skip for town</li>
-          <li>0.2 mi off trail</li>
+          <li>No privy</li>
+          <li>No bear cables — must hang food</li>
+          <li>Train noise at night</li>
+          <li>Limited cell service</li>
         </ul>
       </div>
     </div>
@@ -267,59 +272,38 @@ var LAT=35.876,LNG=-82.861;
 
   <div class="lodging-card">
     <div class="lodging-header">
-      <span class="lodging-name">Elmer's Sunnybank Inn — Hot Springs, NC</span>
-      <span class="badge badge-paid">~$25–40 bunk / $70–100 private</span>
+      <span class="lodging-name">Uncle Johnny's Nolichucky Hostel &amp; Outfitter</span>
+      <span class="badge badge-paid">$25–75/night</span>
     </div>
-    <div class="lodging-meta">3.2 trail miles north · Year-round (call ahead)</div>
-    <div class="lodging-desc">Legendary Victorian farmhouse hostel welcoming AT hikers for decades. Bunk beds, private rooms, family-style vegetarian dinners, and genuine community atmosphere. Right in the heart of Hot Springs. Reserve ahead during peak season (March–May). 26 Serpentine Ave, Hot Springs, NC 28743.</div>
+    <div class="lodging-meta">~5 trail miles south · Near Nolichucky River crossing · Year-round</div>
+    <div class="lodging-desc">A legendary hiker hostel and outfitter located near the Nolichucky River crossing south of Erwin. Offers bunk beds, private rooms, tent sites, hot showers, laundry, resupply items, gear, and shuttles into Erwin for groceries and restaurants. Known as a major social hub for NOBO thru-hikers passing through this section.</div>
     <div class="pros-cons">
       <div class="pros"><strong>Pros</strong>
         <ul>
-          <li>Iconic AT destination</li>
-          <li>Affordable bunk rates</li>
-          <li>Community dinners</li>
-          <li>Hot springs spa nearby</li>
+          <li>Full-service hostel with showers and laundry</li>
+          <li>Outfitter on site for gear and resupply</li>
+          <li>Shuttles to Erwin available</li>
+          <li>Great hiker community atmosphere</li>
         </ul>
       </div>
       <div class="cons"><strong>Cons</strong>
         <ul>
-          <li>Fills quickly in season</li>
-          <li>Must call ahead</li>
+          <li>~5 trail miles south of shelter</li>
+          <li>Road detour required due to bridge destruction</li>
+          <li>Can be crowded during peak thru-hiker bubble</li>
         </ul>
       </div>
     </div>
-  </div>
-
-  <div class="lodging-card">
-    <div class="lodging-header">
-      <span class="lodging-name">Laughing Heart Lodge — Hot Springs, NC</span>
-      <span class="badge badge-paid">~$30 bunk / $80–120 private</span>
-    </div>
-    <div class="lodging-meta">3.2 trail miles north · Year-round</div>
-    <div class="lodging-desc">Hostel and lodge right on the AT as it passes through Hot Springs. Bunk rooms, private cabins, communal kitchen, hot showers, laundry, and gear storage. Walking distance to all town amenities. A comfortable base for a zero day — the mineral hot springs spa is a short walk away.</div>
-    <div class="pros-cons">
-      <div class="pros"><strong>Pros</strong>
-        <ul>
-          <li>Right on the AT in town</li>
-          <li>Multiple room options</li>
-          <li>Full amenities on site</li>
-          <li>Great base for zero day</li>
-        </ul>
-      </div>
-      <div class="cons"><strong>Cons</strong>
-        <ul>
-          <li>Private rooms fill quickly</li>
-          <li>Higher rates for cabins</li>
-        </ul>
-      </div>
+    <div class="contact-row">
+      <a href="tel:+14237350548" class="call-btn">Call (423) 735-0548</a>
     </div>
   </div>
 </div>
 
 <div class="nav-strip">
-  <a href="shelter-walnut-mountain.html" class="nav-btn">&larr; Walnut Mountain</a>
+  <a href="shelter-no-business-knob.html" class="nav-btn">&larr; No Business Knob</a>
   <a href="at-map.html" class="nav-btn">&#9968; Back to Map</a>
-  <a href="shelter-spring-mountain.html" class="nav-btn">Spring Mountain &rarr;</a>
+  <span class="nav-btn" style="opacity:0.4;cursor:default;">Northern Terminus &rarr;</span>
 </div>
 
 <a href="index.html" class="back">&larr; Back to Home</a>

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="AT resupply planner for Georgia, North Carolina, and the Smokies. Adjust daily mileage and food carry to find your resupply stops from Springer Mountain to Davenport Gap.">
-  <title>AT Resupply Planner &mdash; Georgia, NC &amp; Smokies</title>
+  <meta name="description" content="AT resupply planner from Springer Mountain to Erwin. Adjust daily mileage and food carry to find your resupply stops across Georgia, North Carolina, Smokies, and Tennessee.">
+  <title>AT Resupply Planner &mdash; Springer Mountain to Erwin</title>
   <style>
     * { box-sizing: border-box; }
     body { margin: 0; padding: 1.5rem; background: #f0f4f8; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #2d3748; }
@@ -159,7 +159,7 @@
 <script>
 (function () {
 
-  var TOTAL = 227.3;
+  var TOTAL = 348.8;
 
   var TOWNS = [
     {
@@ -211,6 +211,36 @@
       mailDrop: true, mailAddr: 'Fontana Village Resort, 300 Woods Road, Fontana Dam NC 28733 &mdash; HOLD FOR AT HIKER: [Your Name]',
       desc: 'Resort village 2 miles from Fontana Dam shelter &mdash; walk the road or hitch. The camp store has limited but adequate selection. CRITICAL: this is your last resupply before 68 miles of Smokies wilderness with zero resupply options. Stock a full 6&ndash;7 days of food. Do not underestimate this gap &mdash; it is the longest no-resupply stretch south of the White Mountains.',
       phone: '800-849-2258', web: 'https://fontanavillage.com', webLabel: 'fontanavillage.com'
+    },
+    {
+      name: 'Standing Bear Farm',
+      mile: 228.5, offTrail: 0.2,
+      badge: 'badge-trail', badgeText: '0.2 mi off trail',
+      color: '#92400e',
+      services: ['limited resupply', 'bunks', 'camping', 'showers', 'laundry', 'small store'],
+      mailDrop: true, mailAddr: 'Standing Bear Farm, 4255 Green Corner Rd, Hartford TN 37753 &mdash; HOLD FOR AT HIKER: [Your Name]',
+      desc: 'Rustic hostel and limited resupply at I-40/Pigeon River, 0.2 mi off the AT. First stop after exiting the Smokies. Ramen, snacks, freeze-dried meals, and basic supplies. Bunks, tent camping, hot showers, laundry. Open year-round 8am&ndash;8pm. Text Maria for info.',
+      phone: '423-608-0149', web: null, webLabel: null
+    },
+    {
+      name: 'Hot Springs, NC',
+      mile: 273.9, offTrail: 0,
+      badge: 'badge-trail', badgeText: 'On-Trail',
+      color: '#3182ce',
+      services: ['Dollar General', 'convenience stores', 'restaurants', 'hostels', 'post office', 'outfitter', 'laundry', 'hot springs spa'],
+      mailDrop: true, mailAddr: 'USPS General Delivery, 173 Bridge St, Hot Springs NC 28743 &mdash; or Elmer\'s Sunnybank Inn, 26 Serpentine Ave, Hot Springs NC 28743',
+      desc: 'One of the AT\'s most beloved trail towns &mdash; the trail literally walks through downtown on Bridge Street. Dollar General for groceries, multiple restaurants, Elmer\'s Sunnybank Inn (legendary hiker hostel), Laughing Heart Lodge, and the Hot Springs Resort &amp; Spa with mineral soaking tubs. Full services. Plan a zero day.',
+      phone: null, web: null, webLabel: null
+    },
+    {
+      name: 'Erwin, TN',
+      mile: 344.6, offTrail: 2,
+      badge: 'badge-town', badgeText: '~2 mi from trail',
+      color: '#d97706',
+      services: ['grocery', 'restaurants', 'hotels', 'Uncle Johnny\'s Hostel', 'outfitter', 'laundry', 'post office'],
+      mailDrop: true, mailAddr: 'USPS General Delivery, Erwin TN 37650 &mdash; or Uncle Johnny\'s Hostel, 151 River Rd, Erwin TN 37650',
+      desc: 'Full-service trail town accessed via the Nolichucky River crossing. Uncle Johnny\'s Nolichucky Hostel &amp; Outfitter offers bunks, cabins, camping, showers, laundry, and a complimentary shuttle to town. NOTE: Chestoa Bridge was destroyed by Hurricane Helene (2024) &mdash; a 3.6-mile road detour is in effect as of 2026.',
+      phone: null, web: 'https://www.atunclejohnnys.com/', webLabel: 'atunclejohnnys.com'
     }
   ];
 
@@ -244,8 +274,8 @@
     for (var i = 0; i < TOWNS.length; i++) {
       var from = TOWNS[i];
       var toTown = (i < TOWNS.length - 1) ? TOWNS[i + 1] : null;
-      var toMile = toTown ? toTown.mile : 232.5;
-      var toName = toTown ? toTown.name.replace(/&mdash;.*/, '').trim() : 'Davenport Gap (end of coverage)';
+      var toMile = toTown ? toTown.mile : 348.8;
+      var toName = toTown ? toTown.name.replace(/&mdash;.*/, '').trim() : 'Curley Maple Gap (end of coverage)';
       var trailMiles = toMile - from.mile;
       var daysNeeded = trailMiles / dailyMiles;
       var isSmokies = from.mile >= 164.9;
