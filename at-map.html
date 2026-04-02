@@ -132,6 +132,8 @@
       box-shadow: 0 2px 8px rgba(0,0,0,0.25);
       font-size: 0.76rem;
       line-height: 1.8;
+      max-width: calc(100vw - 2rem);
+      margin-bottom: 0.5rem;
     }
     .leg-title { font-weight: bold; margin-bottom: 0.2rem; color: #2d3748; font-size: 0.78rem; }
     .leg-row { display: flex; align-items: center; gap: 0.4rem; }
@@ -383,7 +385,7 @@ L.marker([35.335, -83.579], {
 }).bindPopup(`<div class="sp"><h3>Nantahala Outdoor Center</h3><div class="pm">Mile ~137 &bull; Restaurant, Outfitter, Rafting, Lodging &bull; Right on the AT</div><a href="noc-nantahala.html">View NOC Guide &rarr;</a></div>`, {maxWidth:220}).addTo(map);
 
 // ── Legend ────────────────────────────────────────────────────────────────────
-const legend = L.control({ position: 'bottomright' });
+const legend = L.control({ position: 'bottomleft' });
 legend.onAdd = () => {
   const div = L.DomUtil.create('div','legend');
   div.innerHTML = `
