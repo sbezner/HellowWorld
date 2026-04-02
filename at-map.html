@@ -43,7 +43,7 @@
       max-height: 60vh;
       overflow-y: auto;
       z-index: 1000;
-      transform: translateY(calc(100% - 42px));
+      transform: translateY(calc(100% - 42px - env(safe-area-inset-bottom, 0px)));
       transition: transform 0.3s ease;
       padding-bottom: env(safe-area-inset-bottom, 0px);
     }
@@ -54,6 +54,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 0.6rem 1rem;
+      padding-bottom: calc(0.6rem + env(safe-area-inset-bottom, 0px));
       background: #2d5a27;
       color: white;
       cursor: pointer;
@@ -63,7 +64,7 @@
       position: sticky;
       top: 0;
       z-index: 1;
-      height: 42px;
+      min-height: 42px;
     }
     .arrow { transition: transform 0.3s; display: inline-block; }
     #panel.open .arrow { transform: rotate(180deg); }
