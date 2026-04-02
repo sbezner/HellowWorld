@@ -58,6 +58,11 @@ const CORE_ASSETS = [
   'shelter-tricorner-knob.html',
   'shelter-cosby-knob.html',
   'shelter-davenport-gap.html',
+  // Shelter pages — Davenport Gap to Hot Springs
+  'shelter-groundhog-creek.html',
+  'shelter-roaring-fork.html',
+  'shelter-walnut-mountain.html',
+  'shelter-deer-park-mountain.html',
   // Leaflet CDN assets
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',

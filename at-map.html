@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Interactive Appalachian Trail map covering all 38 shelters from Springer Mountain to Davenport Gap — Georgia, North Carolina, and Great Smoky Mountains.">
+  <meta name="description" content="Interactive Appalachian Trail map covering all 42 shelters from Springer Mountain to Hot Springs — Georgia, North Carolina, Great Smoky Mountains, and beyond.">
   <title>Appalachian Trail Map — Georgia, North Carolina &amp; Great Smoky Mountains</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
   <style>
@@ -269,8 +269,8 @@
 
 <div id="header">
   <div>
-    <div class="sub">Appalachian Trail &mdash; Georgia, North Carolina &amp; Great Smoky Mountains &bull; Springer Mountain to Davenport Gap</div>
-    <h1>&#9968; Appalachian Trail Map &mdash; 38 Shelters</h1>
+    <div class="sub">Appalachian Trail &mdash; Georgia, North Carolina &amp; Great Smoky Mountains &bull; Springer Mountain to Hot Springs</div>
+    <h1>&#9968; Appalachian Trail Map &mdash; 42 Shelters</h1>
   </div>
   <div style="display:flex;align-items:center;gap:0.5rem;flex-shrink:0;">
     <button id="info-btn" onclick="document.getElementById('legend-modal').classList.add('open')">ⓘ Legend</button>
@@ -358,6 +358,11 @@ const shelters = [
   { name:'Tricorner Knob Shelter',     state:'GSMNP', type:'lean-to', lat:35.712,  lng:-83.265,  mile:216.7,elev:5920, cap:12, url:'shelter-tricorner-knob.html',     water:'Spring 0.2 mi south on side trail' },
   { name:'Cosby Knob Shelter',         state:'GSMNP', type:'lean-to', lat:35.738,  lng:-83.198,  mile:222.4,elev:4700, cap:12, url:'shelter-cosby-knob.html',         water:'Spring nearby' },
   { name:'Davenport Gap Shelter',      state:'GSMNP', type:'lean-to', lat:35.762,  lng:-83.145,  mile:227.3,elev:1975, cap:12, url:'shelter-davenport-gap.html',      water:'Spring on side trail', parkExit:true },
+  // Davenport Gap to Hot Springs, NC
+  { name:'Groundhog Creek Shelter',   state:'NC',    type:'lean-to', lat:35.782,  lng:-83.026,  mile:249.0,elev:2850, cap:10, url:'shelter-groundhog-creek.html',    water:'Stream 100 yards from shelter' },
+  { name:'Roaring Fork Shelter',      state:'NC',    type:'lean-to', lat:35.805,  lng:-82.950,  mile:257.3,elev:3590, cap:5,  url:'shelter-roaring-fork.html',       water:'Water 800 ft north and south on AT' },
+  { name:'Walnut Mountain Shelter',   state:'NC',    type:'lean-to', lat:35.837,  lng:-82.936,  mile:262.1,elev:4260, cap:5,  url:'shelter-walnut-mountain.html',    water:'Spring down blue-blazed trail (unreliable in dry periods)' },
+  { name:'Deer Park Mountain Shelter',state:'NC',    type:'lean-to', lat:35.876,  lng:-82.861,  mile:272.0,elev:2330, cap:6,  url:'shelter-deer-park-mountain.html', water:'Walled-in spring (slow flow, unreliable in dry seasons)' },
 ];
 
 // ── AT trail polyline ─────────────────────────────────────────────────────────
@@ -387,6 +392,11 @@ const trail = [
   [35.611,-83.425],[35.623,-83.405],[35.645,-83.378],
   [35.667,-83.348],[35.687,-83.315],[35.712,-83.265],
   [35.738,-83.198],[35.762,-83.145],
+  // Davenport Gap to Hot Springs, NC
+  [35.765,-83.119],[35.774,-83.074],[35.782,-83.026],
+  [35.795,-82.963],[35.805,-82.950],[35.822,-82.936],
+  [35.837,-82.936],[35.853,-82.875],[35.876,-82.861],
+  [35.897,-82.826],
 ];
 
 // ── Map ───────────────────────────────────────────────────────────────────────
@@ -497,7 +507,7 @@ shelters.forEach(s => {
   if (s.type === 'stone-cabin') extra += `<div style="background:#f7fafc;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#5a6e7e;margin-bottom:0.5rem;">&#127963; Historic CCC Stone Cabin</div>`;
   if (highestPerState[s.state] === s) { const label = s.state === 'GSMNP' ? 'Smokies' : s.state; extra += `<div style="background:#fffbeb;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#92400e;margin-bottom:0.5rem;">&#9968; Highest shelter in ${label} (${s.elev.toLocaleString()} ft)</div>`; }
   if (s.cap >= 20) extra += `<div style="background:#ebf8ff;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#2b6cb0;margin-bottom:0.5rem;">&#127969; Extra large capacity &mdash; sleeps ${s.cap}</div>`;
-  if (s.mile === 227.3) extra += `<div style="background:#fef3c7;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#92400e;margin-bottom:0.5rem;">&#127937; Northern end of coverage</div>`;
+  if (s.mile === 272.0) extra += `<div style="background:#fef3c7;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#92400e;margin-bottom:0.5rem;">&#127937; Northern end of coverage</div>`;
   const stateClass = s.state === 'GSMNP' ? 'state-gsmnp' : `state-${s.state.toLowerCase()}`;
   const stateLabel = s.state === 'GSMNP' ? 'Smokies' : s.state;
   m.bindPopup(`
@@ -523,6 +533,25 @@ L.marker([35.335, -83.579], {
 }).bindPopup(`<div class="sp"><h3>Nantahala Outdoor Center</h3><div class="pm">Mile ~137 &bull; Restaurant, Outfitter, Rafting, Lodging &bull; Right on the AT</div><a href="noc-nantahala.html">View NOC Guide &rarr;</a></div>`, {maxWidth:220}).addTo(map);
 
 
+// Standing Bear Farm marker
+L.marker([35.786, -83.102], {
+  icon: L.divIcon({
+    className:'',
+    html:`<div style="background:#92400e;color:white;border-radius:6px;padding:3px 7px;font-size:10px;font-weight:bold;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,0.4);">Standing Bear</div>`,
+    iconSize:null, iconAnchor:[30,-20]
+  })
+}).bindPopup(`<div class="sp"><h3>Standing Bear Farm</h3><div class="pm">Mile ~228.5 &bull; Hostel, Resupply, Showers &bull; 0.2 mi off AT</div><div style="font-size:0.82rem;color:#4a5568;margin-bottom:0.5rem;">Rustic hostel &amp; resupply at I-40/Pigeon River. Bunks, camping, laundry, small store. Text Maria: (423) 608-0149</div></div>`, {maxWidth:220}).addTo(map);
+
+// Hot Springs town marker
+L.marker([35.897, -82.826], {
+  icon: L.divIcon({
+    className:'',
+    html:`<div style="background:#6b21a8;color:white;border-radius:6px;padding:3px 7px;font-size:10px;font-weight:bold;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,0.4);">Hot Springs</div>`,
+    iconSize:null, iconAnchor:[30,-20]
+  })
+}).bindPopup(`<div class="sp"><h3>Hot Springs, NC</h3><div class="pm">Mile ~273.9 &bull; Trail Town &bull; AT walks through downtown</div><div style="font-size:0.82rem;color:#4a5568;margin-bottom:0.5rem;">Full-service trail town on the French Broad River. Grocery, restaurants, outfitter, post office, mineral hot springs spa. Elmer's Sunnybank Inn &amp; Laughing Heart Lodge.</div></div>`, {maxWidth:220}).addTo(map);
+
+
 // Road crossings
 const crossings = [
   { name:'Woody Gap\n(GA-60)',         lat:34.758, lng:-84.096 },
@@ -537,6 +566,10 @@ const crossings = [
   { name:'Clingmans Dome\n6,643 ft',  lat:35.562, lng:-83.498 },
   { name:'Newfound Gap\n(US-441)',     lat:35.611, lng:-83.425 },
   { name:'Davenport Gap\n(TN-32)',     lat:35.762, lng:-83.145 },
+  { name:'I-40 / Pigeon River',       lat:35.765, lng:-83.119 },
+  { name:'Max Patch Road\n(SR 1182)', lat:35.795, lng:-82.963 },
+  { name:'Lemon Gap\n(NC/TN)',        lat:35.822, lng:-82.936 },
+  { name:'Hot Springs\n(US 25/70)',   lat:35.897, lng:-82.826 },
 ];
 crossings.forEach(c => {
   L.marker([c.lat, c.lng], {
@@ -684,7 +717,7 @@ function locateMe() {
       hdr.innerHTML = s.state === 'GA'
         ? '⛰ Georgia — 11 Shelters (Springer Mountain → Plumorchard Gap)'
         : s.state === 'NC'
-          ? '⛰ North Carolina — 14 Shelters (Muskrat Creek → Fontana Dam)'
+          ? '⛰ North Carolina — 18 Shelters (Muskrat Creek → Deer Park Mountain)'
           : '⛰ Great Smoky Mountains — 13 Shelters (Birch Spring Gap → Davenport Gap)';
       inner.appendChild(hdr);
       listDiv = document.createElement('div');

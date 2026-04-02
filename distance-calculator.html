@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Calculate distance and elevation change between any two AT shelters from Springer Mountain to Davenport Gap.">
+  <meta name="description" content="Calculate distance and elevation change between any two AT shelters from Springer Mountain to Hot Springs.">
   <title>AT Distance Calculator — Shelter to Shelter</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -156,7 +156,7 @@
 <div class="container">
   <div class="breadcrumb"><a href="index.html">&larr; Home</a> &bull; <a href="at-map.html">Map</a></div>
   <h1>&#128207; AT Distance Calculator</h1>
-  <p class="subtitle">Calculate mileage and elevation between any two shelters &mdash; Springer Mountain to Davenport Gap</p>
+  <p class="subtitle">Calculate mileage and elevation between any two shelters &mdash; Springer Mountain to Hot Springs</p>
 
   <div class="card">
     <h2>Select Shelters</h2>
@@ -230,6 +230,11 @@ const shelters = [
   { name:'Tricorner Knob Shelter',     state:'GSMNP', lat:35.712,  lng:-83.265,  mile:216.7, elev:5920, url:'shelter-tricorner-knob.html',     water:'Spring 0.2 mi south on side trail' },
   { name:'Cosby Knob Shelter',         state:'GSMNP', lat:35.738,  lng:-83.198,  mile:222.4, elev:4700, url:'shelter-cosby-knob.html',         water:'Spring nearby' },
   { name:'Davenport Gap Shelter',      state:'GSMNP', lat:35.762,  lng:-83.145,  mile:227.3, elev:1975, url:'shelter-davenport-gap.html',      water:'Spring on side trail' },
+  // Davenport Gap to Hot Springs, NC
+  { name:'Groundhog Creek Shelter',   state:'NC',    lat:35.782,  lng:-83.026,  mile:249.0, elev:2850, url:'shelter-groundhog-creek.html',    water:'Stream 100 yards from shelter' },
+  { name:'Roaring Fork Shelter',      state:'NC',    lat:35.805,  lng:-82.950,  mile:257.3, elev:3590, url:'shelter-roaring-fork.html',       water:'Water 800 ft north and south on AT' },
+  { name:'Walnut Mountain Shelter',   state:'NC',    lat:35.837,  lng:-82.936,  mile:262.1, elev:4260, url:'shelter-walnut-mountain.html',    water:'Spring down blue-blazed trail (unreliable in dry periods)' },
+  { name:'Deer Park Mountain Shelter',state:'NC',    lat:35.876,  lng:-82.861,  mile:272.0, elev:2330, url:'shelter-deer-park-mountain.html', water:'Walled-in spring (slow flow, unreliable in dry seasons)' },
 ];
 
 // ── Sunrise/Sunset calculator (NOAA algorithm) ─────────────────────────────
