@@ -401,16 +401,30 @@ function makeIcon(shelter) {
   });
 }
 
+// ── Derived callouts ─────────────────────────────────────────────────────────
+const highestPerState = {};
+shelters.forEach(s => {
+  if (!highestPerState[s.state] || s.elev > highestPerState[s.state].elev)
+    highestPerState[s.state] = s;
+});
+
 // ── Markers ───────────────────────────────────────────────────────────────────
 shelters.forEach(s => {
   const m = L.marker([s.lat, s.lng], { icon: makeIcon(s) }).addTo(map);
   s._marker = m;
   const typeLabel = s.type === 'stone-cabin' ? 'Historic Stone Cabin' : 'Lean-to';
   let extra = '';
-  if (s.hilton) extra = `<div style="background:#f3e8ff;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#6b21a8;margin-bottom:0.5rem;">&#11088; The Hilton of the AT</div>`;
-  if (s.noc) extra = `<a class="noc-link" href="noc-nantahala.html">&#9972; View NOC Guide &rarr;</a>`;
-  if (s.clingmans) extra = `<div style="background:#d1fae5;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#065f46;margin-bottom:0.5rem;">&#9968; Clingmans Dome 0.5 mi (6,643 ft — highest AT point)</div>`;
-  if (s.parkExit) extra = `<div style="background:#fef3c7;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#92400e;margin-bottom:0.5rem;">&#127937; Park Exit &rarr; Hot Springs, NC section</div>`;
+  // Hardcoded flags (not derivable)
+  if (s.hilton) extra += `<div style="background:#f3e8ff;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#6b21a8;margin-bottom:0.5rem;">&#11088; The Hilton of the AT</div>`;
+  if (s.noc) extra += `<a class="noc-link" href="noc-nantahala.html">&#9972; View NOC Guide &rarr;</a>`;
+  if (s.clingmans) extra += `<div style="background:#d1fae5;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#065f46;margin-bottom:0.5rem;">&#9968; Clingmans Dome 0.5 mi (6,643 ft — highest AT point)</div>`;
+  if (s.parkExit) extra += `<div style="background:#fef3c7;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#92400e;margin-bottom:0.5rem;">&#127937; Park Exit &rarr; Hot Springs, NC section</div>`;
+  // Auto-derived callouts
+  if (s.mile === 0) extra += `<div style="background:#f0fff4;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#276749;margin-bottom:0.5rem;">&#127793; Southern Terminus of the AT</div>`;
+  if (s.type === 'stone-cabin') extra += `<div style="background:#f7fafc;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#5a6e7e;margin-bottom:0.5rem;">&#127963; Historic CCC Stone Cabin</div>`;
+  if (highestPerState[s.state] === s) { const label = s.state === 'GSMNP' ? 'Smokies' : s.state; extra += `<div style="background:#fffbeb;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#92400e;margin-bottom:0.5rem;">&#9968; Highest shelter in ${label} (${s.elev.toLocaleString()} ft)</div>`; }
+  if (s.cap >= 20) extra += `<div style="background:#ebf8ff;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#2b6cb0;margin-bottom:0.5rem;">&#127969; Extra large capacity &mdash; sleeps ${s.cap}</div>`;
+  if (s.mile === 227.3) extra += `<div style="background:#fef3c7;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#92400e;margin-bottom:0.5rem;">&#127937; Northern end of coverage</div>`;
   const stateClass = s.state === 'GSMNP' ? 'state-gsmnp' : `state-${s.state.toLowerCase()}`;
   const stateLabel = s.state === 'GSMNP' ? 'Smokies' : s.state;
   m.bindPopup(`
