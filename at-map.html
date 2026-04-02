@@ -89,6 +89,16 @@
     .s-icon { font-size: 1rem; flex-shrink: 0; }
     .s-name { font-weight: bold; font-size: 0.85rem; flex: 1; min-width: 0; }
     .s-meta { font-size: 0.73rem; color: #718096; white-space: nowrap; }
+    .s-water-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      border: 1.5px solid rgba(0,0,0,0.15);
+    }
+    .s-water-dot.green { background: #38a169; }
+    .s-water-dot.yellow { background: #ecc94b; }
+    .s-water-dot.red { background: #e53e3e; }
     .s-detail-link {
       display: flex;
       align-items: center;
@@ -263,6 +273,10 @@
     <div class="leg-row"><div style="background:#6b21a8;width:16px;height:16px;border-radius:50%;flex-shrink:0;"></div><span>Fontana Hilton</span></div>
     <div class="leg-row"><div style="background:#065f46;width:16px;height:16px;border-radius:50%;flex-shrink:0;"></div><span>GSMNP Lean-to</span></div>
     <div class="leg-row" style="margin-top:0.2rem;"><div style="width:24px;height:3px;background:#888;border:1px solid #3a1e00;flex-shrink:0;"></div><span>AT Route</span></div>
+    <h3 style="margin-top:0.8rem;">Water Status</h3>
+    <div class="leg-row"><div style="background:#38a169;width:11px;height:11px;border-radius:50%;flex-shrink:0;border:2px solid white;box-shadow:0 0 0 1px #ccc;"></div><span>Reliable / on-site</span></div>
+    <div class="leg-row"><div style="background:#ecc94b;width:11px;height:11px;border-radius:50%;flex-shrink:0;border:2px solid white;box-shadow:0 0 0 1px #ccc;"></div><span>Requires walk or seasonal</span></div>
+    <div class="leg-row"><div style="background:#e53e3e;width:11px;height:11px;border-radius:50%;flex-shrink:0;border:2px solid white;box-shadow:0 0 0 1px #ccc;"></div><span>No water at shelter</span></div>
     <button onclick="document.getElementById('legend-modal').classList.remove('open')" style="margin-top:0.8rem;width:100%;padding:0.4rem;background:#2d5a27;color:white;border:none;border-radius:6px;font-size:0.85rem;cursor:pointer;">Close</button>
   </div>
 </div>
@@ -379,6 +393,15 @@ L.marker([34.980, -83.527], {
   })
 }).addTo(map);
 
+// ── Water status classifier ──────────────────────────────────────────────────
+function getWaterStatus(waterText) {
+  const w = waterText.toLowerCase();
+  if (w.includes('no water')) return { status: 'red', label: 'No water at shelter', color: '#e53e3e', bg: '#fff5f5' };
+  if (w.includes('year-round') || w.includes('reliable') || w.includes('running water') || w.includes('piped') || w.includes('in front of'))
+    return { status: 'green', label: 'Reliable water', color: '#276749', bg: '#f0fff4' };
+  return { status: 'yellow', label: 'Requires short walk or seasonal', color: '#744210', bg: '#fffbeb' };
+}
+
 // ── Icon factory ──────────────────────────────────────────────────────────────
 function makeIcon(shelter) {
   const isCabin = shelter.type === 'stone-cabin';
@@ -392,9 +415,11 @@ function makeIcon(shelter) {
     ? `<svg width="14" height="14" viewBox="0 0 14 14"><rect x="2" y="6" width="10" height="7" fill="white"/><polygon points="7,0 14,6 0,6" fill="white"/></svg>`
     : `<svg width="14" height="12" viewBox="0 0 14 12"><polygon points="7,0 14,12 0,12" fill="white"/></svg>`;
   const size = isHilton ? 34 : 30;
+  const ws = getWaterStatus(shelter.water);
+  const dotColor = ws.status === 'red' ? '#e53e3e' : ws.status === 'green' ? '#38a169' : '#ecc94b';
   return L.divIcon({
     className: '',
-    html: `<div style="background:${bg};width:${size}px;height:${size}px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2.5px solid rgba(255,255,255,0.9);box-shadow:0 2px 6px rgba(0,0,0,0.5);">${svg}</div>`,
+    html: `<div style="position:relative;background:${bg};width:${size}px;height:${size}px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2.5px solid rgba(255,255,255,0.9);box-shadow:0 2px 6px rgba(0,0,0,0.5);">${svg}<div style="position:absolute;bottom:-3px;right:-3px;width:11px;height:11px;border-radius:50%;background:${dotColor};border:2px solid white;"></div></div>`,
     iconSize: [size,size],
     iconAnchor: [size/2,size/2],
     popupAnchor: [0,-size/2-4],
@@ -431,7 +456,8 @@ shelters.forEach(s => {
     <div class="sp">
       <span class="state-tag ${stateClass}">${stateLabel}</span>
       <h3>${s.name}</h3>
-      <div class="pm">Mile ${s.mile} (NOBO) &bull; ${s.elev.toLocaleString()} ft &bull; ${typeLabel}<br>Sleeps ~${s.cap} &bull; <strong>Water:</strong> ${s.water}</div>
+      <div class="pm">Mile ${s.mile} (NOBO) &bull; ${s.elev.toLocaleString()} ft &bull; ${typeLabel}<br>Sleeps ~${s.cap}</div>
+      <div style="background:${getWaterStatus(s.water).bg};border-radius:4px;padding:0.25rem 0.4rem;font-size:0.78rem;color:${getWaterStatus(s.water).color};margin-bottom:0.5rem;display:flex;align-items:center;gap:0.35rem;"><span style="width:9px;height:9px;border-radius:50%;background:${getWaterStatus(s.water).status === 'red' ? '#e53e3e' : getWaterStatus(s.water).status === 'green' ? '#38a169' : '#ecc94b'};flex-shrink:0;"></span><strong>Water:</strong> ${s.water}</div>
       ${extra}
       <a href="${s.url}">View Shelter Details &rarr;</a>
     </div>
@@ -610,7 +636,8 @@ function locateMe() {
     const row = document.createElement('div');
     row.className = 'shelter-item';
     const icon = s.type === 'stone-cabin' ? '🏛' : (s.hilton ? '⭐' : '⛺');
-    row.innerHTML = `<span class="s-icon">${icon}</span><span class="s-name">${s.name}</span><span class="s-meta">Mile ${s.mile} &bull; ${s.elev.toLocaleString()} ft</span>`;
+    const ws = getWaterStatus(s.water);
+    row.innerHTML = `<span class="s-icon">${icon}</span><span class="s-name">${s.name}</span><span class="s-water-dot ${ws.status}" title="${ws.label}"></span><span class="s-meta">Mile ${s.mile} &bull; ${s.elev.toLocaleString()} ft</span>`;
     row.addEventListener('click', () => flyToShelter(s, row));
     const link = document.createElement('a');
     link.className = 's-detail-link';
