@@ -12,7 +12,7 @@
 HellowWorld/
 ├── index.html                  # Home page / navigation hub
 ├── shelters.html               # Shelter showcase (top 5 AT shelters)
-├── at-map.html                 # Interactive Leaflet map — 50 shelters (GA → Erwin, TN)
+├── at-map.html                 # Interactive Leaflet map — 62 shelters (GA → Damascus, VA)
 ├── at-georgia-map.html         # Redirect → at-map.html (kept for backwards compatibility)
 ├── distance-calculator.html    # Shelter-to-shelter distance/elevation/sunset calculator
 ├── resupply-planner.html       # Interactive resupply planner with mileage/carry sliders
@@ -22,14 +22,14 @@ HellowWorld/
 ├── low-gap-resupply.html       # Resupply guide from Low Gap Shelter
 ├── hostel-vs-hotel.html        # Green Dragon Hostel vs. hotel comparison
 ├── sumner-parts.html           # Sumner Material Lift parts sales reference
-├── shelter-*.html              # 50 individual shelter pages (see below)
+├── shelter-*.html              # 62 individual shelter pages (see below)
 ├── sw.js                       # Service worker for offline support
 ├── todo.md                     # Feature roadmap
 ├── README.md                   # Minimal repo description
 └── CLAUDE.md                   # This file
 ```
 
-### Shelter Pages (50 total)
+### Shelter Pages (62 total)
 
 Shelters are grouped by state/section and listed south-to-north (NOBO order):
 
@@ -43,6 +43,8 @@ Shelters are grouped by state/section and listed south-to-north (NOBO order):
 
 **Hot Springs to Erwin, TN (8):** spring-mountain, little-laurel, jerry-cabin, flint-mountain, hogback-ridge, bald-mountain, no-business-knob, curley-maple-gap
 
+**Erwin, TN to Damascus, VA (12):** cherry-gap, clyde-smith, roan-high-knob, stan-murray, overmountain, mountaineer-falls, moreland-gap, laurel-fork, vandeventer, iron-mountain, double-springs, abingdon-gap
+
 ---
 
 ## Tech Stack
@@ -51,7 +53,7 @@ Shelters are grouped by state/section and listed south-to-north (NOBO order):
 - **CSS3** — embedded `<style>` blocks per page (no external stylesheets)
 - **JavaScript** — embedded `<script>` blocks for interactive pages
 - **[Leaflet.js](https://leafletjs.com/) v1.9.4** — used in `at-map.html` for the interactive trail map (loaded via CDN)
-- **[Open-Meteo API](https://open-meteo.com/)** — free, no-key weather API used in all 50 shelter pages for current conditions and 3-day forecast
+- **[Open-Meteo API](https://open-meteo.com/)** — free, no-key weather API used in all 62 shelter pages for current conditions and 3-day forecast
 - **NOAA solar algorithm** — pure JavaScript sunrise/sunset calculator (no API dependency), hardcoded to Eastern timezone (EDT/EST)
 - **OpenStreetMap** — map tile provider for Leaflet
 - **Service Worker** — `sw.js` provides offline caching (network-first HTML, cache-first tiles)
@@ -153,9 +155,9 @@ Every page should include a back link. Shelter pages use prev/next navigation li
 | File | Purpose | Notes |
 |---|---|---|
 | `index.html` | Entry point; lists all guides | Start here |
-| `at-map.html` | Leaflet map, 50 shelters, AT polyline | Uses CDN JS/CSS; most complex page |
+| `at-map.html` | Leaflet map, 62 shelters, AT polyline | Uses CDN JS/CSS; most complex page |
 | `distance-calculator.html` | Distance/elevation/sunset between any two shelters | Duplicate shelter array + calcSun() |
-| `resupply-planner.html` | Interactive planner with JS sliders | Total distance: 348.8 mi |
+| `resupply-planner.html` | Interactive planner with JS sliders | Total distance: 469.0 mi |
 | `shelter-blood-mountain.html` | Good shelter page example | Stone cabin type |
 | `shelter-fontana-dam.html` | "Hilton of the AT" — detailed shelter | Capacity 24 |
 | `sw.js` | Service worker for offline support | Network-first HTML, cache-first tiles |

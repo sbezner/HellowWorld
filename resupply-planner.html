@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="AT resupply planner from Springer Mountain to Erwin. Adjust daily mileage and food carry to find your resupply stops across Georgia, North Carolina, Smokies, and Tennessee.">
-  <title>AT Resupply Planner &mdash; Springer Mountain to Erwin</title>
+  <meta name="description" content="AT resupply planner from Springer Mountain to Damascus. Adjust daily mileage and food carry to find your resupply stops across Georgia, North Carolina, Smokies, Tennessee, and Virginia.">
+  <title>AT Resupply Planner &mdash; Springer Mountain to Damascus</title>
   <style>
     * { box-sizing: border-box; }
     body { margin: 0; padding: 1.5rem; background: #f0f4f8; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #2d3748; }
@@ -97,7 +97,7 @@
   </div>
 
   <h1>&#127978; AT Resupply Planner</h1>
-  <p class="subtitle">Georgia &bull; North Carolina &bull; Great Smoky Mountains &mdash; Miles 0&ndash;227.3 &bull; 5 resupply stops</p>
+  <p class="subtitle">Georgia &bull; North Carolina &bull; Tennessee &bull; Virginia &mdash; Miles 0&ndash;469 &bull; 8 resupply stops</p>
 
   <div class="alert">
     <strong>Coverage: Springer Mountain (Mile 0) &rarr; Davenport Gap (Mile 227.3)</strong>
@@ -159,7 +159,7 @@
 <script>
 (function () {
 
-  var TOTAL = 348.8;
+  var TOTAL = 469.0;
 
   var TOWNS = [
     {
@@ -241,6 +241,36 @@
       mailDrop: true, mailAddr: 'USPS General Delivery, Erwin TN 37650 &mdash; or Uncle Johnny\'s Hostel, 151 River Rd, Erwin TN 37650',
       desc: 'Full-service trail town accessed via the Nolichucky River crossing. Uncle Johnny\'s Nolichucky Hostel &amp; Outfitter offers bunks, cabins, camping, showers, laundry, and a complimentary shuttle to town. NOTE: Chestoa Bridge was destroyed by Hurricane Helene (2024) &mdash; a 3.6-mile road detour is in effect as of 2026.',
       phone: null, web: 'https://www.atunclejohnnys.com/', webLabel: 'atunclejohnnys.com'
+    },
+    {
+      name: 'Mountain Harbour (Roan Mtn)',
+      mile: 381.0, offTrail: 0.3,
+      badge: 'badge-hostel', badgeText: '0.3 mi off trail',
+      color: '#92400e',
+      services: ['hostel', 'B&B', 'famous burgers', 'shuttle', 'laundry'],
+      mailDrop: true, mailAddr: 'Mountain Harbour B&B, 9151 Hwy 19E, Roan Mountain TN 37687',
+      desc: 'Popular hostel and B&amp;B at Carvers Gap (TN 143). Famous for their burger food truck. Hostel bunks from $25, shuttle service, laundry. Gateway to the spectacular Roan Highlands. Roan Mountain, TN (~3 mi W) has limited resupply.',
+      phone: null, web: null, webLabel: null
+    },
+    {
+      name: 'Kincora Hostel (Hampton)',
+      mile: 418.0, offTrail: 0.2,
+      badge: 'badge-hostel', badgeText: '0.2 mi off trail',
+      color: '#92400e',
+      services: ['hostel', 'kitchen', 'laundry', 'showers'],
+      mailDrop: false, mailAddr: null,
+      desc: 'Legendary hiker hostel at Dennis Cove Rd run by Bob Peoples (TEHCC trail maintainer). $5 suggested donation. Kitchen, laundry, showers. 3-night limit. Hampton, TN nearby for limited resupply via US 321.',
+      phone: null, web: null, webLabel: null
+    },
+    {
+      name: 'Damascus, VA',
+      mile: 469.0, offTrail: 0,
+      badge: 'badge-town', badgeText: 'On trail',
+      color: '#6b21a8',
+      services: ['grocery', 'restaurants', 'outfitters', 'hostels', 'post office', 'laundry'],
+      mailDrop: true, mailAddr: 'USPS General Delivery, Damascus VA 24236 &mdash; or Mt Rogers Outfitters, 110 Laurel Ave, Damascus VA 24236',
+      desc: '"Trail Town USA" &mdash; the AT runs directly through downtown Damascus. The Place (Methodist church donation hostel), Woodchuck Hostel, multiple outfitters, restaurants, and a post office. Host of the annual Trail Days festival. Full services &mdash; a great spot for a zero day.',
+      phone: null, web: null, webLabel: null
     }
   ];
 
@@ -274,8 +304,8 @@
     for (var i = 0; i < TOWNS.length; i++) {
       var from = TOWNS[i];
       var toTown = (i < TOWNS.length - 1) ? TOWNS[i + 1] : null;
-      var toMile = toTown ? toTown.mile : 348.8;
-      var toName = toTown ? toTown.name.replace(/&mdash;.*/, '').trim() : 'Curley Maple Gap (end of coverage)';
+      var toMile = toTown ? toTown.mile : 469.0;
+      var toName = toTown ? toTown.name.replace(/&mdash;.*/, '').trim() : 'Damascus, VA (end of coverage)';
       var trailMiles = toMile - from.mile;
       var daysNeeded = trailMiles / dailyMiles;
       var isSmokies = from.mile >= 164.9;
