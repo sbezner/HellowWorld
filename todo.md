@@ -8,40 +8,17 @@ Derived callout badges from existing shelter data (Southern Terminus, Historic S
 ### Map: Dual-action shelter list panel ✓
 Shelter list items now fly to the shelter on the map (click) with a separate → button to navigate to the detail page. Merged in PR #18.
 
----
+### 1. Water Report Status Indicators ✓
+Added visual water reliability indicators (green/yellow/red) to map markers, popups, shelter list panel, and legend. Parses existing `water` field to classify each shelter. Merged in PR #21.
 
-## Upcoming Features (in order)
+### 2. Distance Calculator Between Shelters ✓
+New `distance-calculator.html` page with two dropdowns, swap button, total mileage, elevation gain/loss, NOBO/SOBO direction, and full intermediate shelter route with water status dots. Added to index.html navigation. Merged in PR #22.
 
-### 1. Water Report Status Indicators
-Add visual water reliability indicators to shelter markers on the map. Parse existing `water` field data to classify each shelter:
-- **Green** — reliable, year-round, on-site
-- **Yellow** — seasonal, requires walking (0.1+ mi), or spring-fed
-- **Red** — no water on site (e.g. Blood Mountain)
+### 3. Sunrise/Sunset Times ✓
+Added NOAA solar algorithm (pure JS, no API) to map popups (today's sunrise/sunset/remaining), all 38 shelter pages (4-day forecast widget), and distance calculator ("Arrive Before Dark?" estimate at 3 hiking paces with safety status). Merged in PR #23.
 
-Display as a small colored dot on each map marker. Add a legend entry explaining the colors.
-
-**Files to change:** `at-map.html` — marker rendering, legend modal, shelter data (add `waterStatus` field or derive from `water` string).
-
-### 2. Distance Calculator Between Shelters
-Pick two shelters from dropdowns → show NOBO mileage between them and total elevation change. Uses existing `mile` and `elev` data from the shelter array.
-
-Could live as a panel on the map page or a standalone page. Should also show intermediate shelters in the route.
-
-**Files to change:** `at-map.html` (if panel) or new `distance-calculator.html`. Update `index.html` navigation.
-
-### 3. Sunrise/Sunset Times
-Calculate sunrise and sunset for each shelter using lat/lng and a solar position algorithm (no API needed — works offline). Display on:
-- Each shelter detail page (alongside weather widget)
-- Map popups
-
-**Files to change:** All 38 `shelter-*.html` pages, `at-map.html` popup builder.
-
-### 4. Offline Support (Service Worker)
-Add a service worker to cache all HTML pages for offline access. Shelter details, distance calculator, and sunrise/sunset all work without internet. Map tiles are the limitation — cache last-viewed area where possible.
-
-Do this last so all new features get cached.
-
-**Files to add:** `sw.js` (service worker), registration script in all pages.
+### 4. Offline Support (Service Worker) ✓
+Added `sw.js` service worker that pre-caches all 49 HTML pages and Leaflet CDN assets. Network-first for HTML (fresh weather online, cached fallback offline). Map tiles cached opportunistically as viewed. Registration added to all pages. Merged in PR #24.
 
 ---
 
