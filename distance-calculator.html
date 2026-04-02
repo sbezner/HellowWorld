@@ -127,6 +127,23 @@
     }
     .map-link:hover { background: #1a3a15; }
 
+    .daylight-box {
+      background: #fffbeb;
+      border-radius: 8px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 1rem;
+      border: 2px solid #ecc94b;
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+    .daylight-box.safe { border-color: #38a169; background: #f0fff4; }
+    .daylight-box.warning { border-color: #ecc94b; background: #fffbeb; }
+    .daylight-box.danger { border-color: #e53e3e; background: #fff5f5; }
+    .daylight-box .title { font-weight: bold; font-size: 0.92rem; margin-bottom: 0.3rem; }
+    .daylight-box.safe .title { color: #276749; }
+    .daylight-box.warning .title { color: #744210; }
+    .daylight-box.danger .title { color: #742a2a; }
+
     @media (max-width: 480px) {
       body { padding: 1rem; }
       h1 { font-size: 1.25rem; }
@@ -164,6 +181,7 @@
       <div class="stat-box gain"><div class="val" id="stat-gain">--</div><div class="lbl">Elevation Gain</div></div>
       <div class="stat-box warn"><div class="val" id="stat-loss">--</div><div class="lbl">Elevation Loss</div></div>
     </div>
+    <div id="daylight-box" class="daylight-box" style="display:none;"></div>
     <h2>Route &mdash; <span id="route-count">0</span> Shelters</h2>
     <ul class="shelter-route" id="route-list"></ul>
     <div style="margin-top:1rem;text-align:center;">
@@ -174,45 +192,70 @@
 
 <script>
 const shelters = [
-  { name:'Springer Mountain Shelter',  state:'GA',    mile:0,     elev:3782, url:'shelter-springer-mountain.html', water:'Spring 0.2 mi south' },
-  { name:'Stover Creek Shelter',       state:'GA',    mile:2.6,   elev:2900, url:'shelter-stover-creek.html',       water:'Stover Creek, year-round' },
-  { name:'Hawk Mountain Shelter',      state:'GA',    mile:8.1,   elev:3200, url:'shelter-hawk-mountain.html',      water:'Spring 100 yds from shelter' },
-  { name:'Gooch Mountain Shelter',     state:'GA',    mile:15.8,  elev:2784, url:'shelter-gooch-mountain.html',     water:'Spring east of shelter' },
-  { name:'Blood Mountain Shelter',     state:'GA',    mile:31.7,  elev:4461, url:'shelter-blood-mountain.html',     water:'NO WATER on site' },
-  { name:'Whitley Gap Shelter',        state:'GA',    mile:36.5,  elev:3500, url:'shelter-whitley-gap.html',        water:'Spring via blue-blazed trail' },
-  { name:'Low Gap Shelter',            state:'GA',    mile:43.3,  elev:2966, url:'low-gap-resupply.html',           water:'30-40 yards in front of shelter' },
-  { name:'Blue Mountain Shelter',      state:'GA',    mile:50.7,  elev:3889, url:'shelter-blue-mountain.html',      water:'Spring nearby, bear cables' },
-  { name:'Tray Mountain Shelter',      state:'GA',    mile:56.8,  elev:4200, url:'shelter-tray-mountain.html',      water:'Spring 200 yds north on AT' },
-  { name:'Deep Gap Shelter',           state:'GA',    mile:63.3,  elev:3550, url:'shelter-deep-gap.html',           water:'Spring nearby' },
-  { name:'Plumorchard Gap Shelter',    state:'GA',    mile:68.4,  elev:4080, url:'shelter-plumorchard-gap.html',    water:'Spring on blue-blazed trail' },
-  { name:'Muskrat Creek Shelter',      state:'NC',    mile:80.7,  elev:4600, url:'shelter-muskrat-creek.html',      water:'Spring nearby' },
-  { name:'Standing Indian Shelter',    state:'NC',    mile:87.7,  elev:4980, url:'shelter-standing-indian.html',    water:'Spring 100 yds south' },
-  { name:'Carter Gap Shelter',         state:'NC',    mile:91.7,  elev:4540, url:'shelter-carter-gap.html',         water:'Spring nearby' },
-  { name:'Big Spring Shelter',         state:'NC',    mile:96.8,  elev:4750, url:'shelter-big-spring.html',         water:'Big Spring, reliable year-round' },
-  { name:'Rock Gap Shelter',           state:'NC',    mile:101.5, elev:3750, url:'shelter-rock-gap.html',           water:'Spring nearby' },
-  { name:'Siler Bald Shelter',         state:'NC',    mile:107.7, elev:5240, url:'shelter-siler-bald.html',         water:'Spring 0.1 mi south' },
-  { name:'Cold Spring Shelter',        state:'NC',    mile:113.0, elev:4940, url:'shelter-cold-spring.html',        water:'Cold Spring, reliable' },
-  { name:'Wayah Bald Shelter',         state:'NC',    mile:115.4, elev:5100, url:'shelter-wayah-bald.html',         water:'Spring nearby' },
-  { name:'Wesser Bald Shelter',        state:'NC',    mile:131.2, elev:4115, url:'shelter-wesser-bald.html',        water:'Boxed spring 0.1 mi south on blue blaze' },
-  { name:'A. Rufus Morgan Shelter',    state:'NC',    mile:134.0, elev:1700, url:'shelter-rufus-morgan.html',       water:'Nantahala River nearby; spring at shelter' },
-  { name:'Sassafras Gap Shelter',      state:'NC',    mile:138.5, elev:3440, url:'shelter-sassafras-gap-nc.html',   water:'Spring nearby' },
-  { name:'Brown Fork Gap Shelter',     state:'NC',    mile:143.8, elev:3740, url:'shelter-brown-fork-gap.html',     water:'Spring 100 yds on blue-blazed trail' },
-  { name:'Cable Gap Shelter',          state:'NC',    mile:150.8, elev:2900, url:'shelter-cable-gap.html',          water:'Spring 50 yds from shelter' },
-  { name:'Fontana Dam Shelter',        state:'NC',    mile:164.7, elev:1680, url:'shelter-fontana-dam.html',        water:'Running water on site (piped)' },
-  { name:'Birch Spring Gap Shelter',   state:'GSMNP', mile:168.1, elev:3400, url:'shelter-birch-spring-gap.html',   water:'Spring on blue-blaze side trail' },
-  { name:'Russell Field Shelter',      state:'GSMNP', mile:174.2, elev:4360, url:'shelter-russell-field.html',      water:'Spring 0.1 mi on side trail' },
-  { name:'Mollies Ridge Shelter',      state:'GSMNP', mile:177.8, elev:4570, url:'shelter-mollies-ridge.html',      water:'Spring nearby' },
-  { name:'Spence Field Shelter',       state:'GSMNP', mile:180.7, elev:4900, url:'shelter-spence-field.html',       water:'Spring 0.1 mi downhill' },
-  { name:'Derrick Knob Shelter',       state:'GSMNP', mile:186.6, elev:4880, url:'shelter-derrick-knob.html',       water:'Spring on side trail' },
-  { name:'Silers Bald Shelter',        state:'GSMNP', mile:192.0, elev:5460, url:'shelter-silers-bald.html',        water:'Spring 0.15 mi south on side trail' },
-  { name:'Double Spring Gap Shelter',  state:'GSMNP', mile:195.3, elev:5510, url:'shelter-double-spring-gap.html',  water:'Two springs nearby (namesake)' },
-  { name:'Mount Collins Shelter',      state:'GSMNP', mile:200.5, elev:5870, url:'shelter-mount-collins.html',      water:'Spring 0.3 mi on side trail' },
-  { name:'Icewater Spring Shelter',    state:'GSMNP', mile:207.3, elev:5820, url:'shelter-icewater-spring.html',    water:'Icewater Spring (reliable, cold)' },
-  { name:'Pecks Corner Shelter',       state:'GSMNP', mile:213.0, elev:5280, url:'shelter-pecks-corner.html',       water:'Spring nearby' },
-  { name:'Tricorner Knob Shelter',     state:'GSMNP', mile:216.7, elev:5920, url:'shelter-tricorner-knob.html',     water:'Spring 0.2 mi south on side trail' },
-  { name:'Cosby Knob Shelter',         state:'GSMNP', mile:222.4, elev:4700, url:'shelter-cosby-knob.html',         water:'Spring nearby' },
-  { name:'Davenport Gap Shelter',      state:'GSMNP', mile:227.3, elev:1975, url:'shelter-davenport-gap.html',      water:'Spring on side trail' },
+  { name:'Springer Mountain Shelter',  state:'GA',    lat:34.6279, lng:-84.1934, mile:0,     elev:3782, url:'shelter-springer-mountain.html', water:'Spring 0.2 mi south' },
+  { name:'Stover Creek Shelter',       state:'GA',    lat:34.659,  lng:-84.202,  mile:2.6,   elev:2900, url:'shelter-stover-creek.html',       water:'Stover Creek, year-round' },
+  { name:'Hawk Mountain Shelter',      state:'GA',    lat:34.693,  lng:-84.198,  mile:8.1,   elev:3200, url:'shelter-hawk-mountain.html',      water:'Spring 100 yds from shelter' },
+  { name:'Gooch Mountain Shelter',     state:'GA',    lat:34.738,  lng:-84.182,  mile:15.8,  elev:2784, url:'shelter-gooch-mountain.html',     water:'Spring east of shelter' },
+  { name:'Blood Mountain Shelter',     state:'GA',    lat:34.797,  lng:-83.939,  mile:31.7,  elev:4461, url:'shelter-blood-mountain.html',     water:'NO WATER on site' },
+  { name:'Whitley Gap Shelter',        state:'GA',    lat:34.833,  lng:-83.882,  mile:36.5,  elev:3500, url:'shelter-whitley-gap.html',        water:'Spring via blue-blazed trail' },
+  { name:'Low Gap Shelter',            state:'GA',    lat:34.859,  lng:-83.813,  mile:43.3,  elev:2966, url:'low-gap-resupply.html',           water:'30-40 yards in front of shelter' },
+  { name:'Blue Mountain Shelter',      state:'GA',    lat:34.884,  lng:-83.759,  mile:50.7,  elev:3889, url:'shelter-blue-mountain.html',      water:'Spring nearby, bear cables' },
+  { name:'Tray Mountain Shelter',      state:'GA',    lat:34.901,  lng:-83.703,  mile:56.8,  elev:4200, url:'shelter-tray-mountain.html',      water:'Spring 200 yds north on AT' },
+  { name:'Deep Gap Shelter',           state:'GA',    lat:34.927,  lng:-83.637,  mile:63.3,  elev:3550, url:'shelter-deep-gap.html',           water:'Spring nearby' },
+  { name:'Plumorchard Gap Shelter',    state:'GA',    lat:34.953,  lng:-83.572,  mile:68.4,  elev:4080, url:'shelter-plumorchard-gap.html',    water:'Spring on blue-blazed trail' },
+  { name:'Muskrat Creek Shelter',      state:'NC',    lat:35.003,  lng:-83.530,  mile:80.7,  elev:4600, url:'shelter-muskrat-creek.html',      water:'Spring nearby' },
+  { name:'Standing Indian Shelter',    state:'NC',    lat:35.043,  lng:-83.566,  mile:87.7,  elev:4980, url:'shelter-standing-indian.html',    water:'Spring 100 yds south' },
+  { name:'Carter Gap Shelter',         state:'NC',    lat:35.070,  lng:-83.596,  mile:91.7,  elev:4540, url:'shelter-carter-gap.html',         water:'Spring nearby' },
+  { name:'Big Spring Shelter',         state:'NC',    lat:35.097,  lng:-83.589,  mile:96.8,  elev:4750, url:'shelter-big-spring.html',         water:'Big Spring, reliable year-round' },
+  { name:'Rock Gap Shelter',           state:'NC',    lat:35.137,  lng:-83.579,  mile:101.5, elev:3750, url:'shelter-rock-gap.html',           water:'Spring nearby' },
+  { name:'Siler Bald Shelter',         state:'NC',    lat:35.164,  lng:-83.548,  mile:107.7, elev:5240, url:'shelter-siler-bald.html',         water:'Spring 0.1 mi south' },
+  { name:'Cold Spring Shelter',        state:'NC',    lat:35.185,  lng:-83.537,  mile:113.0, elev:4940, url:'shelter-cold-spring.html',        water:'Cold Spring, reliable' },
+  { name:'Wayah Bald Shelter',         state:'NC',    lat:35.187,  lng:-83.551,  mile:115.4, elev:5100, url:'shelter-wayah-bald.html',         water:'Spring nearby' },
+  { name:'Wesser Bald Shelter',        state:'NC',    lat:35.282,  lng:-83.582,  mile:131.2, elev:4115, url:'shelter-wesser-bald.html',        water:'Boxed spring 0.1 mi south on blue blaze' },
+  { name:'A. Rufus Morgan Shelter',    state:'NC',    lat:35.334,  lng:-83.579,  mile:134.0, elev:1700, url:'shelter-rufus-morgan.html',       water:'Nantahala River nearby; spring at shelter' },
+  { name:'Sassafras Gap Shelter',      state:'NC',    lat:35.355,  lng:-83.630,  mile:138.5, elev:3440, url:'shelter-sassafras-gap-nc.html',   water:'Spring nearby' },
+  { name:'Brown Fork Gap Shelter',     state:'NC',    lat:35.393,  lng:-83.685,  mile:143.8, elev:3740, url:'shelter-brown-fork-gap.html',     water:'Spring 100 yds on blue-blazed trail' },
+  { name:'Cable Gap Shelter',          state:'NC',    lat:35.422,  lng:-83.741,  mile:150.8, elev:2900, url:'shelter-cable-gap.html',          water:'Spring 50 yds from shelter' },
+  { name:'Fontana Dam Shelter',        state:'NC',    lat:35.447,  lng:-83.803,  mile:164.7, elev:1680, url:'shelter-fontana-dam.html',        water:'Running water on site (piped)' },
+  { name:'Birch Spring Gap Shelter',   state:'GSMNP', lat:35.512,  lng:-83.836,  mile:168.1, elev:3400, url:'shelter-birch-spring-gap.html',   water:'Spring on blue-blaze side trail' },
+  { name:'Russell Field Shelter',      state:'GSMNP', lat:35.547,  lng:-83.820,  mile:174.2, elev:4360, url:'shelter-russell-field.html',      water:'Spring 0.1 mi on side trail' },
+  { name:'Mollies Ridge Shelter',      state:'GSMNP', lat:35.562,  lng:-83.800,  mile:177.8, elev:4570, url:'shelter-mollies-ridge.html',      water:'Spring nearby' },
+  { name:'Spence Field Shelter',       state:'GSMNP', lat:35.572,  lng:-83.775,  mile:180.7, elev:4900, url:'shelter-spence-field.html',       water:'Spring 0.1 mi downhill' },
+  { name:'Derrick Knob Shelter',       state:'GSMNP', lat:35.581,  lng:-83.715,  mile:186.6, elev:4880, url:'shelter-derrick-knob.html',       water:'Spring on side trail' },
+  { name:'Silers Bald Shelter',        state:'GSMNP', lat:35.577,  lng:-83.677,  mile:192.0, elev:5460, url:'shelter-silers-bald.html',        water:'Spring 0.15 mi south on side trail' },
+  { name:'Double Spring Gap Shelter',  state:'GSMNP', lat:35.572,  lng:-83.652,  mile:195.3, elev:5510, url:'shelter-double-spring-gap.html',  water:'Two springs nearby (namesake)' },
+  { name:'Mount Collins Shelter',      state:'GSMNP', lat:35.564,  lng:-83.558,  mile:200.5, elev:5870, url:'shelter-mount-collins.html',      water:'Spring 0.3 mi on side trail' },
+  { name:'Icewater Spring Shelter',    state:'GSMNP', lat:35.623,  lng:-83.405,  mile:207.3, elev:5820, url:'shelter-icewater-spring.html',    water:'Icewater Spring (reliable, cold)' },
+  { name:'Pecks Corner Shelter',       state:'GSMNP', lat:35.687,  lng:-83.315,  mile:213.0, elev:5280, url:'shelter-pecks-corner.html',       water:'Spring nearby' },
+  { name:'Tricorner Knob Shelter',     state:'GSMNP', lat:35.712,  lng:-83.265,  mile:216.7, elev:5920, url:'shelter-tricorner-knob.html',     water:'Spring 0.2 mi south on side trail' },
+  { name:'Cosby Knob Shelter',         state:'GSMNP', lat:35.738,  lng:-83.198,  mile:222.4, elev:4700, url:'shelter-cosby-knob.html',         water:'Spring nearby' },
+  { name:'Davenport Gap Shelter',      state:'GSMNP', lat:35.762,  lng:-83.145,  mile:227.3, elev:1975, url:'shelter-davenport-gap.html',      water:'Spring on side trail' },
 ];
+
+// ── Sunrise/Sunset calculator (NOAA algorithm) ─────────────────────────────
+function calcSun(lat, lng, date) {
+  const rad = Math.PI / 180;
+  const jd = Math.floor(365.25 * (date.getFullYear() + 4716)) + Math.floor(30.6001 * ((date.getMonth() < 2 ? date.getMonth() + 13 : date.getMonth() + 1))) + date.getDate() - 1524.5;
+  const jc = (jd - 2451545) / 36525;
+  const gml = (280.46646 + jc * (36000.76983 + 0.0003032 * jc)) % 360;
+  const gma = 357.52911 + jc * (35999.05029 - 0.0001537 * jc);
+  const eeo = 0.016708634 - jc * (0.000042037 + 0.0000001267 * jc);
+  const sec = Math.sin(gma * rad) * (1.914602 - jc * (0.004817 + 0.000014 * jc)) + Math.sin(2 * gma * rad) * (0.019993 - 0.000101 * jc) + Math.sin(3 * gma * rad) * 0.000289;
+  const stl = gml + sec, sta = gma + sec;
+  const sal = stl - 0.00569 - 0.00478 * Math.sin((125.04 - 1934.136 * jc) * rad);
+  const oe = 23 + (26 + ((21.448 - jc * (46.815 + jc * (0.00059 - jc * 0.001813)))) / 60) / 60 + 0.00256 * Math.cos((125.04 - 1934.136 * jc) * rad);
+  const sd = Math.asin(Math.sin(oe * rad) * Math.sin(sal * rad)) / rad;
+  const y = Math.tan(oe / 2 * rad) * Math.tan(oe / 2 * rad);
+  const eot = 4 * (y * Math.sin(2 * gml * rad) - 2 * eeo * Math.sin(gma * rad) + 4 * eeo * y * Math.sin(gma * rad) * Math.cos(2 * gml * rad) - 0.5 * y * y * Math.sin(4 * gml * rad) - 1.25 * eeo * eeo * Math.sin(2 * gma * rad)) / rad;
+  const ha = Math.acos(Math.cos(90.833 * rad) / (Math.cos(lat * rad) * Math.cos(sd * rad)) - Math.tan(lat * rad) * Math.tan(sd * rad)) / rad;
+  const noon = (720 - 4 * lng - eot + new Date().getTimezoneOffset()) / 1440;
+  const rise = noon - ha * 4 / 1440, set = noon + ha * 4 / 1440;
+  function fmt(f) { const m = Math.round(f * 1440), h = Math.floor(m / 60), mn = m % 60, ap = h >= 12 ? 'PM' : 'AM'; return ((h % 12) || 12) + ':' + (mn < 10 ? '0' : '') + mn + ' ' + ap; }
+  const daylight = (set - rise) * 24;
+  const now = (date.getHours() * 60 + date.getMinutes()) / 1440;
+  const remaining = Math.max(0, (set - now) * 24);
+  return { rise: fmt(rise), set: fmt(set), daylight: daylight.toFixed(1), remaining: parseFloat(((set - now) * 24).toFixed(1)), setFrac: set };
+}
 
 function getWaterStatus(waterText) {
   const w = waterText.toLowerCase();
@@ -312,6 +355,52 @@ function calculate() {
     li.innerHTML = `<span class="route-dot ${stateClass}"></span><a href="${s.url}" style="flex:1;min-width:0;color:inherit;text-decoration:none;" class="route-name">${s.name}</a><span class="water-dot ${ws}" title="Water: ${s.water}"></span><span class="route-elev">${s.elev.toLocaleString()} ft</span><span class="route-mile">${segmentLabel}</span>`;
     list.appendChild(li);
   });
+
+  // Daylight / arrive before dark estimate
+  const daylightBox = document.getElementById('daylight-box');
+  const dest = to;
+  const sun = calcSun(dest.lat, dest.lng, new Date());
+  const dist = parseFloat(distance);
+  const paces = [
+    { mph: 1.5, label: 'Slow (1.5 mph)' },
+    { mph: 2.0, label: 'Average (2.0 mph)' },
+    { mph: 2.5, label: 'Fast (2.5 mph)' },
+  ];
+  const now = new Date();
+  const nowHours = now.getHours() + now.getMinutes() / 60;
+
+  let html = `<div class="title">&#127765; Arrive Before Dark?</div>`;
+  html += `<div style="margin-bottom:0.5rem;font-size:0.82rem;color:#718096;">Sunset at ${dest.name.replace(' Shelter','')}: <strong>${sun.set}</strong> &bull; ${sun.daylight}h total daylight</div>`;
+  html += `<div style="display:flex;flex-wrap:wrap;gap:0.5rem;">`;
+
+  let bestStatus = 'safe';
+  paces.forEach(p => {
+    const hours = dist / p.mph;
+    const arriveHour = nowHours + hours;
+    const arriveMin = Math.round((arriveHour % 1) * 60);
+    const arriveH = Math.floor(arriveHour) % 24;
+    const ap = arriveH >= 12 ? 'PM' : 'AM';
+    const arriveStr = ((arriveH % 12) || 12) + ':' + (arriveMin < 10 ? '0' : '') + arriveMin + ' ' + ap;
+    const sunsetHour = sun.setFrac * 24;
+    const margin = sunsetHour - arriveHour;
+    let status, statusText, color;
+    if (margin > 2) { status = 'safe'; statusText = 'Plenty of light'; color = '#276749'; }
+    else if (margin > 0.5) { status = 'warning'; statusText = 'Cutting it close'; color = '#744210'; }
+    else if (margin > 0) { status = 'danger'; statusText = 'Near dark'; color = '#742a2a'; }
+    else { status = 'danger'; statusText = 'After dark'; color = '#742a2a'; }
+    if (status === 'danger') bestStatus = 'danger';
+    else if (status === 'warning' && bestStatus !== 'danger') bestStatus = 'warning';
+    html += `<div style="flex:1;min-width:100px;background:white;border-radius:6px;padding:0.5rem;text-align:center;font-size:0.82rem;">`;
+    html += `<div style="font-weight:bold;color:#4a5568;margin-bottom:0.2rem;">${p.label}</div>`;
+    html += `<div style="color:#2d3748;">${hours.toFixed(1)}h hiking</div>`;
+    html += `<div style="color:#2d3748;">Arrive ~${arriveStr}</div>`;
+    html += `<div style="font-weight:bold;color:${color};margin-top:0.2rem;">${statusText}</div>`;
+    html += `</div>`;
+  });
+  html += `</div>`;
+  daylightBox.innerHTML = html;
+  daylightBox.className = 'daylight-box ' + bestStatus;
+  daylightBox.style.display = 'block';
 
   results.classList.add('show');
   results.scrollIntoView({ behavior: 'smooth', block: 'start' });
