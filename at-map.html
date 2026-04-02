@@ -85,9 +85,26 @@
       color: #2d3748;
     }
     .shelter-item:hover { background: #f0f4f8; }
+    .shelter-item.active { background: #ebf8ff; }
     .s-icon { font-size: 1rem; flex-shrink: 0; }
     .s-name { font-weight: bold; font-size: 0.85rem; flex: 1; min-width: 0; }
     .s-meta { font-size: 0.73rem; color: #718096; white-space: nowrap; }
+    .s-detail-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      background: #2d5a27;
+      color: white;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: bold;
+      flex-shrink: 0;
+      transition: background 0.15s;
+    }
+    .s-detail-link:hover { background: #1a3a15; }
 
     .sp h3 { font-size: 0.95rem; margin-bottom: 0.3rem; color: #2d5a27; line-height: 1.3; }
     .sp .pm { font-size: 0.8rem; color: #718096; margin-bottom: 0.4rem; line-height: 1.5; }
@@ -387,6 +404,7 @@ function makeIcon(shelter) {
 // ── Markers ───────────────────────────────────────────────────────────────────
 shelters.forEach(s => {
   const m = L.marker([s.lat, s.lng], { icon: makeIcon(s) }).addTo(map);
+  s._marker = m;
   const typeLabel = s.type === 'stone-cabin' ? 'Historic Stone Cabin' : 'Lean-to';
   let extra = '';
   if (s.hilton) extra = `<div style="background:#f3e8ff;border-radius:4px;padding:0.2rem 0.4rem;font-size:0.75rem;color:#6b21a8;margin-bottom:0.5rem;">&#11088; The Hilton of the AT</div>`;
@@ -550,6 +568,16 @@ function locateMe() {
   inner.innerHTML = '';
   let lastState = null;
   let listDiv = null;
+  let activeItem = null;
+
+  function flyToShelter(s, itemEl) {
+    if (activeItem) activeItem.classList.remove('active');
+    itemEl.classList.add('active');
+    activeItem = itemEl;
+    map.flyTo([s.lat, s.lng], 14, { duration: 0.8 });
+    s._marker.openPopup();
+  }
+
   shelters.forEach(s => {
     if (s.state !== lastState) {
       lastState = s.state;
@@ -565,13 +593,19 @@ function locateMe() {
       listDiv.className = 'shelter-list';
       inner.appendChild(listDiv);
     }
-    const a = document.createElement('a');
-    a.className = 'shelter-item';
-    a.href = s.url;
+    const row = document.createElement('div');
+    row.className = 'shelter-item';
     const icon = s.type === 'stone-cabin' ? '🏛' : (s.hilton ? '⭐' : '⛺');
-    a.innerHTML = `<span class="s-icon">${icon}</span><span class="s-name">${s.name}</span><span class="s-meta">Mile ${s.mile} &bull; ${s.elev.toLocaleString()} ft</span>`;
-    a.addEventListener('mouseenter', () => map.setView([s.lat, s.lng], 13, { animate: true }));
-    listDiv.appendChild(a);
+    row.innerHTML = `<span class="s-icon">${icon}</span><span class="s-name">${s.name}</span><span class="s-meta">Mile ${s.mile} &bull; ${s.elev.toLocaleString()} ft</span>`;
+    row.addEventListener('click', () => flyToShelter(s, row));
+    const link = document.createElement('a');
+    link.className = 's-detail-link';
+    link.href = s.url;
+    link.title = 'View shelter details';
+    link.innerHTML = '&rarr;';
+    link.addEventListener('click', e => e.stopPropagation());
+    row.appendChild(link);
+    listDiv.appendChild(row);
     // NOC link after Rufus Morgan
     if (s.noc) {
       const noc = document.createElement('a');
