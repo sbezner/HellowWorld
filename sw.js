@@ -63,6 +63,15 @@ const CORE_ASSETS = [
   'shelter-roaring-fork.html',
   'shelter-walnut-mountain.html',
   'shelter-deer-park-mountain.html',
+  // Shelter pages — Hot Springs to Erwin
+  'shelter-spring-mountain.html',
+  'shelter-little-laurel.html',
+  'shelter-jerry-cabin.html',
+  'shelter-flint-mountain.html',
+  'shelter-hogback-ridge.html',
+  'shelter-bald-mountain.html',
+  'shelter-no-business-knob.html',
+  'shelter-curley-maple-gap.html',
   // Leaflet CDN assets
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',
