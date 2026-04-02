@@ -260,7 +260,7 @@
   </div>
   <div style="display:flex;align-items:center;gap:0.5rem;flex-shrink:0;">
     <button id="info-btn" onclick="document.getElementById('legend-modal').classList.add('open')">ⓘ Legend</button>
-    <span class="offline-badge">&#9888; Map tiles require internet</span>
+    <span class="offline-badge" id="offline-badge" style="display:none;">&#9888; Offline &mdash; cached tiles only</span>
   </div>
 </div>
 
@@ -632,6 +632,15 @@ function locateMe() {
     { timeout: 10000, maximumAge: 60000 }
   );
 }
+
+// ── Offline badge ────────────────────────────────────────────────────────────
+(function() {
+  var badge = document.getElementById('offline-badge');
+  function update() { badge.style.display = navigator.onLine ? 'none' : 'inline-block'; }
+  window.addEventListener('online', update);
+  window.addEventListener('offline', update);
+  update();
+})();
 
 // Build shelter-list divs properly (one per state)
 (function fixList() {
