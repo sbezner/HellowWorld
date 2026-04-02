@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Abingdon Gap Shelter — AT Mile 460.8, 3,785 ft, sleeps 5. Last shelter before Damascus, VA. Concrete block lean-to in Johnson County, TN.">
+<title>Abingdon Gap Shelter – Appalachian Trail TN</title>
+<style>
+* { box-sizing: border-box; }
+body { margin:0; padding:1.5rem; background:#f0f4f8; font-family:sans-serif; color:#2d3748; }
+h1 { font-size:1.7rem; margin-bottom:0.2rem; }
+.subtitle { color:#718096; font-size:0.88rem; margin-bottom:1.25rem; }
+.breadcrumb { font-size:0.78rem; color:#718096; margin-bottom:0.75rem; }
+.breadcrumb a { color:#3182ce; text-decoration:none; }
+.breadcrumb a:hover { text-decoration:underline; }
+.section { background:white; border-radius:8px; padding:1.25rem; margin-bottom:1.25rem; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+.section h2 { margin:0 0 1rem; font-size:1.1rem; color:#2b6cb0; border-bottom:1px solid #e2e8f0; padding-bottom:0.5rem; }
+.stat-grid { display:flex; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.75rem; }
+.stat { background:#ebf8ff; border-radius:6px; padding:0.4rem 0.75rem; font-size:0.85rem; }
+.stat span { font-weight:bold; color:#2b6cb0; }
+.badge { font-size:0.75rem; padding:0.2rem 0.6rem; border-radius:12px; font-weight:bold; white-space:nowrap; display:inline-block; }
+.badge-free { background:#c6f6d5; color:#276749; }
+.badge-paid { background:#bee3f8; color:#2b6cb0; }
+.alert { background:#f0fff4; border-left:4px solid #38a169; padding:0.75rem 1rem; border-radius:0 6px 6px 0; font-size:0.9rem; color:#276749; margin-bottom:1.25rem; }
+.alert strong { display:block; margin-bottom:0.2rem; }
+.warning { background:#fff5f5; border-left:4px solid #e53e3e; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#742a2a; margin-bottom:0.6rem; }
+.tip { background:#fffbeb; border-left:4px solid #f6ad55; padding:0.65rem 1rem; border-radius:0 6px 6px 0; font-size:0.88rem; color:#744210; margin-top:0.75rem; }
+.info { background:#ebf8ff; border-left:4px solid #3182ce; padding:0.75rem 1rem; border-radius:0 6px 6px 0; font-size:0.9rem; color:#2a4365; margin-bottom:1.25rem; }
+.info strong { display:block; margin-bottom:0.2rem; }
+.route-grid { display:flex; flex-wrap:wrap; gap:0.75rem; }
+.route-card { flex:1 1 220px; border-radius:8px; padding:1rem; border:2px solid transparent; }
+.route-card.recommended { background:#f0fff4; border-color:#38a169; }
+.route-card.alternate { background:#ebf8ff; border-color:#90cdf4; }
+.route-card.far { background:#f7fafc; border-color:#cbd5e0; }
+.route-card h3 { margin:0 0 0.3rem; font-size:1rem; }
+.route-card.recommended h3 { color:#276749; }
+.route-card.alternate h3 { color:#2b6cb0; }
+.route-card.far h3 { color:#4a5568; }
+.route-badge { display:inline-block; font-size:0.72rem; font-weight:bold; padding:0.15rem 0.5rem; border-radius:10px; margin-bottom:0.5rem; }
+.badge-rec { background:#c6f6d5; color:#276749; }
+.badge-alt { background:#bee3f8; color:#2b6cb0; }
+.badge-far { background:#e2e8f0; color:#4a5568; }
+.route-card p { margin:0; font-size:0.88rem; line-height:1.6; }
+.lodging-card { border:1px solid #e2e8f0; border-radius:8px; padding:1rem; margin-bottom:0.75rem; }
+.lodging-card:last-child { margin-bottom:0; }
+.lodging-header { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.3rem; }
+.lodging-name { font-weight:bold; font-size:1rem; color:#1a365d; }
+.lodging-meta { font-size:0.8rem; color:#718096; margin-bottom:0.5rem; }
+.lodging-desc { font-size:0.88rem; line-height:1.5; color:#4a5568; margin-bottom:0.75rem; }
+.pros-cons { display:flex; flex-wrap:wrap; gap:0.75rem; }
+.pros, .cons { flex:1 1 160px; font-size:0.83rem; line-height:1.7; }
+.pros { background:#f0fff4; border-radius:6px; padding:0.6rem 0.75rem; }
+.cons { background:#fff5f5; border-radius:6px; padding:0.6rem 0.75rem; }
+.pros strong { color:#276749; display:block; margin-bottom:0.2rem; }
+.cons strong { color:#c53030; display:block; margin-bottom:0.2rem; }
+.pros ul, .cons ul { margin:0; padding-left:1.2rem; }
+.contact-row { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:0.75rem; }
+.call-btn { display:inline-block; background:#2b6cb0; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; font-weight:bold; }
+.call-btn:hover { background:#2c5282; }
+.text-btn { display:inline-block; background:#38a169; color:white; text-decoration:none; padding:0.45rem 1rem; border-radius:6px; font-size:0.88rem; font-weight:bold; }
+.text-btn:hover { background:#276749; }
+.nav-strip { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-top:1.5rem; }
+.nav-btn { display:inline-block; padding:0.5rem 1rem; border-radius:6px; font-size:0.88rem; text-decoration:none; background:white; color:#2b6cb0; border:1px solid #bee3f8; }
+.nav-btn:hover { background:#ebf8ff; }
+a.back { display:inline-block; margin-top:1rem; color:#3182ce; text-decoration:none; font-size:0.95rem; }
+a.back:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+
+<div class="breadcrumb">
+  <a href="index.html">Home</a> &rsaquo;
+  <a href="at-map.html">AT Map</a> &rsaquo;
+  Abingdon Gap Shelter
+</div>
+
+<h1>Abingdon Gap Shelter</h1>
+<p class="subtitle">Tennessee &nbsp;&middot;&nbsp; AT Mile 460.8 &nbsp;&middot;&nbsp; Lean-to &nbsp;&middot;&nbsp; Elev. 3,785 ft</p>
+
+<div class="info">
+  <strong>&#127937; Last shelter before Damascus, VA</strong> "Trail Town USA" is approximately 8 miles north. The AT runs directly through downtown Damascus.
+</div>
+
+
+<!-- WEATHER WIDGET -->
+<div style="background:white;border-radius:8px;padding:1.25rem;margin-bottom:1.25rem;box-shadow:0 2px 6px rgba(0,0,0,0.08);">
+  <h2 style="margin:0 0 1rem;font-size:1.1rem;color:#2b6cb0;border-bottom:1px solid #e2e8f0;padding-bottom:0.5rem;">&#127783; Current Weather at Shelter</h2>
+  <div id="wx-loading" style="color:#718096;font-size:0.88rem;padding:0.5rem 0;">Loading weather&#8230;</div>
+  <div id="wx-data" style="display:none;">
+    <div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:center;margin-bottom:1rem;">
+      <div id="wx-icon" style="font-size:3rem;line-height:1;"></div>
+      <div>
+        <div id="wx-temp" style="font-size:2rem;font-weight:bold;color:#2d3748;"></div>
+        <div id="wx-desc" style="color:#718096;font-size:0.88rem;margin-top:0.2rem;"></div>
+      </div>
+      <div style="margin-left:auto;text-align:right;">
+        <div id="wx-wind"   style="font-size:0.83rem;color:#4a5568;"></div>
+        <div id="wx-precip" style="font-size:0.83rem;color:#4a5568;"></div>
+        <div id="wx-hilo"   style="font-size:0.83rem;color:#4a5568;"></div>
+      </div>
+    </div>
+    <div id="wx-forecast" style="display:flex;gap:0.5rem;flex-wrap:wrap;"></div>
+  </div>
+  <div id="wx-err" style="display:none;background:#fff5f5;border-left:4px solid #e53e3e;padding:0.65rem 1rem;border-radius:0 6px 6px 0;font-size:0.88rem;color:#742a2a;">
+    Weather unavailable &mdash; no internet connection. All shelter information is still accessible offline.
+  </div>
+</div>
+<script>
+var LAT=36.581,LNG=-81.902;
+(function(){
+  var url='https://api.open-meteo.com/v1/forecast?latitude='+LAT+'&longitude='+LNG
+    +'&current=temperature_2m,apparent_temperature,precipitation,weathercode,windspeed_10m,winddirection_10m'
+    +'&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_sum'
+    +'&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch'
+    +'&timezone=America%2FNew_York&forecast_days=3';
+  function icon(c){
+    if(c===0)return'&#9728;&#65039;';if(c<=2)return'&#127780;&#65039;';if(c===3)return'&#9925;';
+    if(c<=48)return'&#127787;&#65039;';if(c<=55)return'&#127746;';if(c<=67)return'&#127783;';
+    if(c<=77)return'&#127784;';if(c<=82)return'&#127746;';if(c<=86)return'&#127784;';return'&#9928;&#65039;';
+  }
+  function desc(c){
+    if(c===0)return'Clear sky';if(c===1)return'Mainly clear';if(c===2)return'Partly cloudy';
+    if(c===3)return'Overcast';if(c<=48)return'Foggy';if(c<=55)return'Drizzle';
+    if(c<=67)return'Rain';if(c<=77)return'Snow';if(c<=82)return'Showers';
+    if(c<=86)return'Snow showers';return'Thunderstorm';
+  }
+  function wdir(d){return['N','NE','E','SE','S','SW','W','NW'][Math.round(d/45)%8];}
+  function dname(s){return['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][new Date(s+'T12:00:00').getDay()];}
+  fetch(url).then(function(r){return r.json();}).then(function(d){
+    var c=d.current;
+    document.getElementById('wx-loading').style.display='none';
+    document.getElementById('wx-data').style.display='block';
+    document.getElementById('wx-icon').innerHTML=icon(c.weathercode);
+    document.getElementById('wx-temp').textContent=Math.round(c.temperature_2m)+'°F';
+    document.getElementById('wx-desc').textContent=desc(c.weathercode)+' · Feels like '+Math.round(c.apparent_temperature)+'°F';
+    document.getElementById('wx-wind').textContent='Wind: '+Math.round(c.windspeed_10m)+' mph '+wdir(c.winddirection_10m);
+    document.getElementById('wx-precip').textContent='Precip: '+c.precipitation+'"';
+    document.getElementById('wx-hilo').textContent='Hi/Lo: '+Math.round(d.daily.temperature_2m_max[0])+'° / '+Math.round(d.daily.temperature_2m_min[0])+'°';
+    var fc=document.getElementById('wx-forecast');
+    for(var i=0;i<3;i++){
+      var el=document.createElement('div');
+      el.style.cssText='flex:1;min-width:80px;background:#f0f4f8;border-radius:6px;padding:0.5rem;text-align:center;font-size:0.82rem;';
+      el.innerHTML='<div style="font-weight:bold;color:#4a5568;">'+dname(d.daily.time[i])+'</div>'
+        +'<div style="font-size:1.5rem;line-height:1.4;">'+icon(d.daily.weathercode[i])+'</div>'
+        +'<div style="color:#2d3748;">'+Math.round(d.daily.temperature_2m_max[i])+'° / '+Math.round(d.daily.temperature_2m_min[i])+'°</div>'
+        +'<div style="color:#718096;">'+d.daily.precipitation_sum[i]+'"</div>';
+      fc.appendChild(el);
+    }
+  }).catch(function(){
+    document.getElementById('wx-loading').style.display='none';
+    document.getElementById('wx-err').style.display='block';
+  });
+})();
+</script>
+<!-- END WEATHER WIDGET -->
+<!-- SUNRISE/SUNSET WIDGET -->
+<div style="background:white;border-radius:8px;padding:1.25rem;margin-bottom:1.25rem;box-shadow:0 2px 6px rgba(0,0,0,0.08);">
+  <h2 style="margin:0 0 1rem;font-size:1.1rem;color:#2b6cb0;border-bottom:1px solid #e2e8f0;padding-bottom:0.5rem;">&#127765; Sunrise &amp; Sunset</h2>
+  <div id="sun-data" style="display:flex;flex-wrap:wrap;gap:0.5rem;"></div>
+</div>
+<script>
+(function(){
+  var rad=Math.PI/180;
+  function calcSun(lat,lng,date){
+    var jd=Math.floor(365.25*(date.getFullYear()+4716))+Math.floor(30.6001*(date.getMonth()<2?date.getMonth()+13:date.getMonth()+1))+date.getDate()-1524.5;
+    var jc=(jd-2451545)/36525;
+    var gml=(280.46646+jc*(36000.76983+.0003032*jc))%360;
+    var gma=357.52911+jc*(35999.05029-.0001537*jc);
+    var eeo=.016708634-jc*(.000042037+.0000001267*jc);
+    var sec=Math.sin(gma*rad)*(1.914602-jc*(.004817+.000014*jc))+Math.sin(2*gma*rad)*(.019993-.000101*jc)+Math.sin(3*gma*rad)*.000289;
+    var stl=gml+sec,sta=gma+sec;
+    var sal=stl-.00569-.00478*Math.sin((125.04-1934.136*jc)*rad);
+    var oe=23+(26+((21.448-jc*(46.815+jc*(.00059-jc*.001813))))/60)/60+.00256*Math.cos((125.04-1934.136*jc)*rad);
+    var sd=Math.asin(Math.sin(oe*rad)*Math.sin(sal*rad))/rad;
+    var y=Math.tan(oe/2*rad)*Math.tan(oe/2*rad);
+    var eot=4*(y*Math.sin(2*gml*rad)-2*eeo*Math.sin(gma*rad)+4*eeo*y*Math.sin(gma*rad)*Math.cos(2*gml*rad)-.5*y*y*Math.sin(4*gml*rad)-1.25*eeo*eeo*Math.sin(2*gma*rad))/rad;
+    var ha=Math.acos(Math.cos(90.833*rad)/(Math.cos(lat*rad)*Math.cos(sd*rad))-Math.tan(lat*rad)*Math.tan(sd*rad))/rad;
+    var noon=(720-4*lng-eot-(function(d){var mar=new Date(d.getFullYear(),2,1),nov=new Date(d.getFullYear(),10,1);mar.setDate(14-mar.getDay());nov.setDate(1+(7-nov.getDay())%7);return(d>=mar&&d<nov)?240:300;})(date))/1440;
+    var rise=noon-ha*4/1440,set=noon+ha*4/1440;
+    function fmt(f){var m=Math.round(f*1440);if(m<0)m+=1440;m=m%1440;var h=Math.floor(m/60),mn=m%60,ap=h>=12?'PM':'AM';return((h%12)||12)+':'+(mn<10?'0':'')+mn+' '+ap;}
+    var daylight=(set-rise)*24;
+    var etOff=(function(d){var mar=new Date(d.getFullYear(),2,1),nov=new Date(d.getFullYear(),10,1);mar.setDate(14-mar.getDay());nov.setDate(1+(7-nov.getDay())%7);return(d>=mar&&d<nov)?240:300;})(date);var nowUtc=date.getUTCHours()*60+date.getUTCMinutes();var now=((nowUtc-etOff+1440)%1440)/1440;
+    var remaining=(now>=rise&&now<=set)?Math.max(0,(set-now)*24):0;
+    return{rise:fmt(rise),set:fmt(set),daylight:daylight.toFixed(1),remaining:remaining.toFixed(1),twilight:remaining>0?Math.max(0,remaining+.5).toFixed(1):'0'};
+  }
+  var container=document.getElementById('sun-data');
+  var today=new Date();
+  var days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  for(var i=0;i<4;i++){
+    var d=new Date(today);d.setDate(d.getDate()+i);
+    var s=calcSun(LAT,LNG,d);
+    var label=i===0?'Today':days[d.getDay()];
+    var isToday=i===0;
+    var el=document.createElement('div');
+    el.style.cssText='flex:1;min-width:120px;background:'+(isToday?'#fffbeb':'#f0f4f8')+';border-radius:6px;padding:0.6rem;text-align:center;font-size:0.82rem;'+(isToday?'border:2px solid #ecc94b;':'');
+    el.innerHTML='<div style="font-weight:bold;color:#4a5568;margin-bottom:0.3rem;">'+label+'</div>'
+      +'<div style="color:#744210;">&#127749; '+s.rise+'</div>'
+      +'<div style="color:#2b6cb0;">&#127751; '+s.set+'</div>'
+      +'<div style="color:#718096;margin-top:0.25rem;">'+s.daylight+'h daylight</div>'
+      +(isToday?(parseFloat(s.remaining)>0?'<div style="font-weight:bold;color:'+(parseFloat(s.remaining)<2?'#e53e3e':'#276749')+';margin-top:0.25rem;">'+s.remaining+'h until sunset</div>'+'<div style="color:#718096;font-size:0.75rem;">Hikeable light: ~'+s.twilight+'h</div>':'<div style="font-weight:bold;color:#718096;margin-top:0.25rem;">Currently dark</div>'):'');
+    container.appendChild(el);
+  }
+})();
+</script>
+<!-- END SUNRISE/SUNSET WIDGET -->
+
+<div class="section">
+  <h2>Shelter Overview</h2>
+  <div class="stat-grid">
+    <div class="stat">AT Mile <span>460.8</span></div>
+    <div class="stat">Elevation <span>3,785 ft</span></div>
+    <div class="stat">Capacity <span>5</span></div>
+    <div class="stat">Type <span>Concrete block lean-to (built 1959 by USFS)</span></div>
+    <div class="stat">County <span>Johnson, TN</span></div>
+    <div class="stat">Water <span>Spring 275 yards downhill S on steep blue blaze</span></div>
+    <div class="stat">Privy <span>No</span></div>
+    <div class="stat">Fee <span class="badge badge-free">Free</span></div>
+  </div>
+
+  <p>Abingdon Gap Shelter is the last shelter before Virginia and Damascus! Built in 1959 by the US Forest Service, it is the oldest USFS shelter in this section of the AT. This small concrete block lean-to sleeps just 5 and is located on Holston Mountain in Maple Springs Gap, Johnson County, Tennessee.</p>
+
+  <p>The water source requires a steep 275-yard descent on a blue-blazed trail to a spring south of the shelter. This can be a challenging water run, especially when tired at the end of a long day. Fill up before arriving if possible, or be prepared for the steep downhill and return climb.</p>
+
+  <p>The next shelter north is approximately 10.2 miles into Virginia. Damascus, VA — known as "Trail Town USA" — is about 8 miles north and is home to the annual Trail Days festival held each May. The AT runs directly through downtown Damascus, making it one of the most iconic trail town experiences on the entire Appalachian Trail. Most NOBO thru-hikers look forward to Damascus as a major milestone and resupply point.</p>
+
+  <p>The shelter is maintained by the Tennessee Eastman Hiking and Canoeing Club (TEHCC). Despite its small size and age, it provides adequate protection and marks the final Tennessee shelter for northbound hikers.</p>
+
+  <div class="tip">
+    <strong>Damascus Ahead:</strong> If you are pushing for Damascus, the 8-mile hike north from Abingdon Gap is mostly downhill and very doable in a half day. Many hikers choose to skip this shelter entirely and push through to town for a hot meal and a bed. Trail Days in mid-May draws thousands of hikers and former thru-hikers — plan accordingly if you are in the area during the festival.
+  </div>
+</div>
+
+<div class="section">
+  <h2>Getting Supplies</h2>
+  <p style="font-size:0.88rem; color:#4a5568; margin-bottom:1rem;">Abingdon Gap Shelter is well-positioned for resupply, with Damascus just 8 miles north. Most NOBO hikers push through to Damascus for a full town stop.</p>
+
+  <div class="route-grid">
+    <div class="route-card recommended">
+      <span class="route-badge badge-rec">RECOMMENDED</span>
+      <h3>Damascus, VA — ~8 mi north</h3>
+      <p><strong>~8 miles north on the AT.</strong> Damascus is a full-service trail town known as "Trail Town USA." The AT runs directly through Main Street. You will find grocery stores, restaurants, outfitters (Mt. Rogers Outfitters), a post office for mail drops, laundry, and multiple hiker hostels. Damascus is one of the best resupply and rest stops on the entire AT.</p>
+    </div>
+    <div class="route-card far">
+      <span class="route-badge badge-far">BEHIND YOU</span>
+      <h3>US 421 / Shady Valley — ~5 mi south</h3>
+      <p><strong>~5 miles south on the AT to US 421.</strong> Shady Valley is a small community with very limited services. Not recommended as a primary resupply — push north to Damascus instead if you can.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2>Where to Sleep Nearby</h2>
+
+  <div class="lodging-card">
+    <div class="lodging-header">
+      <span class="lodging-name">Abingdon Gap Shelter (AT Lean-to)</span>
+      <span class="badge badge-free">Free</span>
+    </div>
+    <div class="lodging-meta">On AT · Mile 460.8 · Capacity 5</div>
+    <div class="lodging-desc">Concrete block lean-to built in 1959 by the US Forest Service — the oldest USFS shelter in this section. Sleeps 5 on a wooden platform. No privy. Water is a spring 275 yards downhill on a steep blue-blazed trail. Limited tent camping options nearby.</div>
+    <div class="pros-cons">
+      <div class="pros"><strong>Pros</strong>
+        <ul>
+          <li>No cost</li>
+          <li>Last shelter before Damascus</li>
+          <li>Historic — oldest USFS shelter in section</li>
+        </ul>
+      </div>
+      <div class="cons"><strong>Cons</strong>
+        <ul>
+          <li>Very small capacity (5 only)</li>
+          <li>No privy</li>
+          <li>Steep 275-yard descent to water</li>
+          <li>Limited tent camping</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="lodging-card">
+    <div class="lodging-header">
+      <span class="lodging-name">The Place — Damascus, VA</span>
+      <span class="badge badge-free">Donation-based</span>
+    </div>
+    <div class="lodging-meta">~8 mi north · Seasonal (typically Apr–Oct)</div>
+    <div class="lodging-desc">A hiker hostel run by the Damascus United Methodist Church. Bunk beds, hot showers, kitchen access, and laundry. Operates on a donation basis — suggested donation is typically $7–10/night. One of the most beloved hostels on the entire AT. Located right in downtown Damascus.</div>
+    <div class="pros-cons">
+      <div class="pros"><strong>Pros</strong>
+        <ul>
+          <li>Donation-based (very affordable)</li>
+          <li>Hot showers and laundry</li>
+          <li>Kitchen access</li>
+          <li>Walking distance to all Damascus services</li>
+          <li>Strong hiker community atmosphere</li>
+        </ul>
+      </div>
+      <div class="cons"><strong>Cons</strong>
+        <ul>
+          <li>8 miles north — must hike there first</li>
+          <li>Can be very crowded during peak season</li>
+          <li>Seasonal availability</li>
+          <li>Basic accommodations (bunk beds)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="nav-strip">
+  <a href="shelter-double-springs.html" class="nav-btn">&larr; Double Springs</a>
+  <a href="at-map.html" class="nav-btn">&#9968; Back to Map</a>
+  <span class="nav-btn" style="opacity:0.4;cursor:default;">Northern Terminus &rarr;</span>
+</div>
+
+<a href="index.html" class="back">&larr; Back to Home</a>
+
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}</script>
+</body>
+</html>
