@@ -18,6 +18,7 @@ const CORE_ASSETS = [
   'low-gap-resupply.html',
   'hostel-vs-hotel.html',
   'sumner-parts.html',
+  'gear-checklist.html',
   // Shelter pages — Georgia
   'shelter-springer-mountain.html',
   'shelter-stover-creek.html',
@@ -85,6 +86,8 @@ const CORE_ASSETS = [
   'shelter-iron-mountain.html',
   'shelter-double-springs.html',
   'shelter-abingdon-gap.html',
+  // Tools
+  'gear-checklist.html',
   // Leaflet CDN assets
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',

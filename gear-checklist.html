@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interactive AT thru-hiker gear checklist with weight calculator. Track your base weight, consumables, and total pack weight for the Appalachian Trail.">
+  <title>AT Gear Checklist &mdash; Pack Weight Calculator</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { padding: 1.5rem; background: #f0f4f8; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #2d3748; }
+    h1 { font-size: 1.7rem; margin-bottom: 0.2rem; }
+    .subtitle { color: #718096; font-size: 0.88rem; margin-bottom: 1.25rem; }
+    .breadcrumb { font-size: 0.78rem; color: #718096; margin-bottom: 0.75rem; }
+    .breadcrumb a { color: #3182ce; text-decoration: none; }
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    .section { background: white; border-radius: 8px; padding: 1.25rem; margin-bottom: 1.25rem; box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+    .section > h2 { margin: 0 0 1rem; font-size: 1.1rem; color: #2b6cb0; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.5rem; }
+
+    /* Weight summary bar */
+    .weight-summary { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .weight-box { flex: 1 1 140px; padding: 0.75rem 1rem; border-radius: 6px; text-align: center; }
+    .weight-box .wb-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-bottom: 0.25rem; }
+    .weight-box .wb-value { font-size: 1.6rem; font-weight: 800; line-height: 1.2; }
+    .weight-box .wb-unit { font-size: 0.75rem; font-weight: 400; }
+    .wb-green { background: #f0fff4; border-left: 4px solid #38a169; color: #276749; }
+    .wb-yellow { background: #fffbeb; border-left: 4px solid #f6ad55; color: #744210; }
+    .wb-red { background: #fff5f5; border-left: 4px solid #e53e3e; color: #742a2a; }
+    .wb-blue { background: #ebf8ff; border-left: 4px solid #3182ce; color: #2b6cb0; }
+    .wb-neutral { background: #f7fafc; border-left: 4px solid #a0aec0; color: #4a5568; }
+
+    /* Category accordion */
+    .category { border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 0.75rem; overflow: hidden; }
+    .cat-header { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; background: #f7fafc; cursor: pointer; user-select: none; border: none; width: 100%; text-align: left; font-family: inherit; font-size: 0.95rem; font-weight: 700; color: #1a365d; }
+    .cat-header:hover { background: #edf2f7; }
+    .cat-header .cat-meta { font-size: 0.78rem; font-weight: 500; color: #718096; display: flex; align-items: center; gap: 0.75rem; }
+    .cat-header .cat-arrow { font-size: 0.75rem; color: #a0aec0; transition: transform 0.2s; }
+    .cat-header.collapsed .cat-arrow { transform: rotate(-90deg); }
+    .cat-body { padding: 0; }
+    .cat-body.hidden { display: none; }
+
+    /* Item rows */
+    .item-row { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border-top: 1px solid #f0f4f8; }
+    .item-row:hover { background: #f7fafc; }
+    .item-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: #3182ce; cursor: pointer; flex-shrink: 0; }
+    .item-row .item-name { flex: 1; font-size: 0.88rem; color: #2d3748; }
+    .item-row .item-name.unchecked { color: #a0aec0; text-decoration: line-through; }
+    .item-row input[type="number"] { width: 62px; padding: 0.25rem 0.4rem; border: 1px solid #e2e8f0; border-radius: 4px; font-size: 0.85rem; text-align: right; font-family: inherit; color: #2d3748; }
+    .item-row input[type="number"]:focus { outline: none; border-color: #3182ce; box-shadow: 0 0 0 2px rgba(49,130,206,0.2); }
+    .item-row .oz-label { font-size: 0.75rem; color: #718096; flex-shrink: 0; }
+    .item-row .remove-btn { background: none; border: none; color: #cbd5e0; font-size: 1.1rem; cursor: pointer; padding: 0 0.25rem; line-height: 1; }
+    .item-row .remove-btn:hover { color: #e53e3e; }
+
+    /* Add item button */
+    .add-item-row { padding: 0.5rem 1rem; border-top: 1px solid #f0f4f8; }
+    .add-btn { background: none; border: 1px dashed #cbd5e0; border-radius: 4px; padding: 0.35rem 0.75rem; font-size: 0.82rem; color: #718096; cursor: pointer; font-family: inherit; }
+    .add-btn:hover { border-color: #3182ce; color: #3182ce; background: #ebf8ff; }
+
+    /* Reset button */
+    .reset-row { text-align: center; margin-top: 0.5rem; }
+    .reset-btn { background: white; border: 1px solid #e2e8f0; border-radius: 6px; padding: 0.5rem 1.25rem; font-size: 0.85rem; color: #718096; cursor: pointer; font-family: inherit; }
+    .reset-btn:hover { border-color: #e53e3e; color: #e53e3e; }
+
+    .nav-strip { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+    .nav-btn { display: inline-block; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.88rem; text-decoration: none; background: white; color: #2b6cb0; border: 1px solid #bee3f8; }
+    .nav-btn:hover { background: #ebf8ff; }
+
+    .tip-box { background: #f0fff4; border-left: 4px solid #38a169; padding: 0.75rem 1rem; border-radius: 0 6px 6px 0; font-size: 0.88rem; color: #276749; margin-bottom: 1.25rem; }
+    .tip-box strong { display: block; margin-bottom: 0.2rem; }
+  </style>
+</head>
+<body>
+
+  <div class="breadcrumb">
+    <a href="index.html">Home</a> &rsaquo;
+    <a href="at-map.html">AT Map</a> &rsaquo;
+    Gear Checklist
+  </div>
+
+  <h1>&#127890; AT Gear Checklist</h1>
+  <p class="subtitle">Track your pack weight &mdash; check items, adjust quantities, stay light</p>
+
+  <div class="tip-box">
+    <strong>Ultralight target: under 20 lbs base weight</strong>
+    Base weight = everything except consumables (food, water, fuel). Most AT thru-hikers carry 18&ndash;25 lbs base weight. Checked items count toward your totals &mdash; uncheck anything you are leaving behind.
+  </div>
+
+  <!-- Weight Summary -->
+  <div class="section">
+    <h2>&#9878;&#65039; Pack Weight Summary</h2>
+    <div class="weight-summary">
+      <div class="weight-box wb-green" id="wb-base">
+        <div class="wb-label">Base Weight</div>
+        <div class="wb-value" id="base-weight">0<span class="wb-unit"> lbs</span></div>
+      </div>
+      <div class="weight-box wb-blue" id="wb-consumables">
+        <div class="wb-label">Consumables</div>
+        <div class="wb-value" id="consumable-weight">0<span class="wb-unit"> lbs</span></div>
+      </div>
+      <div class="weight-box wb-neutral" id="wb-total">
+        <div class="wb-label">Total Pack Weight</div>
+        <div class="wb-value" id="total-weight">0<span class="wb-unit"> lbs</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Categories container -->
+  <div id="categories"></div>
+
+  <div class="reset-row">
+    <button class="reset-btn" id="reset-btn">Reset to Defaults</button>
+  </div>
+
+  <div class="nav-strip">
+    <a class="nav-btn" href="at-map.html">&#9968; AT Map</a>
+    <a class="nav-btn" href="resupply-planner.html">&#127978; Resupply Planner</a>
+    <a class="nav-btn" href="index.html">&#8962; Home</a>
+  </div>
+
+<script>
+(function () {
+
+  var STORAGE_KEY = 'at-gear-checklist-v1';
+
+  var DEFAULT_CATEGORIES = [
+    {
+      id: 'shelter-sleep',
+      name: 'Shelter & Sleep',
+      consumable: false,
+      items: [
+        { name: 'Tent / Tarp', oz: 32, checked: true },
+        { name: 'Sleeping Bag', oz: 28, checked: true },
+        { name: 'Sleeping Pad', oz: 16, checked: true },
+        { name: 'Ground Cloth', oz: 4, checked: true }
+      ]
+    },
+    {
+      id: 'clothing-worn',
+      name: 'Clothing \u2014 Worn',
+      consumable: false,
+      items: [
+        { name: 'Hiking Shirt', oz: 6, checked: true },
+        { name: 'Hiking Shorts', oz: 5, checked: true },
+        { name: 'Underwear', oz: 2, checked: true },
+        { name: 'Hiking Socks', oz: 3, checked: true },
+        { name: 'Trail Shoes', oz: 24, checked: true },
+        { name: 'Sun Hat', oz: 3, checked: true }
+      ]
+    },
+    {
+      id: 'clothing-packed',
+      name: 'Clothing \u2014 Packed',
+      consumable: false,
+      items: [
+        { name: 'Rain Jacket', oz: 10, checked: true },
+        { name: 'Fleece / Puffy', oz: 12, checked: true },
+        { name: 'Long Pants', oz: 8, checked: true },
+        { name: 'Extra Socks (x2)', oz: 4, checked: true },
+        { name: 'Sleep Shirt', oz: 5, checked: true },
+        { name: 'Sleep Shorts', oz: 4, checked: true },
+        { name: 'Gloves', oz: 2, checked: true },
+        { name: 'Beanie', oz: 2, checked: true }
+      ]
+    },
+    {
+      id: 'cooking',
+      name: 'Cooking',
+      consumable: false,
+      items: [
+        { name: 'Stove', oz: 3, checked: true },
+        { name: 'Pot', oz: 6, checked: true },
+        { name: 'Lighter', oz: 1, checked: true },
+        { name: 'Spork', oz: 0.5, checked: true },
+        { name: 'Mug', oz: 3, checked: true }
+      ]
+    },
+    {
+      id: 'water',
+      name: 'Water',
+      consumable: false,
+      items: [
+        { name: 'Water Filter / Purifier', oz: 5, checked: true },
+        { name: 'Water Bottles / Bladder (empty)', oz: 4, checked: true }
+      ]
+    },
+    {
+      id: 'electronics',
+      name: 'Electronics',
+      consumable: false,
+      items: [
+        { name: 'Phone', oz: 7, checked: true },
+        { name: 'Battery Pack / Charger', oz: 7, checked: true },
+        { name: 'Headlamp', oz: 3, checked: true },
+        { name: 'Earbuds', oz: 2, checked: true }
+      ]
+    },
+    {
+      id: 'hygiene',
+      name: 'Hygiene',
+      consumable: false,
+      items: [
+        { name: 'Toothbrush', oz: 1, checked: true },
+        { name: 'Toothpaste', oz: 2, checked: true },
+        { name: 'Hand Sanitizer', oz: 2, checked: true },
+        { name: 'Trowel', oz: 2, checked: true },
+        { name: 'Toilet Paper', oz: 1, checked: true },
+        { name: 'Sunscreen', oz: 3, checked: true },
+        { name: 'Bug Spray', oz: 3, checked: true }
+      ]
+    },
+    {
+      id: 'first-aid',
+      name: 'First Aid',
+      consumable: false,
+      items: [
+        { name: 'First Aid Kit', oz: 5, checked: true },
+        { name: 'Ibuprofen', oz: 1, checked: true },
+        { name: 'Blister Care', oz: 1, checked: true },
+        { name: 'Athletic Tape', oz: 1, checked: true }
+      ]
+    },
+    {
+      id: 'nav-safety',
+      name: 'Navigation & Safety',
+      consumable: false,
+      items: [
+        { name: 'Maps / App (on phone)', oz: 0, checked: true },
+        { name: 'Whistle', oz: 0.5, checked: true },
+        { name: 'Emergency Blanket', oz: 2, checked: true }
+      ]
+    },
+    {
+      id: 'pack',
+      name: 'Pack',
+      consumable: false,
+      items: [
+        { name: 'Backpack', oz: 40, checked: true }
+      ]
+    },
+    {
+      id: 'consumables',
+      name: 'Consumables',
+      consumable: true,
+      items: [
+        { name: 'Food (per day)', oz: 32, checked: true },
+        { name: 'Water Carried (2L)', oz: 70, checked: true },
+        { name: 'Fuel Canister', oz: 8, checked: true }
+      ]
+    }
+  ];
+
+  var categories = [];
+  var collapsedState = {};
+
+  function deepCopy(obj) {
+    return JSON.parse(JSON.stringify(obj));
+  }
+
+  function loadData() {
+    try {
+      var saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        var parsed = JSON.parse(saved);
+        categories = parsed.categories || deepCopy(DEFAULT_CATEGORIES);
+        collapsedState = parsed.collapsed || {};
+        return;
+      }
+    } catch (e) { /* ignore */ }
+    categories = deepCopy(DEFAULT_CATEGORIES);
+    collapsedState = {};
+  }
+
+  function saveData() {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        categories: categories,
+        collapsed: collapsedState
+      }));
+    } catch (e) { /* ignore */ }
+  }
+
+  function calcWeights() {
+    var base = 0;
+    var consumable = 0;
+    for (var i = 0; i < categories.length; i++) {
+      var cat = categories[i];
+      for (var j = 0; j < cat.items.length; j++) {
+        var item = cat.items[j];
+        if (!item.checked) continue;
+        var w = parseFloat(item.oz) || 0;
+        if (cat.consumable) {
+          consumable += w;
+        } else {
+          base += w;
+        }
+      }
+    }
+    return { base: base, consumable: consumable, total: base + consumable };
+  }
+
+  function updateSummary() {
+    var w = calcWeights();
+    var baseLbs = (w.base / 16).toFixed(1);
+    var consLbs = (w.consumable / 16).toFixed(1);
+    var totalLbs = (w.total / 16).toFixed(1);
+
+    document.getElementById('base-weight').innerHTML = baseLbs + '<span class="wb-unit"> lbs</span>';
+    document.getElementById('consumable-weight').innerHTML = consLbs + '<span class="wb-unit"> lbs</span>';
+    document.getElementById('total-weight').innerHTML = totalLbs + '<span class="wb-unit"> lbs</span>';
+
+    // Color-code base weight box
+    var baseBox = document.getElementById('wb-base');
+    baseBox.className = 'weight-box';
+    var baseNum = parseFloat(baseLbs);
+    if (baseNum <= 20) {
+      baseBox.classList.add('wb-green');
+    } else if (baseNum <= 25) {
+      baseBox.classList.add('wb-yellow');
+    } else {
+      baseBox.classList.add('wb-red');
+    }
+
+    // Color-code total weight box
+    var totalBox = document.getElementById('wb-total');
+    totalBox.className = 'weight-box';
+    var totalNum = parseFloat(totalLbs);
+    if (totalNum <= 30) {
+      totalBox.classList.add('wb-green');
+    } else if (totalNum <= 40) {
+      totalBox.classList.add('wb-yellow');
+    } else {
+      totalBox.classList.add('wb-red');
+    }
+  }
+
+  function renderCategories() {
+    var container = document.getElementById('categories');
+    var html = '';
+
+    for (var i = 0; i < categories.length; i++) {
+      var cat = categories[i];
+      var isCollapsed = collapsedState[cat.id] === true;
+
+      // Category weight subtotal
+      var catOz = 0;
+      var checkedCount = 0;
+      for (var j = 0; j < cat.items.length; j++) {
+        if (cat.items[j].checked) {
+          catOz += parseFloat(cat.items[j].oz) || 0;
+          checkedCount++;
+        }
+      }
+      var catLbs = (catOz / 16).toFixed(1);
+
+      html += '<div class="category">';
+      html += '<button class="cat-header' + (isCollapsed ? ' collapsed' : '') + '" data-cat="' + i + '">';
+      html += '<span>' + (cat.consumable ? '&#127860; ' : '&#128092; ') + cat.name + '</span>';
+      html += '<span class="cat-meta">';
+      html += '<span>' + checkedCount + '/' + cat.items.length + ' items</span>';
+      html += '<span>' + catLbs + ' lbs</span>';
+      html += '<span class="cat-arrow">&#9660;</span>';
+      html += '</span>';
+      html += '</button>';
+      html += '<div class="cat-body' + (isCollapsed ? ' hidden' : '') + '" data-cat-body="' + i + '">';
+
+      for (var k = 0; k < cat.items.length; k++) {
+        var item = cat.items[k];
+        html += '<div class="item-row">';
+        html += '<input type="checkbox"' + (item.checked ? ' checked' : '') + ' data-cat="' + i + '" data-item="' + k + '">';
+        html += '<span class="item-name' + (!item.checked ? ' unchecked' : '') + '">' + escHtml(item.name) + '</span>';
+        html += '<input type="number" value="' + item.oz + '" step="0.5" min="0" data-cat="' + i + '" data-item="' + k + '">';
+        html += '<span class="oz-label">oz</span>';
+        if (item.custom) {
+          html += '<button class="remove-btn" data-cat="' + i + '" data-item="' + k + '" title="Remove item">&times;</button>';
+        }
+        html += '</div>';
+      }
+
+      html += '<div class="add-item-row">';
+      html += '<button class="add-btn" data-cat="' + i + '">+ Add item</button>';
+      html += '</div>';
+      html += '</div>'; // cat-body
+      html += '</div>'; // category
+    }
+
+    container.innerHTML = html;
+    updateSummary();
+  }
+
+  function escHtml(str) {
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  // Event delegation
+  document.getElementById('categories').addEventListener('click', function (e) {
+    var target = e.target;
+
+    // Collapse/expand header
+    var header = target.closest('.cat-header');
+    if (header) {
+      var catIdx = parseInt(header.getAttribute('data-cat'), 10);
+      var body = document.querySelector('[data-cat-body="' + catIdx + '"]');
+      var isNowCollapsed = !body.classList.contains('hidden');
+      if (isNowCollapsed) {
+        body.classList.add('hidden');
+        header.classList.add('collapsed');
+      } else {
+        body.classList.remove('hidden');
+        header.classList.remove('collapsed');
+      }
+      collapsedState[categories[catIdx].id] = isNowCollapsed;
+      saveData();
+      return;
+    }
+
+    // Remove custom item
+    if (target.classList.contains('remove-btn')) {
+      var ci = parseInt(target.getAttribute('data-cat'), 10);
+      var ii = parseInt(target.getAttribute('data-item'), 10);
+      categories[ci].items.splice(ii, 1);
+      saveData();
+      renderCategories();
+      return;
+    }
+
+    // Add item
+    if (target.classList.contains('add-btn')) {
+      var catI = parseInt(target.getAttribute('data-cat'), 10);
+      var itemName = prompt('Item name:');
+      if (!itemName || !itemName.trim()) return;
+      var itemOz = prompt('Weight in ounces:', '0');
+      var ozVal = parseFloat(itemOz);
+      if (isNaN(ozVal) || ozVal < 0) ozVal = 0;
+      categories[catI].items.push({ name: itemName.trim(), oz: ozVal, checked: true, custom: true });
+      saveData();
+      renderCategories();
+      return;
+    }
+  });
+
+  // Checkbox changes
+  document.getElementById('categories').addEventListener('change', function (e) {
+    var target = e.target;
+
+    if (target.type === 'checkbox') {
+      var ci = parseInt(target.getAttribute('data-cat'), 10);
+      var ii = parseInt(target.getAttribute('data-item'), 10);
+      categories[ci].items[ii].checked = target.checked;
+      // Update visual style of name
+      var nameSpan = target.parentNode.querySelector('.item-name');
+      if (nameSpan) {
+        if (target.checked) {
+          nameSpan.classList.remove('unchecked');
+        } else {
+          nameSpan.classList.add('unchecked');
+        }
+      }
+      saveData();
+      updateSummary();
+      // Update category header meta
+      updateCatHeader(ci);
+      return;
+    }
+  });
+
+  // Weight input changes
+  document.getElementById('categories').addEventListener('input', function (e) {
+    var target = e.target;
+    if (target.type === 'number') {
+      var ci = parseInt(target.getAttribute('data-cat'), 10);
+      var ii = parseInt(target.getAttribute('data-item'), 10);
+      var val = parseFloat(target.value);
+      if (isNaN(val) || val < 0) val = 0;
+      categories[ci].items[ii].oz = val;
+      saveData();
+      updateSummary();
+      updateCatHeader(ci);
+    }
+  });
+
+  function updateCatHeader(catIdx) {
+    var cat = categories[catIdx];
+    var catOz = 0;
+    var checkedCount = 0;
+    for (var j = 0; j < cat.items.length; j++) {
+      if (cat.items[j].checked) {
+        catOz += parseFloat(cat.items[j].oz) || 0;
+        checkedCount++;
+      }
+    }
+    var catLbs = (catOz / 16).toFixed(1);
+    var header = document.querySelector('.cat-header[data-cat="' + catIdx + '"]');
+    if (header) {
+      var meta = header.querySelector('.cat-meta');
+      if (meta) {
+        var spans = meta.querySelectorAll('span');
+        if (spans.length >= 2) {
+          spans[0].textContent = checkedCount + '/' + cat.items.length + ' items';
+          spans[1].textContent = catLbs + ' lbs';
+        }
+      }
+    }
+  }
+
+  // Reset button
+  document.getElementById('reset-btn').addEventListener('click', function () {
+    if (confirm('Reset all items to default weights and selections? Custom items will be removed.')) {
+      categories = deepCopy(DEFAULT_CATEGORIES);
+      collapsedState = {};
+      saveData();
+      renderCategories();
+    }
+  });
+
+  // Init
+  loadData();
+  renderCategories();
+
+}());
+</script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){});}</script>
+</body>
+</html>

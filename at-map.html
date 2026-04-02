@@ -146,7 +146,7 @@
       margin-top: 0.35rem;
     }
 
-    #info-btn {
+    #info-btn, .hdr-btn {
       background: rgba(0,0,0,0.25);
       border: none;
       border-radius: 12px;
@@ -156,8 +156,9 @@
       cursor: pointer;
       white-space: nowrap;
       flex-shrink: 0;
+      text-decoration: none;
     }
-    #info-btn:hover { background: rgba(0,0,0,0.4); }
+    #info-btn:hover, .hdr-btn:hover { background: rgba(0,0,0,0.4); }
 
     #legend-modal {
       display: none;
@@ -272,7 +273,10 @@
     <div class="sub">Appalachian Trail &mdash; Georgia to Virginia &bull; Springer Mountain to Damascus</div>
     <h1>&#9968; Appalachian Trail Map &mdash; 62 Shelters</h1>
   </div>
-  <div style="display:flex;align-items:center;gap:0.5rem;flex-shrink:0;">
+  <div style="display:flex;align-items:center;gap:0.5rem;flex-shrink:0;flex-wrap:wrap;">
+    <a href="resupply-planner.html" class="hdr-btn">&#127978; Resupply</a>
+    <a href="distance-calculator.html" class="hdr-btn">&#128207; Distance</a>
+    <a href="gear-checklist.html" class="hdr-btn">&#127890; Gear</a>
     <button id="info-btn" onclick="document.getElementById('legend-modal').classList.add('open')">ⓘ Legend</button>
     <span class="offline-badge" id="offline-badge" style="display:none;">&#9888; Offline &mdash; cached tiles only</span>
   </div>
@@ -298,8 +302,6 @@
 <div id="map-wrap">
 
   <div class="map-controls">
-    <a href="resupply-planner.html">&#127978; Resupply</a>
-    <a href="distance-calculator.html">&#128207; Distance</a>
     <button id="locate-btn" onclick="locateMe()" title="Find my location">&#9685; Locate Me</button>
   </div>
   <div id="toast"></div>
