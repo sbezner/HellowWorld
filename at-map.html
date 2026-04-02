@@ -39,32 +39,23 @@
       bottom: 0; left: 0; right: 0;
       background: white;
       border-top: 3px solid #2d5a27;
-      max-height: 60dvh;
-      max-height: 60vh;
-      overflow-y: auto;
       z-index: 1000;
-      transform: translateY(calc(100% - 42px - env(safe-area-inset-bottom, 0px)));
-      transition: transform 0.3s ease;
-      padding-bottom: env(safe-area-inset-bottom, 0px);
     }
-    #panel.open { transform: translateY(0); }
+    #shelter-list-wrap { display: none; max-height: 55dvh; max-height: 55vh; overflow-y: auto; }
+    #panel.open #shelter-list-wrap { display: block; }
 
     #panel-toggle {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.6rem 1rem;
-      padding-bottom: calc(0.6rem + env(safe-area-inset-bottom, 0px));
+      padding: 0.7rem 1rem;
       background: #2d5a27;
       color: white;
       cursor: pointer;
       font-size: 0.83rem;
       font-weight: bold;
       user-select: none;
-      position: sticky;
-      top: 0;
       z-index: 1;
-      min-height: 42px;
     }
     .arrow { transition: transform 0.3s; display: inline-block; }
     #panel.open .arrow { transform: rotate(180deg); }
@@ -79,7 +70,7 @@
       color: #4a5568;
       border-bottom: 1px solid #e2e8f0;
       position: sticky;
-      top: 42px;
+      top: 0;
     }
 
     .shelter-list { padding: 0.4rem 0.5rem; }
@@ -267,7 +258,7 @@
   <div id="map"></div>
   <div id="panel">
     <div id="panel-toggle" onclick="togglePanel()">
-      <span>&#9968; All Shelters &mdash; Click to expand list &bull; GA (11) + NC (14) + Smokies (13)</span>
+      <span>&#9968; All Shelters &nbsp;&bull;&nbsp; GA (11) &nbsp;NC (14) &nbsp;Smokies (13)</span>
       <span class="arrow">&#9650;</span>
     </div>
     <div id="shelter-list-wrap"></div>
@@ -453,6 +444,22 @@ crossings.forEach(c => {
 function togglePanel() {
   document.getElementById('panel').classList.toggle('open');
 }
+
+// Keep panel above browser toolbar on all mobile browsers
+(function() {
+  var panel = document.getElementById('panel');
+  function pinPanel() {
+    var vv = window.visualViewport;
+    if (!vv) return;
+    var bottomGap = Math.max(0, window.innerHeight - (vv.offsetTop + vv.height));
+    panel.style.bottom = bottomGap + 'px';
+  }
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', pinPanel);
+    window.visualViewport.addEventListener('scroll', pinPanel);
+    pinPanel();
+  }
+})();
 
 // ── Locate Me ─────────────────────────────────────────────────────────────────
 let userMarker = null;
