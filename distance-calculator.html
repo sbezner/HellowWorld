@@ -248,11 +248,13 @@ function calcSun(lat, lng, date) {
   const y = Math.tan(oe / 2 * rad) * Math.tan(oe / 2 * rad);
   const eot = 4 * (y * Math.sin(2 * gml * rad) - 2 * eeo * Math.sin(gma * rad) + 4 * eeo * y * Math.sin(gma * rad) * Math.cos(2 * gml * rad) - 0.5 * y * y * Math.sin(4 * gml * rad) - 1.25 * eeo * eeo * Math.sin(2 * gma * rad)) / rad;
   const ha = Math.acos(Math.cos(90.833 * rad) / (Math.cos(lat * rad) * Math.cos(sd * rad)) - Math.tan(lat * rad) * Math.tan(sd * rad)) / rad;
-  const noon = (720 - 4 * lng - eot + new Date().getTimezoneOffset()) / 1440;
+  function etOffset(d) { var mar=new Date(d.getFullYear(),2,1),nov=new Date(d.getFullYear(),10,1); mar.setDate(14-mar.getDay()); nov.setDate(1+(7-nov.getDay())%7); return(d>=mar&&d<nov)?240:300; }
+  const noon = (720 - 4 * lng - eot + etOffset(date)) / 1440;
   const rise = noon - ha * 4 / 1440, set = noon + ha * 4 / 1440;
   function fmt(f) { var m = Math.round(f * 1440); if (m < 0) m += 1440; m = m % 1440; const h = Math.floor(m / 60), mn = m % 60, ap = h >= 12 ? 'PM' : 'AM'; return ((h % 12) || 12) + ':' + (mn < 10 ? '0' : '') + mn + ' ' + ap; }
   const daylight = (set - rise) * 24;
-  const now = (date.getHours() * 60 + date.getMinutes()) / 1440;
+  const nowUtc = date.getUTCHours() * 60 + date.getUTCMinutes();
+  const now = ((nowUtc - etOffset(date) + 1440) % 1440) / 1440;
   const remaining = Math.max(0, (set - now) * 24);
   return { rise: fmt(rise), set: fmt(set), daylight: daylight.toFixed(1), remaining: parseFloat(((set - now) * 24).toFixed(1)), setFrac: set };
 }
@@ -367,7 +369,8 @@ function calculate() {
     { mph: 2.5, label: 'Fast (2.5 mph)' },
   ];
   const now = new Date();
-  const nowHours = now.getHours() + now.getMinutes() / 60;
+  const etOff = (function(d) { var mar=new Date(d.getFullYear(),2,1),nov=new Date(d.getFullYear(),10,1); mar.setDate(14-mar.getDay()); nov.setDate(1+(7-nov.getDay())%7); return(d>=mar&&d<nov)?240:300; })(now);
+  const nowHours = ((now.getUTCHours() * 60 + now.getUTCMinutes() - etOff + 1440) % 1440) / 60;
 
   let html = `<div class="title">&#127765; Arrive Before Dark?</div>`;
   html += `<div style="margin-bottom:0.5rem;font-size:0.82rem;color:#718096;">Sunset at ${dest.name.replace(' Shelter','')}: <strong>${sun.set}</strong> &bull; ${sun.daylight}h total daylight</div>`;
