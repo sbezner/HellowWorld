@@ -18,18 +18,24 @@
     .subtitle { font-size: 0.82rem; color: #718096; margin-bottom: 1rem; }
 
     /* Sticky controls */
-    .controls { position: sticky; top: 0; z-index: 100; background: #1a365d; color: white; padding: 0.65rem 1.5rem; display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+    .controls { position: sticky; top: 0; z-index: 100; background: #1a365d; color: white; padding: 0.75rem 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+    .ctrl-row-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem; }
     .ctrl-dir { display: flex; gap: 0; }
-    .ctrl-dir button { padding: 0.3rem 0.75rem; font-size: 0.78rem; font-weight: 700; border: 1px solid rgba(255,255,255,0.3); background: transparent; color: rgba(255,255,255,0.7); cursor: pointer; }
-    .ctrl-dir button:first-child { border-radius: 4px 0 0 4px; }
-    .ctrl-dir button:last-child { border-radius: 0 4px 4px 0; border-left: 0; }
+    .ctrl-dir button { padding: 0.35rem 0.9rem; font-size: 0.8rem; font-weight: 700; border: 1px solid rgba(255,255,255,0.3); background: transparent; color: rgba(255,255,255,0.7); cursor: pointer; transition: background 0.15s; }
+    .ctrl-dir button:first-child { border-radius: 5px 0 0 5px; }
+    .ctrl-dir button:last-child { border-radius: 0 5px 5px 0; border-left: 0; }
     .ctrl-dir button.active { background: white; color: #1a365d; }
-    .ctrl-slider { display: flex; align-items: center; gap: 0.5rem; flex: 1; min-width: 160px; max-width: 280px; }
-    .ctrl-slider label { font-size: 0.72rem; color: rgba(255,255,255,0.7); white-space: nowrap; }
-    .ctrl-slider input[type=range] { flex: 1; accent-color: #63b3ed; height: 4px; cursor: pointer; }
-    .ctrl-val { font-size: 0.82rem; font-weight: 800; color: #63b3ed; min-width: 2.5rem; }
-    .ctrl-total { font-size: 0.78rem; color: rgba(255,255,255,0.6); margin-left: auto; white-space: nowrap; }
-    .ctrl-total strong { color: #63b3ed; font-size: 0.88rem; }
+    .ctrl-total { font-size: 0.82rem; color: rgba(255,255,255,0.6); white-space: nowrap; }
+    .ctrl-total strong { color: #63b3ed; font-size: 1rem; }
+    .ctrl-sliders { display: flex; gap: 1.5rem; }
+    .ctrl-slider { flex: 1; }
+    .ctrl-slider-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.3rem; }
+    .ctrl-slider-label { font-size: 0.72rem; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.05em; }
+    .ctrl-val { font-size: 1rem; font-weight: 800; color: #63b3ed; }
+    .ctrl-val-unit { font-size: 0.72rem; font-weight: 400; color: rgba(255,255,255,0.5); }
+    .ctrl-slider input[type=range] { width: 100%; accent-color: #63b3ed; cursor: pointer; height: 6px; border-radius: 3px; -webkit-appearance: none; appearance: none; background: rgba(255,255,255,0.15); outline: none; }
+    .ctrl-slider input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #63b3ed; border: 2px solid white; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.3); }
+    .ctrl-slider input[type=range]::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: #63b3ed; border: 2px solid white; cursor: pointer; box-shadow: 0 1px 4px rgba(0,0,0,0.3); }
 
     /* Legend bar */
     .legend { display: flex; gap: 1.25rem; padding: 0.5rem 1.5rem; background: white; border-bottom: 1px solid #e2e8f0; font-size: 0.7rem; color: #718096; flex-wrap: wrap; align-items: center; }
@@ -116,9 +122,8 @@
 
     @media (max-width: 600px) {
       .page-header { padding: 1rem 1rem 0; }
-      .controls { padding: 0.5rem 1rem; gap: 0.75rem; }
-      .ctrl-slider { min-width: 120px; }
-      .ctrl-total { display: none; }
+      .controls { padding: 0.65rem 1rem; }
+      .ctrl-sliders { gap: 1rem; }
       .trail { padding: 0.5rem 1rem; }
       .stop-card { padding: 0.75rem 0.85rem; }
       .pass-line { padding-left: 1rem; }
@@ -141,23 +146,29 @@
 
   <!-- Sticky control bar -->
   <div class="controls">
-    <div class="ctrl-dir">
-      <button id="btn-nobo" class="active">NOBO</button>
-      <button id="btn-sobo">SOBO</button>
+    <div class="ctrl-row-top">
+      <div class="ctrl-dir">
+        <button id="btn-nobo" class="active">NOBO</button>
+        <button id="btn-sobo">SOBO</button>
+      </div>
+      <div class="ctrl-total" id="ctrl-total"><strong>38</strong> hiking days</div>
     </div>
-    <div class="ctrl-slider">
-      <label>Pace</label>
-      <input type="range" id="sl-miles" min="8" max="20" step="1" value="12">
-      <span class="ctrl-val" id="val-miles">12</span>
-      <label>mi/day</label>
+    <div class="ctrl-sliders">
+      <div class="ctrl-slider">
+        <div class="ctrl-slider-head">
+          <span class="ctrl-slider-label">Daily Pace</span>
+          <span><span class="ctrl-val" id="val-miles">12</span> <span class="ctrl-val-unit">mi/day</span></span>
+        </div>
+        <input type="range" id="sl-miles" min="8" max="20" step="1" value="12">
+      </div>
+      <div class="ctrl-slider">
+        <div class="ctrl-slider-head">
+          <span class="ctrl-slider-label">Food Carry</span>
+          <span><span class="ctrl-val" id="val-days">5</span> <span class="ctrl-val-unit">days</span></span>
+        </div>
+        <input type="range" id="sl-days" min="3" max="8" step="1" value="5">
+      </div>
     </div>
-    <div class="ctrl-slider">
-      <label>Carry</label>
-      <input type="range" id="sl-days" min="3" max="8" step="1" value="5">
-      <span class="ctrl-val" id="val-days">5</span>
-      <label>days</label>
-    </div>
-    <div class="ctrl-total" id="ctrl-total"><strong>38</strong> hiking days</div>
   </div>
 
   <!-- Legend -->
