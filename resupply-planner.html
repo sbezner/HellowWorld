@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="AT resupply planner from Springer Mountain to Damascus. Adjust daily mileage and food carry to find your resupply stops across Georgia, North Carolina, Smokies, Tennessee, and Virginia.">
-  <title>AT Resupply Planner &mdash; Springer Mountain to Damascus</title>
+  <meta name="description" content="AT Trail Planning Guide from Springer Mountain to Damascus. 62 shelters with nearest town info, day-by-day itinerary, and resupply planning.">
+  <title>AT Trail Planning Guide &mdash; Springer Mountain to Damascus</title>
   <style>
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body { margin: 0; padding: 1.5rem; background: #f0f4f8; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #2d3748; }
     h1 { font-size: 1.7rem; margin-bottom: 0.2rem; }
     .subtitle { color: #718096; font-size: 0.88rem; margin-bottom: 1.25rem; }
@@ -26,101 +26,83 @@
     .config-note { font-size: 0.78rem; color: #718096; margin-top: 0.4rem; }
     .max-range-line { margin-top: 1rem; padding: 0.75rem 1rem; background: #fffbeb; border-left: 4px solid #f6ad55; border-radius: 0 6px 6px 0; font-size: 0.88rem; color: #744210; }
 
-    /* Segment cards */
-    .segment { border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; margin-bottom: 0.75rem; display: flex; align-items: stretch; gap: 1rem; }
-    .segment:last-child { margin-bottom: 0; }
-    .seg-bar { width: 8px; border-radius: 4px; flex-shrink: 0; }
-    .seg-body { flex: 1; }
-    .seg-title { font-weight: 700; font-size: 0.95rem; color: #1a365d; margin-bottom: 0.25rem; }
-    .seg-meta { font-size: 0.82rem; color: #718096; line-height: 1.8; }
-    .seg-warn { margin-top: 0.5rem; padding: 0.4rem 0.75rem; background: #fff5f5; border-left: 3px solid #e53e3e; border-radius: 0 4px 4px 0; font-size: 0.82rem; color: #742a2a; }
-    .seg-smokies { margin-top: 0.5rem; padding: 0.4rem 0.75rem; background: #fff5f5; border-left: 3px solid #e53e3e; border-radius: 0 4px 4px 0; font-size: 0.82rem; color: #742a2a; }
-    .seg-right { text-align: right; flex-shrink: 0; padding-top: 0.1rem; }
-    .seg-days-num { font-size: 2rem; font-weight: 800; line-height: 1; }
-    .seg-days-label { font-size: 0.7rem; color: #718096; text-transform: uppercase; letter-spacing: 0.05em; }
-    .seg-status-label { font-size: 0.72rem; margin-top: 0.25rem; font-weight: 600; }
-    .col-easy { color: #38a169; }
-    .col-mod  { color: #d97706; }
-    .col-hard { color: #e53e3e; }
-    .bg-easy { background: #48bb78; }
-    .bg-mod  { background: #f6ad55; }
-    .bg-hard { background: #fc8181; }
-    .bg-crit { background: #e53e3e; }
+    .warning { background: #fff5f5; border-left: 4px solid #e53e3e; padding: 0.75rem 1rem; border-radius: 0 6px 6px 0; font-size: 0.9rem; color: #742a2a; margin-bottom: 1.25rem; }
+    .warning strong { display: block; margin-bottom: 0.2rem; }
 
-    /* Timeline */
-    .tl-wrap { overflow-x: auto; padding-bottom: 0.5rem; }
-    .tl-inner { position: relative; height: 90px; min-width: 700px; }
-    .tl-track { position: absolute; top: 48px; left: 1.5%; right: 1.5%; height: 8px; background: #e2e8f0; border-radius: 4px; }
-    .tl-seg { position: absolute; top: 48px; height: 8px; }
-    .tl-dot { position: absolute; width: 18px; height: 18px; border-radius: 50%; top: 39px; transform: translateX(-50%); border: 3px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.25); }
-    .tl-label { position: absolute; top: 8px; font-size: 0.7rem; font-weight: 700; white-space: nowrap; transform: translateX(-50%); text-align: center; line-height: 1.3; }
-    .tl-mile { position: absolute; top: 62px; font-size: 0.65rem; color: #718096; transform: translateX(-50%); }
-    .tl-end { position: absolute; top: 36px; width: 4px; height: 24px; background: #4a5568; border-radius: 2px; transform: translateX(-50%); }
-    .tl-end-label { position: absolute; top: 8px; font-size: 0.68rem; font-weight: 700; color: #4a5568; transform: translateX(-50%); white-space: nowrap; }
+    /* Direction toggle */
+    .dir-bar { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
+    .dir-btn { padding: 0.4rem 1rem; border-radius: 6px; border: 1px solid #bee3f8; background: white; color: #2b6cb0; font-size: 0.85rem; font-weight: 600; cursor: pointer; }
+    .dir-btn.active { background: #2b6cb0; color: white; border-color: #2b6cb0; }
+    .dir-summary { font-size: 0.82rem; color: #718096; }
 
-    /* Town cards */
-    .town-card { border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; margin-bottom: 1rem; }
-    .town-card:last-child { margin-bottom: 0; }
-    .town-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.4rem; }
-    .town-name { font-weight: 700; font-size: 1rem; color: #1a365d; }
-    .town-meta { font-size: 0.8rem; color: #718096; margin-bottom: 0.5rem; }
-    .town-desc { font-size: 0.85rem; line-height: 1.65; color: #4a5568; margin-bottom: 0.75rem; }
-    .services { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0.6rem; }
+    /* Shelter row cards */
+    .shelter-row { border: 1px solid #e2e8f0; border-radius: 8px; padding: 0.85rem 1rem; margin-bottom: 0.5rem; display: flex; gap: 0.75rem; align-items: flex-start; transition: border-color 0.15s, background 0.15s; }
+    .shelter-row.is-stop { border-color: #2b6cb0; border-width: 2px; background: #ebf8ff; }
+    .shelter-row.is-muted { opacity: 0.6; }
+    .shelter-row.is-smokies { border-left: 4px solid #e53e3e; background: #fffbea; }
+    .shelter-row.is-smokies.is-stop { border-left: 4px solid #e53e3e; border-color: #e53e3e; background: #fff5f5; }
+
+    .sr-day { width: 52px; flex-shrink: 0; text-align: center; }
+    .sr-day-num { font-weight: 800; font-size: 0.95rem; color: #2b6cb0; line-height: 1.2; }
+    .sr-day-mi { font-size: 0.68rem; color: #718096; }
+
+    .sr-main { flex: 1; min-width: 0; }
+    .sr-head { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.2rem; }
+    .sr-name { font-weight: 700; font-size: 0.92rem; color: #2b6cb0; text-decoration: none; }
+    .sr-name:hover { text-decoration: underline; }
+    .water-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+    .water-green  { background: #38a169; }
+    .water-yellow { background: #d97706; }
+    .water-red    { background: #e53e3e; }
+    .sr-closed { font-size: 0.68rem; font-weight: 700; color: #742a2a; background: #fed7d7; padding: 0.1rem 0.4rem; border-radius: 4px; }
+    .sr-meta { font-size: 0.76rem; color: #718096; line-height: 1.6; }
+    .sr-water { font-size: 0.74rem; color: #718096; font-style: italic; }
+
+    /* Nearest town mini-card on shelter row */
+    .sr-town { flex: 0 0 auto; max-width: 220px; padding: 0.5rem 0.65rem; background: #fffbeb; border-left: 3px solid #f6ad55; border-radius: 0 6px 6px 0; font-size: 0.74rem; }
+    .sr-town-name { font-weight: 700; color: #744210; margin-bottom: 0.15rem; }
+    .sr-town-dist { color: #92400e; font-size: 0.7rem; margin-bottom: 0.25rem; }
+    .sr-town-svcs { display: flex; flex-wrap: wrap; gap: 0.15rem; margin-bottom: 0.25rem; }
+    .sr-town-svc { font-size: 0.65rem; padding: 0.05rem 0.35rem; border-radius: 6px; background: #fef3c7; color: #92400e; }
+    .sr-town-contact a { font-size: 0.7rem; color: #92400e; font-weight: 700; text-decoration: none; }
+    .sr-town-contact a:hover { text-decoration: underline; }
+
+    /* Inline town detail card (collapsible) */
+    .town-inline { border: 2px solid #f6ad55; border-radius: 8px; margin-bottom: 0.5rem; overflow: hidden; }
+    .town-toggle { display: flex; justify-content: space-between; align-items: center; padding: 0.7rem 1rem; background: #fffbeb; cursor: pointer; user-select: none; }
+    .town-toggle:hover { background: #fef3c7; }
+    .town-toggle-name { font-weight: 700; font-size: 0.95rem; color: #744210; }
+    .town-toggle-meta { font-size: 0.78rem; color: #92400e; }
+    .town-toggle-arrow { font-size: 1rem; color: #92400e; transition: transform 0.2s; }
+    .town-inline.open .town-toggle-arrow { transform: rotate(180deg); }
+    .town-body { display: none; padding: 0.85rem 1rem; background: white; }
+    .town-inline.open .town-body { display: block; }
+    .town-desc { font-size: 0.85rem; line-height: 1.65; color: #4a5568; margin-bottom: 0.6rem; }
+    .services { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0.5rem; }
     .svc { font-size: 0.72rem; padding: 0.15rem 0.5rem; border-radius: 10px; background: #ebf8ff; color: #2b6cb0; font-weight: 500; }
     .svc-mail { background: #f0fff4; color: #276749; font-weight: 700; }
-    .badge { display: inline-block; font-size: 0.74rem; padding: 0.2rem 0.6rem; border-radius: 12px; font-weight: 700; }
+    .mail-addr { font-size: 0.78rem; color: #4a5568; margin-top: 0.35rem; padding: 0.5rem 0.75rem; background: #f7fafc; border-radius: 6px; font-style: italic; }
+    .contact-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.6rem; }
+    .call-btn { display: inline-block; background: #2b6cb0; color: white; text-decoration: none; padding: 0.35rem 0.8rem; border-radius: 6px; font-size: 0.82rem; font-weight: 700; }
+    .web-btn  { display: inline-block; background: #718096; color: white; text-decoration: none; padding: 0.35rem 0.8rem; border-radius: 6px; font-size: 0.82rem; }
+    .badge { display: inline-block; font-size: 0.72rem; padding: 0.15rem 0.5rem; border-radius: 10px; font-weight: 700; }
     .badge-trail  { background: #c6f6d5; color: #276749; }
-    .badge-near   { background: #bee3f8; color: #2b6cb0; }
     .badge-town   { background: #fefcbf; color: #744210; }
     .badge-crit   { background: #fed7d7; color: #742a2a; }
     .badge-hostel { background: #fef3c7; color: #92400e; }
-    .mail-addr { font-size: 0.78rem; color: #4a5568; margin-top: 0.35rem; padding: 0.5rem 0.75rem; background: #f7fafc; border-radius: 6px; font-style: italic; }
-    .contact-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.75rem; }
-    .call-btn { display: inline-block; background: #2b6cb0; color: white; text-decoration: none; padding: 0.4rem 0.9rem; border-radius: 6px; font-size: 0.85rem; font-weight: 700; }
-    .web-btn  { display: inline-block; background: #718096; color: white; text-decoration: none; padding: 0.4rem 0.9rem; border-radius: 6px; font-size: 0.85rem; }
 
-    .alert   { background: #f0fff4; border-left: 4px solid #38a169; padding: 0.75rem 1rem; border-radius: 0 6px 6px 0; font-size: 0.9rem; color: #276749; margin-bottom: 1.25rem; }
-    .alert strong { display: block; margin-bottom: 0.2rem; }
-    .warning { background: #fff5f5; border-left: 4px solid #e53e3e; padding: 0.75rem 1rem; border-radius: 0 6px 6px 0; font-size: 0.9rem; color: #742a2a; margin-bottom: 1.25rem; }
-    .warning strong { display: block; margin-bottom: 0.2rem; }
+    /* Smokies warning band */
+    .smokies-band { background: #fff5f5; border: 2px solid #e53e3e; border-radius: 8px; padding: 0.6rem 1rem; margin-bottom: 0.5rem; font-size: 0.82rem; color: #742a2a; font-weight: 600; }
 
     .nav-strip { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
     .nav-btn { display: inline-block; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.88rem; text-decoration: none; background: white; color: #2b6cb0; border: 1px solid #bee3f8; }
     .nav-btn:hover { background: #ebf8ff; }
 
-    /* Day-by-day itinerary */
-    .itin-seg-header { font-weight: 700; font-size: 1rem; color: #1a365d; margin: 1.25rem 0 0.5rem; padding-bottom: 0.35rem; border-bottom: 2px solid #e2e8f0; }
-    .itin-seg-header:first-child { margin-top: 0; }
-    .itin-summary { font-size: 0.82rem; color: #718096; margin-bottom: 0.75rem; }
-    .day-card { border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; margin-bottom: 0.75rem; }
-    .day-card:last-child { margin-bottom: 0; }
-    .day-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
-    .day-num { font-weight: 800; font-size: 1rem; color: #2b6cb0; }
-    .day-miles { font-size: 0.88rem; font-weight: 700; color: #2d3748; }
-    .day-elev { font-size: 0.78rem; color: #718096; }
-    .day-shelter { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem; }
-    .day-shelter a { font-weight: 700; font-size: 0.95rem; color: #2b6cb0; text-decoration: none; }
-    .day-shelter a:hover { text-decoration: underline; }
-    .water-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-    .water-green  { background: #38a169; }
-    .water-yellow { background: #d97706; }
-    .water-red    { background: #e53e3e; }
-    .day-amenities { font-size: 0.78rem; color: #4a5568; margin-bottom: 0.35rem; }
-    .day-water-desc { font-size: 0.78rem; color: #718096; font-style: italic; margin-bottom: 0.5rem; }
-    .day-closed { display: inline-block; font-size: 0.7rem; font-weight: 700; color: #742a2a; background: #fed7d7; padding: 0.1rem 0.45rem; border-radius: 4px; margin-left: 0.35rem; }
-    .day-alts { margin-top: 0.5rem; padding: 0.5rem 0.75rem; background: #f7fafc; border-radius: 6px; font-size: 0.78rem; color: #4a5568; }
-    .day-alts-title { font-weight: 600; color: #2d3748; margin-bottom: 0.25rem; }
-    .day-alt-row { display: flex; justify-content: space-between; align-items: center; padding: 0.15rem 0; }
-    .day-alt-name { color: #2b6cb0; }
-    .day-alt-dist { color: #718096; font-size: 0.75rem; }
-    .day-town { margin-top: 0.5rem; padding: 0.6rem 0.75rem; background: #fffbeb; border-left: 3px solid #f6ad55; border-radius: 0 6px 6px 0; }
-    .day-town-name { font-weight: 700; font-size: 0.85rem; color: #744210; }
-    .day-town-meta { font-size: 0.75rem; color: #744210; margin-top: 0.15rem; }
-    .day-town-services { display: flex; flex-wrap: wrap; gap: 0.2rem; margin-top: 0.35rem; }
-    .day-town-svc { font-size: 0.68rem; padding: 0.1rem 0.4rem; border-radius: 8px; background: #fef3c7; color: #92400e; }
-    .day-town-contact { margin-top: 0.35rem; }
-    .day-town-call { display: inline-block; background: #92400e; color: white; text-decoration: none; padding: 0.25rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
-    .day-town-web { display: inline-block; background: #718096; color: white; text-decoration: none; padding: 0.25rem 0.6rem; border-radius: 4px; font-size: 0.75rem; margin-left: 0.3rem; }
+    @media (max-width: 600px) {
+      .sr-town { max-width: none; margin-top: 0.5rem; }
+      .shelter-row { flex-wrap: wrap; }
+      .sr-day { width: auto; text-align: left; }
+    }
   </style>
 </head>
 <body>
@@ -128,16 +110,11 @@
   <div class="breadcrumb">
     <a href="index.html">Home</a> &rsaquo;
     <a href="at-map.html">AT Map</a> &rsaquo;
-    Resupply Planner
+    Trail Planning Guide
   </div>
 
-  <h1>&#127978; AT Resupply Planner</h1>
-  <p class="subtitle">Georgia &bull; North Carolina &bull; Tennessee &bull; Virginia &mdash; Miles 0&ndash;469 &bull; 11 resupply stops</p>
-
-  <div class="alert">
-    <strong>Coverage: Springer Mountain (Mile 0) &rarr; Damascus, VA (Mile 469)</strong>
-    Adjust your daily mileage and food carry below. Each segment turns red when it exceeds your carry range. The Smokies have <strong>zero resupply</strong> for ~62 miles &mdash; plan accordingly.
-  </div>
+  <h1>&#9978;&#65039; AT Trail Planning Guide</h1>
+  <p class="subtitle">62 shelters &bull; 11 resupply towns &bull; Springer Mountain to Damascus, VA &bull; 469 miles</p>
 
   <div class="warning">
     <strong>&#9888;&#65039; Great Smoky Mountains: NO RESUPPLY for ~62 miles</strong>
@@ -160,50 +137,31 @@
       </div>
     </div>
     <div class="max-range-line">
-      Max carry range: <strong id="max-range">60 miles</strong> &mdash; segments beyond this are flagged red.
+      Max carry range: <strong id="max-range">60 miles</strong> &mdash; segments beyond this are flagged.
     </div>
   </div>
 
-  <!-- Segment analysis -->
+  <!-- Trail guide table -->
   <div class="section">
-    <h2>&#128200; Segment Analysis</h2>
-    <div id="segments"></div>
-  </div>
-
-  <!-- Day-by-day itinerary -->
-  <div class="section">
-    <h2>&#9978;&#65039; Day-by-Day Itinerary</h2>
-    <p style="font-size:0.82rem;color:#718096;margin:0 0 0.75rem;">Shelter stops are chosen greedily &mdash; each day hikes as far as possible within your daily mileage limit. Adjust the slider above to recalculate.</p>
-    <div id="itinerary"></div>
-  </div>
-
-  <!-- Visual timeline -->
-  <div class="section">
-    <h2>&#128506;&#65039; Trail Timeline &mdash; Miles 0&ndash;469</h2>
-    <p style="font-size:0.8rem;color:#718096;margin:0 0 1rem;">Colored circles = resupply towns &bull; Color of each segment reflects difficulty relative to your carry range</p>
-    <div class="tl-wrap">
-      <div class="tl-inner" id="timeline"></div>
+    <h2>&#128205; Shelter-by-Shelter Trail Guide</h2>
+    <div class="dir-bar">
+      <button class="dir-btn active" id="btn-nobo">NOBO &#8593;</button>
+      <button class="dir-btn" id="btn-sobo">SOBO &#8595;</button>
+      <span class="dir-summary" id="dir-summary">Northbound: Springer Mountain &rarr; Damascus, VA</span>
     </div>
-  </div>
-
-  <!-- Town detail cards -->
-  <div class="section">
-    <h2>&#127978; Resupply Town Details</h2>
-    <div id="town-cards"></div>
+    <div id="trail-guide"></div>
   </div>
 
   <div class="nav-strip">
     <a class="nav-btn" href="at-map.html">&#9968; AT Map</a>
-    <a class="nav-btn" href="shelters.html">&#128205; All Shelters</a>
+    <a class="nav-btn" href="distance-calculator.html">&#128207; Distance Calculator</a>
+    <a class="nav-btn" href="gear-checklist.html">&#127890; Gear Checklist</a>
     <a class="nav-btn" href="index.html">&#8962; Home</a>
   </div>
 
 <script>
 (function () {
 
-  var TOTAL = 469.0;
-
-  // Full shelter chain (62 shelters, NOBO order) for day-by-day itinerary
   var SHELTERS = [
     { name:'Springer Mountain Shelter', mile:0, elev:3782, cap:8, type:'lean-to', water:'Spring 0.2 mi south', url:'shelter-springer-mountain.html' },
     { name:'Stover Creek Shelter', mile:2.6, elev:2900, cap:8, type:'lean-to', water:'Stover Creek, year-round', url:'shelter-stover-creek.html' },
@@ -399,140 +357,7 @@
   function getMiles() { return parseInt(document.getElementById('sl-miles').value, 10); }
   function getDays()  { return parseInt(document.getElementById('sl-days').value, 10); }
 
-  function segStyle(trailMiles, maxRange) {
-    var r = trailMiles / maxRange;
-    if (r <= 0.60) return { bar: 'bg-easy', col: 'col-easy', hex: '#48bb78', label: 'Easy' };
-    if (r <= 0.85) return { bar: 'bg-mod',  col: 'col-mod',  hex: '#f6ad55', label: 'Moderate' };
-    if (r <= 1.00) return { bar: 'bg-hard', col: 'col-hard', hex: '#fc8181', label: 'Tight' };
-    return                { bar: 'bg-crit', col: 'col-hard', hex: '#e53e3e', label: 'OVER LIMIT' };
-  }
-
-  function pct(mile) {
-    var pad = 2.5;
-    return pad + (mile / TOTAL) * (100 - 2 * pad);
-  }
-
-  function render() {
-    var dailyMiles = getMiles();
-    var carryDays  = getDays();
-    var maxRange   = dailyMiles * carryDays;
-
-    document.getElementById('val-miles').textContent = dailyMiles + ' mi/day';
-    document.getElementById('val-days').textContent  = carryDays + ' days';
-    document.getElementById('max-range').textContent = maxRange + ' miles';
-
-    // Build segments: each pair of consecutive towns + final segment to Damascus
-    var segs = [];
-    for (var i = 0; i < TOWNS.length; i++) {
-      var from = TOWNS[i];
-      var toTown = (i < TOWNS.length - 1) ? TOWNS[i + 1] : null;
-      var toMile = toTown ? toTown.mile : 469.0;
-      var toName = toTown ? toTown.name.replace(/&mdash;.*/, '').trim() : 'Damascus, VA (end of coverage)';
-      var trailMiles = toMile - from.mile;
-      if (trailMiles <= 0) continue; // skip empty final segment
-      var daysNeeded = trailMiles / dailyMiles;
-      var isSmokies = from.mile >= 164.9 && from.mile < 228.5;
-      segs.push({ from: from, toName: toName, toMile: toMile, trailMiles: trailMiles, daysNeeded: daysNeeded, isSmokies: isSmokies });
-    }
-
-    // Render segment cards
-    var segHtml = segs.map(function (s) {
-      var st = segStyle(s.trailMiles, maxRange);
-      var overLimit = s.trailMiles > maxRange;
-      var fromClean = s.from.name.replace(/&mdash;.*/, '').trim();
-      return '<div class="segment">'
-        + '<div class="seg-bar ' + st.bar + '"></div>'
-        + '<div class="seg-body">'
-        +   '<div class="seg-title">' + fromClean + ' &rarr; ' + s.toName + '</div>'
-        +   '<div class="seg-meta">'
-        +     'Trail miles: <strong>' + s.trailMiles.toFixed(1) + ' mi</strong>'
-        +     ' &bull; Est. time: <strong>' + s.daysNeeded.toFixed(1) + ' days</strong> at ' + dailyMiles + ' mi/day'
-        +     (s.from.offTrail > 0 ? ' &bull; +' + s.from.offTrail + ' mi road to resupply at start' : '')
-        +   '</div>'
-        +   (s.isSmokies ? '<div class="seg-smokies">&#9888;&#65039; Inside Great Smoky Mountains National Park &mdash; no resupply available. GSMNP permit required ($40 + $8/night). Stock full ' + Math.ceil(s.daysNeeded + 0.5) + '+ days food at Fontana.</div>' : '')
-        +   (overLimit && !s.isSmokies ? '<div class="seg-warn">&#9888;&#65039; Exceeds your ' + maxRange + '-mile carry range by ' + (s.trailMiles - maxRange).toFixed(1) + ' miles. Increase food carry or daily mileage.</div>' : '')
-        + '</div>'
-        + '<div class="seg-right">'
-        +   '<div class="seg-days-num ' + st.col + '">' + s.daysNeeded.toFixed(1) + '</div>'
-        +   '<div class="seg-days-label">days</div>'
-        +   '<div class="seg-status-label ' + st.col + '">' + st.label + '</div>'
-        + '</div>'
-        + '</div>';
-    }).join('');
-    document.getElementById('segments').innerHTML = segHtml;
-
-    // Render timeline
-    var tl = document.getElementById('timeline');
-    tl.innerHTML = '';
-
-    // Track background
-    var track = document.createElement('div');
-    track.className = 'tl-track';
-    tl.appendChild(track);
-
-    // Colored segments
-    for (var j = 0; j < segs.length; j++) {
-      var seg = segs[j];
-      var st2 = segStyle(seg.trailMiles, maxRange);
-      var el = document.createElement('div');
-      el.className = 'tl-seg';
-      el.style.left = pct(seg.from.mile) + '%';
-      el.style.width = (pct(seg.toMile) - pct(seg.from.mile)) + '%';
-      el.style.background = st2.hex;
-      el.style.borderRadius = '4px';
-      tl.appendChild(el);
-    }
-
-    // Town dots + labels
-    TOWNS.forEach(function (t) {
-      var dot = document.createElement('div');
-      dot.className = 'tl-dot';
-      dot.style.left = pct(t.mile) + '%';
-      dot.style.background = t.color;
-      dot.title = t.name.replace(/&mdash;.*/, '').trim() + ' (mile ' + t.mile + ')';
-      tl.appendChild(dot);
-
-      var lbl = document.createElement('div');
-      lbl.className = 'tl-label';
-      lbl.style.left = pct(t.mile) + '%';
-      lbl.style.color = t.color;
-      lbl.innerHTML = t.name.replace(/&mdash;.*/, '').trim().split(' ').slice(0, 2).join('<br>');
-      tl.appendChild(lbl);
-
-      var mileEl = document.createElement('div');
-      mileEl.className = 'tl-mile';
-      mileEl.style.left = pct(t.mile) + '%';
-      mileEl.textContent = t.mile;
-      tl.appendChild(mileEl);
-    });
-
-    // No separate end marker needed — Damascus is already in TOWNS array
-  }
-
-  // Town cards (static)
-  function renderCards() {
-    document.getElementById('town-cards').innerHTML = TOWNS.map(function (t) {
-      var name = t.name;
-      return '<div class="town-card">'
-        + '<div class="town-header">'
-        +   '<div><div class="town-name">&#127978; ' + name + '</div>'
-        +   '<div class="town-meta">AT Mile ' + t.mile
-        +     (t.offTrail === 0 ? ' &bull; On-trail access' : ' &bull; ' + t.offTrail + ' miles by road') + '</div></div>'
-        +   '<span class="badge ' + t.badge + '">' + t.badgeText + '</span>'
-        + '</div>'
-        + '<div class="services">'
-        +   t.services.map(function (s) { return '<span class="svc">' + s + '</span>'; }).join('')
-        +   (t.mailDrop ? '<span class="svc svc-mail">&#128238; Mail Drop OK</span>' : '')
-        + '</div>'
-        + '<div class="town-desc">' + t.desc + '</div>'
-        + (t.mailDrop && t.mailAddr ? '<div class="mail-addr">&#128238; Mail drop address: ' + t.mailAddr + '</div>' : '')
-        + ((t.phone || t.web) ? '<div class="contact-row">'
-        +   (t.phone ? '<a class="call-btn" href="tel:' + t.phone.replace(/\D/g, '') + '">Call ' + t.phone + '</a>' : '')
-        +   (t.web ? '<a class="web-btn" href="' + t.web + '" target="_blank">' + t.webLabel + '</a>' : '')
-        + '</div>' : '')
-        + '</div>';
-    }).join('');
-  }
+  var direction = 'nobo'; // 'nobo' or 'sobo'
 
   // Find nearest town to a given mile marker
   function nearestTown(mile) {
@@ -544,186 +369,246 @@
     return { town: best, dist: bestDist };
   }
 
-  // Build day-by-day itinerary for a resupply segment
-  function planSegment(startMile, endMile, dailyMax) {
-    // Get shelters within this segment (exclusive of start mile, inclusive of end)
-    var segShelters = [];
-    for (var i = 0; i < SHELTERS.length; i++) {
-      if (SHELTERS[i].mile > startMile && SHELTERS[i].mile <= endMile) {
-        segShelters.push(SHELTERS[i]);
-      }
-    }
-    if (segShelters.length === 0) return [];
-
-    var days = [];
-    var currentMile = startMile;
-    var remaining = segShelters.slice();
+  // Greedy day planner across the full trail
+  function planDays(shelters, dailyMax) {
+    var stops = {}; // mile -> { dayNum, dayMiles }
+    var currentMile = direction === 'nobo' ? 0 : 469.0;
+    var ordered = shelters.slice();
+    if (direction === 'sobo') ordered.reverse();
+    var dayNum = 0;
+    var remaining = ordered.slice();
 
     while (remaining.length > 0) {
-      var targetMile = currentMile + dailyMax;
-      // Find the last shelter reachable within daily max
+      var targetDist = dailyMax;
       var bestIdx = -1;
       for (var j = 0; j < remaining.length; j++) {
-        if (remaining[j].mile <= targetMile) {
+        var dist = Math.abs(remaining[j].mile - currentMile);
+        if (dist <= targetDist) {
           bestIdx = j;
         } else {
           break;
         }
       }
-      // If no shelter is within range, take the next one anyway (forced long day)
       if (bestIdx === -1) bestIdx = 0;
 
+      dayNum++;
       var stop = remaining[bestIdx];
-      var dayMiles = stop.mile - currentMile;
-
-      // Find alternatives: 1 shelter before and 1 after the chosen stop
-      var altBefore = bestIdx > 0 ? remaining[bestIdx - 1] : null;
-      var altAfter = (bestIdx < remaining.length - 1) ? remaining[bestIdx + 1] : null;
-
-      days.push({
-        shelter: stop,
-        dayMiles: dayMiles,
-        startMile: currentMile,
-        altBefore: altBefore,
-        altAfter: altAfter,
-        forced: (stop.mile > targetMile)
-      });
-
+      var dayMiles = Math.abs(stop.mile - currentMile);
+      stops[stop.mile] = { dayNum: dayNum, dayMiles: dayMiles, forced: dayMiles > dailyMax };
       currentMile = stop.mile;
       remaining = remaining.slice(bestIdx + 1);
     }
-    return days;
+    return stops;
   }
 
-  function renderItinerary() {
+  // Build inline town card HTML
+  function townCardHtml(t) {
+    var name = t.name;
+    return '<div class="town-inline" id="town-' + t.mile + '">'
+      + '<div class="town-toggle" onclick="this.parentElement.classList.toggle(\'open\')">'
+      + '<div>'
+      + '<span class="town-toggle-name">&#127978; ' + name + '</span>'
+      + ' <span class="badge ' + t.badge + '">' + t.badgeText + '</span>'
+      + '<div class="town-toggle-meta">AT Mile ' + t.mile
+      + (t.offTrail === 0 ? ' &bull; On-trail' : ' &bull; ' + t.offTrail + ' mi off-trail') + '</div>'
+      + '</div>'
+      + '<span class="town-toggle-arrow">&#9660;</span>'
+      + '</div>'
+      + '<div class="town-body">'
+      + '<div class="services">'
+      + t.services.map(function (s) { return '<span class="svc">' + s + '</span>'; }).join('')
+      + (t.mailDrop ? '<span class="svc svc-mail">&#128238; Mail Drop OK</span>' : '')
+      + '</div>'
+      + '<div class="town-desc">' + t.desc + '</div>'
+      + (t.mailDrop && t.mailAddr ? '<div class="mail-addr">&#128238; ' + t.mailAddr + '</div>' : '')
+      + ((t.phone || t.web) ? '<div class="contact-row">'
+      + (t.phone ? '<a class="call-btn" href="tel:' + t.phone.replace(/\D/g, '') + '">Call ' + t.phone + '</a>' : '')
+      + (t.web ? '<a class="web-btn" href="' + t.web + '" target="_blank">' + t.webLabel + '</a>' : '')
+      + '</div>' : '')
+      + '</div></div>';
+  }
+
+  // Build shelter row HTML
+  function shelterRowHtml(s, dayInfo, nt) {
+    var isStop = !!dayInfo;
+    var isSmokies = s.mile >= 168.1 && s.mile <= 227.3;
+    var cls = 'shelter-row';
+    if (isStop) cls += ' is-stop';
+    if (!isStop) cls += ' is-muted';
+    if (isSmokies) cls += ' is-smokies';
+
+    var wDot = waterDotClass(s.water);
+
+    var html = '<div class="' + cls + '">';
+
+    // Day badge column
+    html += '<div class="sr-day">';
+    if (isStop) {
+      html += '<div class="sr-day-num">Day ' + dayInfo.dayNum + '</div>';
+      html += '<div class="sr-day-mi">' + dayInfo.dayMiles.toFixed(1) + ' mi'
+        + (dayInfo.forced ? '<br><span style="color:#e53e3e;font-weight:700;">LONG</span>' : '')
+        + '</div>';
+    }
+    html += '</div>';
+
+    // Main shelter info
+    html += '<div class="sr-main">';
+    html += '<div class="sr-head">'
+      + '<span class="water-dot ' + wDot + '" title="' + s.water.replace(/"/g, '&quot;') + '"></span>'
+      + '<a class="sr-name" href="' + s.url + '">' + s.name + '</a>';
+    if (s.closed) {
+      var reason = s.closed === 'bears' ? 'Closed (bears)' : s.closed === 'structural' ? 'Closed (structural)' : s.closed === 'fire' ? 'Closed (fire)' : 'Closed';
+      html += '<span class="sr-closed">' + reason + '</span>';
+    }
+    html += '</div>';
+    html += '<div class="sr-meta">Mile ' + s.mile + ' &bull; '
+      + s.elev.toLocaleString() + ' ft &bull; Cap ' + s.cap + ' &bull; '
+      + (s.type === 'stone-cabin' ? 'Stone cabin' : 'Lean-to')
+      + '</div>';
+    html += '<div class="sr-water">' + s.water + '</div>';
+    html += '</div>';
+
+    // Nearest town mini-card
+    if (nt && nt.town && nt.dist <= 30) {
+      var t = nt.town;
+      var dir = t.mile <= s.mile ? 'S' : 'N';
+      html += '<div class="sr-town">';
+      html += '<div class="sr-town-name">' + t.name.replace(/&mdash;.*/, '').trim() + '</div>';
+      html += '<div class="sr-town-dist">' + nt.dist.toFixed(1) + ' mi ' + dir
+        + (t.offTrail > 0 ? ' + ' + t.offTrail + ' mi road' : '') + '</div>';
+      html += '<div class="sr-town-svcs">'
+        + t.services.slice(0, 4).map(function (sv) { return '<span class="sr-town-svc">' + sv + '</span>'; }).join('')
+        + '</div>';
+      if (t.phone) {
+        html += '<div class="sr-town-contact"><a href="tel:' + t.phone.replace(/\D/g, '') + '">' + t.phone + '</a></div>';
+      }
+      html += '</div>';
+    }
+
+    html += '</div>';
+    return html;
+  }
+
+  function render() {
     var dailyMiles = getMiles();
+    var carryDays  = getDays();
+    var maxRange   = dailyMiles * carryDays;
+
+    document.getElementById('val-miles').textContent = dailyMiles + ' mi/day';
+    document.getElementById('val-days').textContent  = carryDays + ' days';
+    document.getElementById('max-range').textContent = maxRange + ' miles';
+
+    // Plan days
+    var stops = planDays(SHELTERS, dailyMiles);
+
+    // Order shelters
+    var ordered = SHELTERS.slice();
+    if (direction === 'sobo') ordered.reverse();
+
+    // Order towns for inline insertion
+    var townsByMile = {};
+    TOWNS.forEach(function (t) { townsByMile[t.mile] = t; });
+
+    // Build a combined list: shelter rows + inline town cards at the right positions
+    // Insert town card BEFORE the first shelter that passes that town's mile marker
+    var townMiles = TOWNS.map(function (t) { return t.mile; });
+    if (direction === 'sobo') townMiles.reverse();
+
     var html = '';
     var totalDays = 0;
+    var insertedTowns = {};
+    var smokiesBandInserted = false;
 
-    for (var i = 0; i < TOWNS.length - 1; i++) {
-      var from = TOWNS[i];
-      var to = TOWNS[i + 1];
-      var fromClean = from.name.replace(/&mdash;.*/, '').trim();
-      var toClean = to.name.replace(/&mdash;.*/, '').trim();
-      var segMiles = to.mile - from.mile;
+    for (var i = 0; i < ordered.length; i++) {
+      var s = ordered[i];
 
-      var days = planSegment(from.mile, to.mile, dailyMiles);
-      if (days.length === 0) continue;
+      // Insert any town cards that should appear before this shelter
+      for (var ti = 0; ti < townMiles.length; ti++) {
+        var tm = townMiles[ti];
+        if (insertedTowns[tm]) continue;
+        var shouldInsert = direction === 'nobo'
+          ? (tm <= s.mile)
+          : (tm >= s.mile);
+        if (shouldInsert) {
+          html += townCardHtml(townsByMile[tm]);
+          insertedTowns[tm] = true;
 
-      html += '<div class="itin-seg-header">' + fromClean + ' &rarr; ' + toClean
-        + ' <span style="font-weight:400;font-size:0.82rem;color:#718096;">(' + segMiles.toFixed(1) + ' mi &bull; ' + days.length + ' day' + (days.length !== 1 ? 's' : '') + ')</span></div>';
-
-      for (var d = 0; d < days.length; d++) {
-        totalDays++;
-        var day = days[d];
-        var s = day.shelter;
-        var elevChange = d === 0
-          ? s.elev  // first day: just show shelter elevation
-          : s.elev - days[d - 1].shelter.elev;
-        var elevSign = elevChange >= 0 ? '+' : '';
-        var prevElev = d === 0 ? null : days[d - 1].shelter.elev;
-        var wDot = waterDotClass(s.water);
-        var nt = nearestTown(s.mile);
-
-        html += '<div class="day-card">';
-
-        // Header row
-        html += '<div class="day-head">'
-          + '<div><span class="day-num">Day ' + totalDays + '</span>'
-          + (day.forced ? ' <span style="font-size:0.72rem;color:#e53e3e;font-weight:700;">LONG DAY</span>' : '')
-          + '</div>'
-          + '<div style="text-align:right;">'
-          + '<span class="day-miles">' + day.dayMiles.toFixed(1) + ' mi</span>'
-          + '<div class="day-elev">Elev ' + s.elev.toLocaleString() + ' ft'
-          + (prevElev !== null ? ' &bull; ' + elevSign + Math.abs(elevChange).toLocaleString() + ' ft net' : '')
-          + '</div></div></div>';
-
-        // Shelter name + water dot
-        html += '<div class="day-shelter">'
-          + '<span class="water-dot ' + wDot + '" title="Water: ' + s.water.replace(/"/g, '&quot;') + '"></span>'
-          + '<a href="' + s.url + '">' + s.name + '</a>';
-        if (s.closed) {
-          var reason = s.closed === 'bears' ? 'Closed (bears)' : s.closed === 'structural' ? 'Closed (structural)' : s.closed === 'fire' ? 'Closed (fire)' : 'Closed';
-          html += '<span class="day-closed">' + reason + '</span>';
-        }
-        html += '</div>';
-
-        // Amenities
-        html += '<div class="day-amenities">'
-          + 'Cap: ' + s.cap + ' &bull; '
-          + (s.type === 'stone-cabin' ? 'Stone cabin' : 'Lean-to')
-          + '</div>';
-
-        // Water description
-        html += '<div class="day-water-desc">' + s.water + '</div>';
-
-        // Nearby alternatives
-        if (day.altBefore || day.altAfter) {
-          html += '<div class="day-alts">';
-          html += '<div class="day-alts-title">Nearby alternatives:</div>';
-          if (day.altBefore) {
-            var altBMiles = day.altBefore.mile - day.startMile;
-            var diff = day.dayMiles - altBMiles;
-            html += '<div class="day-alt-row">'
-              + '<span class="day-alt-name">' + day.altBefore.name + '</span>'
-              + '<span class="day-alt-dist">' + altBMiles.toFixed(1) + ' mi (' + diff.toFixed(1) + ' mi shorter day)</span>'
-              + '</div>';
+          // Check if carry range is exceeded for next segment
+          var townIdx = TOWNS.indexOf(townsByMile[tm]);
+          if (direction === 'nobo' && townIdx < TOWNS.length - 1) {
+            var nextTown = TOWNS[townIdx + 1];
+            var segDist = nextTown.mile - townsByMile[tm].mile;
+            if (segDist > maxRange) {
+              html += '<div class="smokies-band">&#9888;&#65039; Next resupply: '
+                + nextTown.name.replace(/&mdash;.*/, '').trim()
+                + ' (' + segDist.toFixed(1) + ' mi) &mdash; exceeds your '
+                + maxRange + '-mile carry range by ' + (segDist - maxRange).toFixed(1) + ' mi</div>';
+            }
           }
-          if (day.altAfter) {
-            var altAMiles = day.altAfter.mile - day.startMile;
-            var diff2 = altAMiles - day.dayMiles;
-            html += '<div class="day-alt-row">'
-              + '<span class="day-alt-name">' + day.altAfter.name + '</span>'
-              + '<span class="day-alt-dist">' + altAMiles.toFixed(1) + ' mi (' + diff2.toFixed(1) + ' mi longer day)</span>'
-              + '</div>';
+          if (direction === 'sobo' && townIdx > 0) {
+            var prevTown = TOWNS[townIdx - 1];
+            var segDistS = townsByMile[tm].mile - prevTown.mile;
+            if (segDistS > maxRange) {
+              html += '<div class="smokies-band">&#9888;&#65039; Next resupply: '
+                + prevTown.name.replace(/&mdash;.*/, '').trim()
+                + ' (' + segDistS.toFixed(1) + ' mi) &mdash; exceeds your '
+                + maxRange + '-mile carry range by ' + (segDistS - maxRange).toFixed(1) + ' mi</div>';
+            }
           }
-          html += '</div>';
         }
+      }
 
-        // Nearest town card
-        if (nt.town && nt.dist <= 25) {
-          var t = nt.town;
-          var dir = t.mile <= s.mile ? 'S' : 'N';
-          html += '<div class="day-town">';
-          html += '<div class="day-town-name">Nearest town: ' + t.name.replace(/&mdash;.*/, '').trim() + '</div>';
-          html += '<div class="day-town-meta">' + nt.dist.toFixed(1) + ' mi ' + dir + ' on AT'
-            + (t.offTrail > 0 ? ' + ' + t.offTrail + ' mi off-trail' : ' (on-trail)') + '</div>';
-          html += '<div class="day-town-services">'
-            + t.services.slice(0, 6).map(function (sv) { return '<span class="day-town-svc">' + sv + '</span>'; }).join('')
-            + '</div>';
-          if (t.phone || t.web) {
-            html += '<div class="day-town-contact">';
-            if (t.phone) html += '<a class="day-town-call" href="tel:' + t.phone.replace(/\D/g, '') + '">' + t.phone + '</a>';
-            if (t.web) html += '<a class="day-town-web" href="' + t.web + '" target="_blank">' + t.webLabel + '</a>';
-            html += '</div>';
-          }
-          html += '</div>';
-        }
+      // Insert Smokies warning band
+      var isSmokies = s.mile >= 168.1 && s.mile <= 227.3;
+      if (isSmokies && !smokiesBandInserted) {
+        var smokiesMsg = direction === 'nobo'
+          ? '&#9888;&#65039; Entering Great Smoky Mountains NP &mdash; No resupply for 62 miles (Fontana Dam to Standing Bear Farm). GSMNP permit required.'
+          : '&#9888;&#65039; Entering Great Smoky Mountains NP &mdash; No resupply for 62 miles (Standing Bear Farm to Fontana Dam). GSMNP permit required.';
+        html += '<div class="smokies-band">' + smokiesMsg + '</div>';
+        smokiesBandInserted = true;
+      }
 
-        html += '</div>'; // close day-card
+      var dayInfo = stops[s.mile] || null;
+      if (dayInfo) totalDays = Math.max(totalDays, dayInfo.dayNum);
+      var nt = nearestTown(s.mile);
+      html += shelterRowHtml(s, dayInfo, nt);
+    }
+
+    // Insert any remaining town cards (Damascus at the end for NOBO)
+    for (var ti2 = 0; ti2 < townMiles.length; ti2++) {
+      if (!insertedTowns[townMiles[ti2]]) {
+        html += townCardHtml(townsByMile[townMiles[ti2]]);
       }
     }
 
     // Grand total
     html += '<div style="margin-top:1rem;padding:0.75rem 1rem;background:#ebf8ff;border-left:4px solid #3182ce;border-radius:0 6px 6px 0;font-size:0.9rem;color:#2b6cb0;">'
-      + '<strong>Total: ' + totalDays + ' hiking days</strong> at ' + dailyMiles + ' mi/day max &bull; '
-      + TOTAL + ' miles Springer to Damascus'
+      + '<strong>Total: ' + totalDays + ' hiking days</strong> at ' + dailyMiles + ' mi/day max &bull; 469 miles Springer to Damascus'
       + '</div>';
 
-    document.getElementById('itinerary').innerHTML = html;
+    document.getElementById('trail-guide').innerHTML = html;
   }
 
-  function onSliderChange() {
+  // Direction toggle
+  document.getElementById('btn-nobo').addEventListener('click', function () {
+    direction = 'nobo';
+    this.classList.add('active');
+    document.getElementById('btn-sobo').classList.remove('active');
+    document.getElementById('dir-summary').innerHTML = 'Northbound: Springer Mountain &rarr; Damascus, VA';
     render();
-    renderItinerary();
-  }
+  });
+  document.getElementById('btn-sobo').addEventListener('click', function () {
+    direction = 'sobo';
+    this.classList.add('active');
+    document.getElementById('btn-nobo').classList.remove('active');
+    document.getElementById('dir-summary').innerHTML = 'Southbound: Damascus, VA &rarr; Springer Mountain';
+    render();
+  });
 
-  document.getElementById('sl-miles').addEventListener('input', onSliderChange);
-  document.getElementById('sl-days').addEventListener('input', onSliderChange);
+  document.getElementById('sl-miles').addEventListener('input', render);
+  document.getElementById('sl-days').addEventListener('input', render);
 
   render();
-  renderCards();
-  renderItinerary();
 
 }());
 </script>
