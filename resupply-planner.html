@@ -87,6 +87,40 @@
     .nav-strip { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
     .nav-btn { display: inline-block; padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.88rem; text-decoration: none; background: white; color: #2b6cb0; border: 1px solid #bee3f8; }
     .nav-btn:hover { background: #ebf8ff; }
+
+    /* Day-by-day itinerary */
+    .itin-seg-header { font-weight: 700; font-size: 1rem; color: #1a365d; margin: 1.25rem 0 0.5rem; padding-bottom: 0.35rem; border-bottom: 2px solid #e2e8f0; }
+    .itin-seg-header:first-child { margin-top: 0; }
+    .itin-summary { font-size: 0.82rem; color: #718096; margin-bottom: 0.75rem; }
+    .day-card { border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; margin-bottom: 0.75rem; }
+    .day-card:last-child { margin-bottom: 0; }
+    .day-head { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.5rem; }
+    .day-num { font-weight: 800; font-size: 1rem; color: #2b6cb0; }
+    .day-miles { font-size: 0.88rem; font-weight: 700; color: #2d3748; }
+    .day-elev { font-size: 0.78rem; color: #718096; }
+    .day-shelter { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.35rem; }
+    .day-shelter a { font-weight: 700; font-size: 0.95rem; color: #2b6cb0; text-decoration: none; }
+    .day-shelter a:hover { text-decoration: underline; }
+    .water-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .water-green  { background: #38a169; }
+    .water-yellow { background: #d97706; }
+    .water-red    { background: #e53e3e; }
+    .day-amenities { font-size: 0.78rem; color: #4a5568; margin-bottom: 0.35rem; }
+    .day-water-desc { font-size: 0.78rem; color: #718096; font-style: italic; margin-bottom: 0.5rem; }
+    .day-closed { display: inline-block; font-size: 0.7rem; font-weight: 700; color: #742a2a; background: #fed7d7; padding: 0.1rem 0.45rem; border-radius: 4px; margin-left: 0.35rem; }
+    .day-alts { margin-top: 0.5rem; padding: 0.5rem 0.75rem; background: #f7fafc; border-radius: 6px; font-size: 0.78rem; color: #4a5568; }
+    .day-alts-title { font-weight: 600; color: #2d3748; margin-bottom: 0.25rem; }
+    .day-alt-row { display: flex; justify-content: space-between; align-items: center; padding: 0.15rem 0; }
+    .day-alt-name { color: #2b6cb0; }
+    .day-alt-dist { color: #718096; font-size: 0.75rem; }
+    .day-town { margin-top: 0.5rem; padding: 0.6rem 0.75rem; background: #fffbeb; border-left: 3px solid #f6ad55; border-radius: 0 6px 6px 0; }
+    .day-town-name { font-weight: 700; font-size: 0.85rem; color: #744210; }
+    .day-town-meta { font-size: 0.75rem; color: #744210; margin-top: 0.15rem; }
+    .day-town-services { display: flex; flex-wrap: wrap; gap: 0.2rem; margin-top: 0.35rem; }
+    .day-town-svc { font-size: 0.68rem; padding: 0.1rem 0.4rem; border-radius: 8px; background: #fef3c7; color: #92400e; }
+    .day-town-contact { margin-top: 0.35rem; }
+    .day-town-call { display: inline-block; background: #92400e; color: white; text-decoration: none; padding: 0.25rem 0.6rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+    .day-town-web { display: inline-block; background: #718096; color: white; text-decoration: none; padding: 0.25rem 0.6rem; border-radius: 4px; font-size: 0.75rem; margin-left: 0.3rem; }
   </style>
 </head>
 <body>
@@ -136,6 +170,13 @@
     <div id="segments"></div>
   </div>
 
+  <!-- Day-by-day itinerary -->
+  <div class="section">
+    <h2>&#9978;&#65039; Day-by-Day Itinerary</h2>
+    <p style="font-size:0.82rem;color:#718096;margin:0 0 0.75rem;">Shelter stops are chosen greedily &mdash; each day hikes as far as possible within your daily mileage limit. Adjust the slider above to recalculate.</p>
+    <div id="itinerary"></div>
+  </div>
+
   <!-- Visual timeline -->
   <div class="section">
     <h2>&#128506;&#65039; Trail Timeline &mdash; Miles 0&ndash;469</h2>
@@ -161,6 +202,86 @@
 (function () {
 
   var TOTAL = 469.0;
+
+  // Full shelter chain (62 shelters, NOBO order) for day-by-day itinerary
+  var SHELTERS = [
+    { name:'Springer Mountain Shelter', mile:0, elev:3782, cap:8, type:'lean-to', water:'Spring 0.2 mi south', url:'shelter-springer-mountain.html' },
+    { name:'Stover Creek Shelter', mile:2.6, elev:2900, cap:8, type:'lean-to', water:'Stover Creek, year-round', url:'shelter-stover-creek.html' },
+    { name:'Hawk Mountain Shelter', mile:8.1, elev:3200, cap:8, type:'lean-to', water:'Spring 100 yds from shelter', url:'shelter-hawk-mountain.html' },
+    { name:'Gooch Mountain Shelter', mile:15.8, elev:2784, cap:8, type:'lean-to', water:'Spring east of shelter', url:'shelter-gooch-mountain.html' },
+    { name:'Blood Mountain Shelter', mile:31.7, elev:4461, cap:8, type:'stone-cabin', water:'NO WATER on site \u2014 0.5 mi south', url:'shelter-blood-mountain.html' },
+    { name:'Whitley Gap Shelter', mile:36.5, elev:3500, cap:6, type:'lean-to', water:'Spring via blue-blazed trail', url:'shelter-whitley-gap.html' },
+    { name:'Low Gap Shelter', mile:43.3, elev:2966, cap:6, type:'lean-to', water:'30\u201340 yards in front of shelter', url:'low-gap-resupply.html' },
+    { name:'Blue Mountain Shelter', mile:50.7, elev:3889, cap:7, type:'lean-to', water:'Spring nearby, bear cables', url:'shelter-blue-mountain.html' },
+    { name:'Tray Mountain Shelter', mile:56.8, elev:4200, cap:8, type:'lean-to', water:'Spring 200 yds north on AT', url:'shelter-tray-mountain.html' },
+    { name:'Deep Gap Shelter', mile:63.3, elev:3550, cap:8, type:'lean-to', water:'Spring nearby', url:'shelter-deep-gap.html' },
+    { name:'Plumorchard Gap Shelter', mile:68.4, elev:4080, cap:8, type:'lean-to', water:'Spring on blue-blazed trail', url:'shelter-plumorchard-gap.html' },
+    { name:'Muskrat Creek Shelter', mile:80.7, elev:4600, cap:8, type:'lean-to', water:'Spring nearby', url:'shelter-muskrat-creek.html' },
+    { name:'Standing Indian Shelter', mile:87.7, elev:4980, cap:8, type:'lean-to', water:'Spring 100 yds south', url:'shelter-standing-indian.html' },
+    { name:'Carter Gap Shelter', mile:91.7, elev:4540, cap:8, type:'lean-to', water:'Spring nearby', url:'shelter-carter-gap.html' },
+    { name:'Big Spring Shelter', mile:96.8, elev:4750, cap:6, type:'lean-to', water:'Big Spring, reliable year-round', url:'shelter-big-spring.html' },
+    { name:'Rock Gap Shelter', mile:101.5, elev:3750, cap:8, type:'lean-to', water:'Spring nearby', url:'shelter-rock-gap.html' },
+    { name:'Siler Bald Shelter', mile:107.7, elev:5240, cap:6, type:'lean-to', water:'Spring 0.2 mi below summit', url:'shelter-siler-bald.html' },
+    { name:'Cold Spring Shelter', mile:113.0, elev:4940, cap:6, type:'lean-to', water:'Cold Spring, reliable', url:'shelter-cold-spring.html' },
+    { name:'Wayah Bald Shelter', mile:115.4, elev:5100, cap:8, type:'lean-to', water:'Spring nearby', url:'shelter-wayah-bald.html' },
+    { name:'Wesser Bald Shelter', mile:131.2, elev:4115, cap:6, type:'lean-to', water:'Boxed spring 0.1 mi south on blue blaze', url:'shelter-wesser-bald.html' },
+    { name:'A. Rufus Morgan Shelter', mile:134.0, elev:1700, cap:6, type:'lean-to', water:'Reliable creek nearby', url:'shelter-rufus-morgan.html' },
+    { name:'Sassafras Gap Shelter', mile:138.5, elev:3440, cap:8, type:'lean-to', water:'Spring nearby', url:'shelter-sassafras-gap-nc.html' },
+    { name:'Brown Fork Gap Shelter', mile:143.8, elev:3740, cap:8, type:'lean-to', water:'Brown Fork Creek, reliable', url:'shelter-brown-fork-gap.html' },
+    { name:'Cable Gap Shelter', mile:150.8, elev:2900, cap:8, type:'lean-to', water:'Reliable creek 0.1 mi', url:'shelter-cable-gap.html' },
+    { name:'Fontana Dam Shelter', mile:164.7, elev:1680, cap:24, type:'lean-to', water:'Running water on site (piped)', url:'shelter-fontana-dam.html' },
+    { name:'Birch Spring Gap Shelter', mile:168.1, elev:3400, cap:12, type:'lean-to', water:'Spring on blue-blaze side trail', url:'shelter-birch-spring-gap.html' },
+    { name:'Russell Field Shelter', mile:174.2, elev:4360, cap:14, type:'lean-to', water:'Spring 0.1 mi on side trail', url:'shelter-russell-field.html' },
+    { name:'Mollies Ridge Shelter', mile:177.8, elev:4570, cap:12, type:'lean-to', water:'Spring nearby', url:'shelter-mollies-ridge.html' },
+    { name:'Spence Field Shelter', mile:180.7, elev:4900, cap:12, type:'lean-to', water:'Spring 0.1 mi downhill', url:'shelter-spence-field.html' },
+    { name:'Derrick Knob Shelter', mile:186.6, elev:4880, cap:14, type:'lean-to', water:'Spring on side trail', url:'shelter-derrick-knob.html' },
+    { name:'Silers Bald Shelter', mile:192.0, elev:5460, cap:12, type:'lean-to', water:'Spring 0.15 mi south on side trail', url:'shelter-silers-bald.html' },
+    { name:'Double Spring Gap Shelter', mile:195.3, elev:5510, cap:14, type:'lean-to', water:'Two springs nearby (namesake)', url:'shelter-double-spring-gap.html' },
+    { name:'Mount Collins Shelter', mile:200.5, elev:5870, cap:12, type:'lean-to', water:'Spring 0.3 mi on side trail', url:'shelter-mount-collins.html' },
+    { name:'Icewater Spring Shelter', mile:207.3, elev:5820, cap:12, type:'lean-to', water:'Icewater Spring (reliable, cold)', url:'shelter-icewater-spring.html' },
+    { name:'Pecks Corner Shelter', mile:213.0, elev:5280, cap:12, type:'lean-to', water:'Spring nearby', url:'shelter-pecks-corner.html' },
+    { name:'Tricorner Knob Shelter', mile:216.7, elev:5920, cap:12, type:'lean-to', water:'Spring 0.2 mi south on side trail', url:'shelter-tricorner-knob.html' },
+    { name:'Cosby Knob Shelter', mile:222.4, elev:4700, cap:12, type:'lean-to', water:'Spring nearby', url:'shelter-cosby-knob.html' },
+    { name:'Davenport Gap Shelter', mile:227.3, elev:1975, cap:12, type:'lean-to', water:'Spring on side trail', url:'shelter-davenport-gap.html' },
+    { name:'Groundhog Creek Shelter', mile:249.0, elev:2850, cap:10, type:'lean-to', water:'Stream 100 yards from shelter', url:'shelter-groundhog-creek.html' },
+    { name:'Roaring Fork Shelter', mile:257.3, elev:3590, cap:5, type:'lean-to', water:'Water 800 ft north and south on AT', url:'shelter-roaring-fork.html' },
+    { name:'Walnut Mountain Shelter', mile:262.1, elev:4260, cap:5, type:'lean-to', water:'Spring down blue-blazed trail (unreliable in dry periods)', url:'shelter-walnut-mountain.html' },
+    { name:'Deer Park Mountain Shelter', mile:272.0, elev:2330, cap:6, type:'lean-to', water:'Walled-in spring (slow flow, unreliable in dry seasons)', url:'shelter-deer-park-mountain.html' },
+    { name:'Spring Mountain Shelter', mile:286.2, elev:3300, cap:6, type:'lean-to', water:'Spring 75 yards down hillside (can be unreliable in dry conditions)', url:'shelter-spring-mountain.html' },
+    { name:'Little Laurel Shelter', mile:294.8, elev:3620, cap:5, type:'lean-to', water:'Piped spring 100 yards via blue-blazed trail', url:'shelter-little-laurel.html' },
+    { name:'Jerry Cabin Shelter', mile:302.1, elev:4150, cap:6, type:'stone-cabin', water:'Spring 100 yards on side trail (two pipes; upper pipe more reliable)', url:'shelter-jerry-cabin.html' },
+    { name:'Flint Mountain Shelter', mile:308.8, elev:3570, cap:6, type:'lean-to', water:'Spring near shelter', url:'shelter-flint-mountain.html' },
+    { name:'Hogback Ridge Shelter', mile:317.6, elev:4255, cap:6, type:'lean-to', water:'Stream 0.2 mi west via blue-blazed trail', url:'shelter-hogback-ridge.html' },
+    { name:'Bald Mountain Shelter', mile:327.7, elev:5100, cap:10, type:'lean-to', water:'Spring 200 ft on blue-blazed trail (reliable)', url:'shelter-bald-mountain.html' },
+    { name:'No Business Knob Shelter', mile:338.3, elev:3180, cap:8, type:'lean-to', water:'Spring 200-400 yards south on AT', url:'shelter-no-business-knob.html' },
+    { name:'Curley Maple Gap Shelter', mile:348.8, elev:3070, cap:14, type:'lean-to', water:'Spring 100 ft south on AT', url:'shelter-curley-maple-gap.html' },
+    { name:'Cherry Gap Shelter', mile:361.7, elev:3900, cap:14, type:'lean-to', water:'Spring 250 ft SW on blue-blazed trail (can be unreliable in dry seasons)', url:'shelter-cherry-gap.html' },
+    { name:'Clyde Smith Shelter', mile:370.8, elev:4400, cap:10, type:'lean-to', water:'Spring 205 yards W, steep downhill (buried drum with pipe)', url:'shelter-clyde-smith.html', closed:'bears' },
+    { name:'Roan High Knob Shelter', mile:379.3, elev:6275, cap:15, type:'stone-cabin', water:'Spring ~100 yards opposite shelter on blue blaze', url:'shelter-roan-high-knob.html', closed:'structural' },
+    { name:'Stan Murray Shelter', mile:384.5, elev:5050, cap:6, type:'lean-to', water:'Spring ~100 yards on blue blaze (unreliable, steep descent)', url:'shelter-stan-murray.html' },
+    { name:'Overmountain Shelter', mile:386.4, elev:4550, cap:30, type:'lean-to', water:'Spring on blue-blazed trail between shelter and AT', url:'shelter-overmountain.html', closed:'permanent' },
+    { name:'Mountaineer Falls Shelter', mile:404.4, elev:3200, cap:14, type:'lean-to', water:'Mountaineer Falls branch, few hundred yards on blue blaze', url:'shelter-mountaineer-falls.html' },
+    { name:'Moreland Gap Shelter', mile:414.0, elev:3815, cap:6, type:'lean-to', water:'Spring 0.2 mi down hollow across from shelter', url:'shelter-moreland-gap.html' },
+    { name:'Laurel Fork Shelter', mile:422.2, elev:2445, cap:8, type:'lean-to', water:'Cascading stream 150 ft on blue blaze behind shelter', url:'shelter-laurel-fork.html', closed:'fire' },
+    { name:'Vandeventer Shelter', mile:438.0, elev:3620, cap:6, type:'lean-to', water:'No reliable water at shelter \u2014 carry water from Watauga Lake', url:'shelter-vandeventer.html' },
+    { name:'Iron Mountain Shelter', mile:444.8, elev:4125, cap:6, type:'lean-to', water:'Spring 0.2 mi S on AT (crosses trail)', url:'shelter-iron-mountain.html' },
+    { name:'Double Springs Shelter', mile:452.5, elev:4080, cap:6, type:'lean-to', water:'Spring 100 yards downhill W of shelter', url:'shelter-double-springs.html' },
+    { name:'Abingdon Gap Shelter', mile:460.8, elev:3785, cap:5, type:'lean-to', water:'Spring 275 yards downhill S on steep blue blaze', url:'shelter-abingdon-gap.html' }
+  ];
+
+  function getWaterStatus(w) {
+    var t = w.toLowerCase();
+    if (/no water|no reliable|unreliable|dry|seasonal|slow flow/.test(t)) return 'red';
+    if (/walk|yards|0\.\d+ mi|ft |side trail|blue.?blaze|downhill|steep|hollow/.test(t)) return 'yellow';
+    return 'green';
+  }
+
+  function waterDotClass(w) {
+    var s = getWaterStatus(w);
+    if (s === 'red') return 'water-red';
+    if (s === 'yellow') return 'water-yellow';
+    return 'water-green';
+  }
 
   var TOWNS = [
     {
@@ -413,11 +534,196 @@
     }).join('');
   }
 
-  document.getElementById('sl-miles').addEventListener('input', render);
-  document.getElementById('sl-days').addEventListener('input', render);
+  // Find nearest town to a given mile marker
+  function nearestTown(mile) {
+    var best = null, bestDist = Infinity;
+    for (var i = 0; i < TOWNS.length; i++) {
+      var d = Math.abs(TOWNS[i].mile - mile);
+      if (d < bestDist) { bestDist = d; best = TOWNS[i]; }
+    }
+    return { town: best, dist: bestDist };
+  }
+
+  // Build day-by-day itinerary for a resupply segment
+  function planSegment(startMile, endMile, dailyMax) {
+    // Get shelters within this segment (exclusive of start mile, inclusive of end)
+    var segShelters = [];
+    for (var i = 0; i < SHELTERS.length; i++) {
+      if (SHELTERS[i].mile > startMile && SHELTERS[i].mile <= endMile) {
+        segShelters.push(SHELTERS[i]);
+      }
+    }
+    if (segShelters.length === 0) return [];
+
+    var days = [];
+    var currentMile = startMile;
+    var remaining = segShelters.slice();
+
+    while (remaining.length > 0) {
+      var targetMile = currentMile + dailyMax;
+      // Find the last shelter reachable within daily max
+      var bestIdx = -1;
+      for (var j = 0; j < remaining.length; j++) {
+        if (remaining[j].mile <= targetMile) {
+          bestIdx = j;
+        } else {
+          break;
+        }
+      }
+      // If no shelter is within range, take the next one anyway (forced long day)
+      if (bestIdx === -1) bestIdx = 0;
+
+      var stop = remaining[bestIdx];
+      var dayMiles = stop.mile - currentMile;
+
+      // Find alternatives: 1 shelter before and 1 after the chosen stop
+      var altBefore = bestIdx > 0 ? remaining[bestIdx - 1] : null;
+      var altAfter = (bestIdx < remaining.length - 1) ? remaining[bestIdx + 1] : null;
+
+      days.push({
+        shelter: stop,
+        dayMiles: dayMiles,
+        startMile: currentMile,
+        altBefore: altBefore,
+        altAfter: altAfter,
+        forced: (stop.mile > targetMile)
+      });
+
+      currentMile = stop.mile;
+      remaining = remaining.slice(bestIdx + 1);
+    }
+    return days;
+  }
+
+  function renderItinerary() {
+    var dailyMiles = getMiles();
+    var html = '';
+    var totalDays = 0;
+
+    for (var i = 0; i < TOWNS.length - 1; i++) {
+      var from = TOWNS[i];
+      var to = TOWNS[i + 1];
+      var fromClean = from.name.replace(/&mdash;.*/, '').trim();
+      var toClean = to.name.replace(/&mdash;.*/, '').trim();
+      var segMiles = to.mile - from.mile;
+
+      var days = planSegment(from.mile, to.mile, dailyMiles);
+      if (days.length === 0) continue;
+
+      html += '<div class="itin-seg-header">' + fromClean + ' &rarr; ' + toClean
+        + ' <span style="font-weight:400;font-size:0.82rem;color:#718096;">(' + segMiles.toFixed(1) + ' mi &bull; ' + days.length + ' day' + (days.length !== 1 ? 's' : '') + ')</span></div>';
+
+      for (var d = 0; d < days.length; d++) {
+        totalDays++;
+        var day = days[d];
+        var s = day.shelter;
+        var elevChange = d === 0
+          ? s.elev  // first day: just show shelter elevation
+          : s.elev - days[d - 1].shelter.elev;
+        var elevSign = elevChange >= 0 ? '+' : '';
+        var prevElev = d === 0 ? null : days[d - 1].shelter.elev;
+        var wDot = waterDotClass(s.water);
+        var nt = nearestTown(s.mile);
+
+        html += '<div class="day-card">';
+
+        // Header row
+        html += '<div class="day-head">'
+          + '<div><span class="day-num">Day ' + totalDays + '</span>'
+          + (day.forced ? ' <span style="font-size:0.72rem;color:#e53e3e;font-weight:700;">LONG DAY</span>' : '')
+          + '</div>'
+          + '<div style="text-align:right;">'
+          + '<span class="day-miles">' + day.dayMiles.toFixed(1) + ' mi</span>'
+          + '<div class="day-elev">Elev ' + s.elev.toLocaleString() + ' ft'
+          + (prevElev !== null ? ' &bull; ' + elevSign + Math.abs(elevChange).toLocaleString() + ' ft net' : '')
+          + '</div></div></div>';
+
+        // Shelter name + water dot
+        html += '<div class="day-shelter">'
+          + '<span class="water-dot ' + wDot + '" title="Water: ' + s.water.replace(/"/g, '&quot;') + '"></span>'
+          + '<a href="' + s.url + '">' + s.name + '</a>';
+        if (s.closed) {
+          var reason = s.closed === 'bears' ? 'Closed (bears)' : s.closed === 'structural' ? 'Closed (structural)' : s.closed === 'fire' ? 'Closed (fire)' : 'Closed';
+          html += '<span class="day-closed">' + reason + '</span>';
+        }
+        html += '</div>';
+
+        // Amenities
+        html += '<div class="day-amenities">'
+          + 'Cap: ' + s.cap + ' &bull; '
+          + (s.type === 'stone-cabin' ? 'Stone cabin' : 'Lean-to')
+          + '</div>';
+
+        // Water description
+        html += '<div class="day-water-desc">' + s.water + '</div>';
+
+        // Nearby alternatives
+        if (day.altBefore || day.altAfter) {
+          html += '<div class="day-alts">';
+          html += '<div class="day-alts-title">Nearby alternatives:</div>';
+          if (day.altBefore) {
+            var altBMiles = day.altBefore.mile - day.startMile;
+            var diff = day.dayMiles - altBMiles;
+            html += '<div class="day-alt-row">'
+              + '<span class="day-alt-name">' + day.altBefore.name + '</span>'
+              + '<span class="day-alt-dist">' + altBMiles.toFixed(1) + ' mi (' + diff.toFixed(1) + ' mi shorter day)</span>'
+              + '</div>';
+          }
+          if (day.altAfter) {
+            var altAMiles = day.altAfter.mile - day.startMile;
+            var diff2 = altAMiles - day.dayMiles;
+            html += '<div class="day-alt-row">'
+              + '<span class="day-alt-name">' + day.altAfter.name + '</span>'
+              + '<span class="day-alt-dist">' + altAMiles.toFixed(1) + ' mi (' + diff2.toFixed(1) + ' mi longer day)</span>'
+              + '</div>';
+          }
+          html += '</div>';
+        }
+
+        // Nearest town card
+        if (nt.town && nt.dist <= 25) {
+          var t = nt.town;
+          var dir = t.mile <= s.mile ? 'S' : 'N';
+          html += '<div class="day-town">';
+          html += '<div class="day-town-name">Nearest town: ' + t.name.replace(/&mdash;.*/, '').trim() + '</div>';
+          html += '<div class="day-town-meta">' + nt.dist.toFixed(1) + ' mi ' + dir + ' on AT'
+            + (t.offTrail > 0 ? ' + ' + t.offTrail + ' mi off-trail' : ' (on-trail)') + '</div>';
+          html += '<div class="day-town-services">'
+            + t.services.slice(0, 6).map(function (sv) { return '<span class="day-town-svc">' + sv + '</span>'; }).join('')
+            + '</div>';
+          if (t.phone || t.web) {
+            html += '<div class="day-town-contact">';
+            if (t.phone) html += '<a class="day-town-call" href="tel:' + t.phone.replace(/\D/g, '') + '">' + t.phone + '</a>';
+            if (t.web) html += '<a class="day-town-web" href="' + t.web + '" target="_blank">' + t.webLabel + '</a>';
+            html += '</div>';
+          }
+          html += '</div>';
+        }
+
+        html += '</div>'; // close day-card
+      }
+    }
+
+    // Grand total
+    html += '<div style="margin-top:1rem;padding:0.75rem 1rem;background:#ebf8ff;border-left:4px solid #3182ce;border-radius:0 6px 6px 0;font-size:0.9rem;color:#2b6cb0;">'
+      + '<strong>Total: ' + totalDays + ' hiking days</strong> at ' + dailyMiles + ' mi/day max &bull; '
+      + TOTAL + ' miles Springer to Damascus'
+      + '</div>';
+
+    document.getElementById('itinerary').innerHTML = html;
+  }
+
+  function onSliderChange() {
+    render();
+    renderItinerary();
+  }
+
+  document.getElementById('sl-miles').addEventListener('input', onSliderChange);
+  document.getElementById('sl-days').addEventListener('input', onSliderChange);
 
   render();
   renderCards();
+  renderItinerary();
 
 }());
 </script>
