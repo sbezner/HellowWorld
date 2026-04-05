@@ -19,7 +19,6 @@ const CORE_ASSETS = [
   'hostel-vs-hotel.html',
   'sumner-parts.html',
   'gear-checklist.html',
-  'fred.html',
   // Shelter pages — Georgia
   'shelter-springer-mountain.html',
   'shelter-stover-creek.html',
